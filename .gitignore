@@ -1,0 +1,18 @@
+# App-specific rules live in web/.gitignore.
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editors
+.idea/
+.vscode/
+*.swp
+
+# logs
+*.log
+
+# local screenshots and other scratch output
+/artifacts/
+web/AGENTS.md
+web/CLAUDE.md

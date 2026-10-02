@@ -1,0 +1,14 @@
+node_modules
+.git
+.env*
+!.env.example
+dist
+.next
+.wrangler
+.sites-runtime
+.agents
+.codex
+outputs
+work
+public/generated
+*.tsbuildinfo
