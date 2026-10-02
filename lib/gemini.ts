@@ -9,12 +9,13 @@ export class GeminiError extends Error {
   constructor(message: string, status = 502) { super(message); this.status = status; }
 }
 
+// The only model the app uses; it is not configurable through the environment.
+export const GEMINI_MODEL = "gemini-3.8-flash";
+
 export function geminiConfig() {
   const apiKey = process.env.GEMINI_API_KEY?.trim();
   if (!apiKey) throw new GeminiError("Przygotowywanie przepisów jest chwilowo niedostępne. Spróbuj ponownie później.", 503);
-  const model = process.env.GEMINI_MODEL || "gemini-3.5-flash";
-  if (!["gemini-3.8-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"].includes(model)) throw new GeminiError("Przygotowywanie przepisów jest chwilowo niedostępne.", 503);
-  return { apiKey, model };
+  return { apiKey, model: GEMINI_MODEL };
 }
 
 type Interaction = { status?: string; steps?: { type: string; content?: { type: string; text?: string }[] }[] };

@@ -6,7 +6,6 @@ import { recipeResultSchema } from '../lib/recipe.ts';
 import { POST } from '../app/api/recipe/route.ts';
 
 process.env.GEMINI_API_KEY = 'test-only-key';
-process.env.GEMINI_MODEL = 'gemini-3.5-flash';
 const output = { isRecipe: true, title: 'Makaron', description: 'Makaron z cytryną.',
   servings: null, servingsEvidence: '', time: '15 minut', timeEvidence: '',
   ingredients: [{ name: 'makaron', amount: '200 g', evidence: '200 grams of pasta' }, { name: 'cytryna', amount: '2 sztuki', evidence: '' }],
@@ -25,7 +24,7 @@ test('sends the canonical public video directly to Gemini with server-only authe
     assert.equal(init.redirect, 'manual');
     const body = JSON.parse(init.body);
     assert.equal(body.store, false);
-    assert.equal(body.model, 'gemini-3.5-flash');
+    assert.equal(body.model, 'gemini-3.8-flash');
     assert.deepEqual(body.input[0], { type: 'video', uri: 'https://www.youtube.com/watch?v=SwDJi_PB-wY' });
     assert.equal(body.response_format.mime_type, 'application/json');
     assert.equal(init.body.includes('test-only-key'), false);
