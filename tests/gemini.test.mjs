@@ -169,3 +169,12 @@ test('English locale instructs generation in English and is isolated from the Po
   assert.equal(data.recipe.title, 'Pasta with lemon');
   assert.equal(calls, 2);
 });
+
+test('accepts a cooking video whose length estimate is shorter than its own observations', async () => {
+  const { assessVideo } = await import('../lib/video-assessment.ts');
+  const verdict = assessVideo(JSON.stringify({ ...accepted, durationSeconds: 196, observations: [
+    { at: 100, evidence: 'Wbijanie jajek do miski i miksowanie z cukrem.' }, { at: 244, evidence: 'Wlewanie ciasta do formy keksowej.' },
+  ] }));
+  assert.equal(verdict.durationSeconds, 245);
+  assert.throws(() => assessVideo(JSON.stringify({ ...accepted, observations: [{ at: 50, evidence: 'Mieszanie ciasta w misce.' }, { at: 50, evidence: 'Mieszanie ciasta w misce.' }] })));
+});
