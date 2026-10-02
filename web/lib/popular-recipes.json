@@ -1,0 +1,720 @@
+[
+ {
+  "id": "C_MBzyj2vuc",
+  "category": "wege",
+  "dish": "Pierogi ruskie",
+  "videoTitle": "Pierogi  babci Marysi lepszych w życiu nie jadłem / Oddaszfartucha  ENG. SUBT.",
+  "author": "Tomasz Strzelczyk ODDASZFARTUCHA",
+  "thumb": "maxresdefault",
+  "ingestedAt": "2026-10-02",
+  "recipe": {
+   "language": "pl",
+   "title": "Tradycyjne pierogi ruskie z okrasą ze śmietany",
+   "description": "Domowe pierogi ruskie przygotowane według tradycyjnego przepisu z ciastem na bazie mąki pszennej i gorącej wody oraz farszem z gotowanych ziemniaków, twarogu i podsmażonej cebuli, podane z okrasą z podsmażonej śmietany.",
+   "servings": null,
+   "time": null,
+   "ingredients": [
+    {
+     "name": "mąka pszenna",
+     "amount": null
+    },
+    {
+     "name": "gorąca woda",
+     "amount": null
+    },
+    {
+     "name": "masło",
+     "amount": null
+    },
+    {
+     "name": "cebula",
+     "amount": null
+    },
+    {
+     "name": "ugotowane ziemniaki (utłuczone)",
+     "amount": null
+    },
+    {
+     "name": "twaróg",
+     "amount": null
+    },
+    {
+     "name": "czarny pieprz ziarnisty (utłuczony)",
+     "amount": null
+    },
+    {
+     "name": "sól",
+     "amount": null
+    },
+    {
+     "name": "kwaśna śmietana",
+     "amount": null
+    }
+   ],
+   "steps": [
+    {
+     "title": "Wysypanie mąki i dodanie wody",
+     "description": "Wysyp mąkę na stolnicę, zrób w niej wgłębienie i stopniowo dolewaj gorącą wodę, zagarniając mąkę.",
+     "at": 28
+    },
+    {
+     "title": "Wyrabianie ciasta",
+     "description": "Zagnieć i dokładnie wyrabiaj ciasto ręcznie, aż stanie się jednolite, gładkie i elastyczne.",
+     "at": 116
+    },
+    {
+     "title": "Odpoczynek ciasta",
+     "description": "Uformuj ciasto w kulę i przykryj je odwróconą miską, aby odpoczęło.",
+     "at": 224
+    },
+    {
+     "title": "Podsmażenie cebuli",
+     "description": "Rozpuść masło na patelni, dodaj drobno posiekaną cebulę i smaż do zeszklenia oraz lekkiego zrumienienia.",
+     "at": 236
+    },
+    {
+     "title": "Przygotowanie farszu",
+     "description": "Do miski z utłuczonymi ziemniakami dodaj podsmażoną cebulę z tłuszczem, twaróg, świeżo roztarty pieprz oraz sól. Wymieszaj i zagnieć składniki ręką na jednolitą masę.",
+     "at": 289
+    },
+    {
+     "title": "Porcjowanie ciasta",
+     "description": "Odkrój kawałek ciasta, uformuj z niego wałek i pokrój nożem na małe kawałki, po czym lekko spłaszcz je dłonią.",
+     "at": 414
+    },
+    {
+     "title": "Wałkowanie i lepienie pierogów",
+     "description": "Rozwałkuj każdy kawałek ciasta na cienki placuszek, nałóż porcję farszu i dokładnie zlep brzegi.",
+     "at": 454
+    },
+    {
+     "title": "Przygotowanie okrasy",
+     "description": "Na patelnię wlej kwaśną śmietanę i podgrzewaj ją, smażąc i redukując, aż zgęstnieje i lekko się podsmaży.",
+     "at": 569
+    },
+    {
+     "title": "Gotowanie pierogów",
+     "description": "Wrzucaj pierogi do garnka z wrzącą, osoloną wodą i gotuj do wypłynięcia na powierzchnię.",
+     "at": 587
+    },
+    {
+     "title": "Podanie",
+     "description": "Wyjmij ugotowane pierogi łyżką cedzakową na talerz i polej przygotowaną podsmażoną śmietaną.",
+     "at": 631
+    }
+   ],
+   "notes": [
+    "W filmie nie podano dokładnych proporcji wagowych ani objętościowych składników ciasta oraz farszu.",
+    "Czas odpoczynku ciasta oraz dokładny czas gotowania pierogów nie zostały sprecyzowane."
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=C_MBzyj2vuc",
+   "author": "Tomasz Strzelczyk ODDASZFARTUCHA"
+  }
+ },
+ {
+  "id": "JawgWAW1zno",
+  "category": "zupy",
+  "dish": "Żurek z białą kiełbasą",
+  "videoTitle": "Żurek z białą kiełbasą, wędzonką i jajkiem :: Skutecznie.Tv [HD]",
+  "author": "SkutecznieTv",
+  "ingestedAt": "2026-10-02",
+  "recipe": {
+   "language": "pl",
+   "title": "Domowy żurek na zakwasie z białą kiełbasą",
+   "description": "Klasyczny polski żurek przygotowany na bazie domowego zakwasu z dodatkiem białej kiełbasy, boczku wędzonego, wiejskiej kiełbasy, suszonych grzybów i aromatycznych przypraw. Doskonały z jajkiem na twardo.",
+   "servings": null,
+   "time": null,
+   "ingredients": [
+    {
+     "name": "zakwas na żurek",
+     "amount": "1/2 l"
+    },
+    {
+     "name": "biała kiełbasa (surowa lub parzona)",
+     "amount": "ok. 250 g"
+    },
+    {
+     "name": "swojska wędzona kiełbasa",
+     "amount": "ok. 150 g"
+    },
+    {
+     "name": "boczek wędzony",
+     "amount": "ok. 100 g"
+    },
+    {
+     "name": "liść laurowy",
+     "amount": "1 szt."
+    },
+    {
+     "name": "ziele angielskie",
+     "amount": "3-4 szt."
+    },
+    {
+     "name": "czarny pieprz w ziarnach",
+     "amount": "4-5 szt."
+    },
+    {
+     "name": "sól",
+     "amount": "1 płaska łyżeczka"
+    },
+    {
+     "name": "woda",
+     "amount": "1 l"
+    },
+    {
+     "name": "cebula",
+     "amount": "1 szt."
+    },
+    {
+     "name": "suszone grzyby (wcześniej namoczone)",
+     "amount": "kilka szt."
+    },
+    {
+     "name": "czosnek",
+     "amount": "2 ząbki"
+    },
+    {
+     "name": "majeranek",
+     "amount": "2 łyżeczki"
+    },
+    {
+     "name": "śmietana 12% lub 18%",
+     "amount": "ok. 1/2 szklanki"
+    },
+    {
+     "name": "mąka pszenna",
+     "amount": "1 łyżka"
+    },
+    {
+     "name": "jajka ugotowane na twardo",
+     "amount": null
+    },
+    {
+     "name": "natka pietruszki",
+     "amount": null
+    }
+   ],
+   "steps": [
+    {
+     "title": "Przygotowanie wywaru",
+     "description": "Do garnka włóż białą kiełbasę, dodaj liść laurowy, ziele angielskie, pieprz w ziarnach, łyżeczkę soli i zalej litrem wody. Gotuj pod przykryciem na wolnym ogniu.",
+     "at": 88
+    },
+    {
+     "title": "Krojenie cebuli",
+     "description": "Cebulę obierz i pokrój w drobną kostkę.",
+     "at": 127
+    },
+    {
+     "title": "Krojenie boczku i kiełbasy",
+     "description": "Swojską kiełbasę obierz ze skórki i pokrój w półtalarki. Boczek pokrój w kostkę lub paseczki.",
+     "at": 142
+    },
+    {
+     "title": "Smażenie wędlin",
+     "description": "Na rozgrzaną suchą patelnię wrzuć pokrojony boczek, a po chwili dodaj pokrojoną wędzoną kiełbasę i podsmażaj.",
+     "at": 160
+    },
+    {
+     "title": "Dodanie grzybów",
+     "description": "Do podsmażanych wędlin dodaj kilka namoczonych wcześniej grzybów suszonych i smaż razem przez chwilę.",
+     "at": 189
+    },
+    {
+     "title": "Zeszklenie cebuli",
+     "description": "Na patelnię dodaj pokrojoną w kostkę cebulę i smaż całość, aż cebula ładnie się zeszkli.",
+     "at": 204
+    },
+    {
+     "title": "Przyprawienie podsmażki",
+     "description": "Do zawartości patelni dodaj przeciśnięty przez praskę czosnek oraz majeranek. Podsmażaj krótką chwilę, po czym wyłącz palnik.",
+     "at": 220
+    },
+    {
+     "title": "Łączenie wywaru z patelnią",
+     "description": "Z garnka wyjmij ugotowaną białą kiełbasę. Do powstałego wywaru przełóż całą zawartość patelni. Przykryj i gotuj na wolnym ogniu przez kolejne 10 minut.",
+     "at": 260
+    },
+    {
+     "title": "Pokrojenie białej kiełbasy",
+     "description": "Ugotowaną i przestudzoną białą kiełbasę obierz z flaka i pokrój w plasterki.",
+     "at": 289
+    },
+    {
+     "title": "Rozrobienie śmietany z mąką",
+     "description": "W osobnym naczyniu dokładnie wymieszaj śmietanę z jedną łyżką mąki, dbając o to, by nie było grudek.",
+     "at": 310
+    },
+    {
+     "title": "Zaciąganie zupy",
+     "description": "Do gotującej się zupy wlej dokładnie wymieszany zakwas na żurek. Śmietanę zahartuj kilkoma łyżkami gorącego wywaru z garnka, wymieszaj, wlej do zupy i szybko zamieszaj całość.",
+     "at": 344
+    },
+    {
+     "title": "Zagotowanie i podanie",
+     "description": "Zagotuj zupę, aż lekko zgęstnieje. Dopraw do smaku solą i świeżo mielonym pieprzem. Podawaj z przygotowaną wcześniej białą kiełbasą, jajkiem na twardo i posiekaną natką pietruszki.",
+     "at": 378
+    }
+   ],
+   "notes": [
+    "Ilość jajek na twardo oraz natki pietruszki do dekoracji zależy od indywidualnych preferencji.",
+    "Do tradycyjnego żurku najlepiej użyć surowej białej kiełbasy, ale parzona również się sprawdzi.",
+    "Suszone grzyby należy namoczyć w wodzie na około pół godziny przed przystąpieniem do gotowania."
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=JawgWAW1zno",
+   "author": "SkutecznieTv"
+  },
+  "thumb": "hqdefault"
+ },
+ {
+  "id": "RbfKeQG_3dQ",
+  "category": "zupy",
+  "dish": "Rosół",
+  "videoTitle": "NAJLEPSZY ROSÓŁ 🥣 | Karol Okrasa & Kuchnia Lidla",
+  "author": "KuchniaLidla.pl",
+  "ingestedAt": "2026-10-02",
+  "recipe": {
+   "language": "pl",
+   "title": "Klasyczny domowy rosół drobiowy",
+   "description": "Tradycyjny, klarowny rosół o głębokim smaku i aromacie, przygotowany na bazie udek kaczki i kurczaka z dodatkiem pieczonych warzyw korzeniowych oraz świeżego lubczyku.",
+   "servings": null,
+   "time": "3-4 godziny",
+   "ingredients": [
+    {
+     "name": "Zimna woda",
+     "amount": null
+    },
+    {
+     "name": "Uda kaczki",
+     "amount": null
+    },
+    {
+     "name": "Kurczak (części korpusu, szyja, skrzydła, udka)",
+     "amount": null
+    },
+    {
+     "name": "Pietruszka (korzeń)",
+     "amount": null
+    },
+    {
+     "name": "Marchewka",
+     "amount": null
+    },
+    {
+     "name": "Seler (korzeń)",
+     "amount": null
+    },
+    {
+     "name": "Cebula",
+     "amount": null
+    },
+    {
+     "name": "Por",
+     "amount": null
+    },
+    {
+     "name": "Pieprz",
+     "amount": null
+    },
+    {
+     "name": "Olej",
+     "amount": null
+    },
+    {
+     "name": "Ziele angielskie",
+     "amount": "kilka ziarenek"
+    },
+    {
+     "name": "Liście laurowe",
+     "amount": "3-4 sztuki"
+    },
+    {
+     "name": "Świeży lubczyk",
+     "amount": null
+    },
+    {
+     "name": "Sól",
+     "amount": null
+    }
+   ],
+   "steps": [
+    {
+     "title": "Przygotowanie mięsa",
+     "description": "Do garnka z zimną wodą przełóż uda kaczki oraz oczyszczone części kurczaka (udka, skrzydła, szyję i korpus, pomijając piersi).",
+     "at": 44
+    },
+    {
+     "title": "Rozpoczęcie gotowania",
+     "description": "Postaw garnek na dużym ogniu, aby jak najszybciej doprowadzić wodę do wrzenia i pobudzić wydobywanie aromatu z mięsa.",
+     "at": 118
+    },
+    {
+     "title": "Krojenie warzyw",
+     "description": "Przekrój pora na pół. Pietruszkę, marchewkę, seler i cebulę pokrój wzdłuż na grube kawałki lub ćwiartki.",
+     "at": 142
+    },
+    {
+     "title": "Przyprawianie warzyw",
+     "description": "Pokrojone warzywa przełóż do miski, oprósz pieprzem i skrop olejem, a następnie dokładnie wymieszaj dłońmi.",
+     "at": 172
+    },
+    {
+     "title": "Pieczenie warzyw",
+     "description": "Wyłóż doprawione warzywa na blachę do pieczenia i wstaw do piekarnika nagranego do 180-200 stopni Celsjusza. Piecz, aż lekko zbrązowieją i się skarmelizują.",
+     "at": 187
+    },
+    {
+     "title": "Szumowanie rosołu",
+     "description": "Gdy wywar się zagotuje, zmniejsz ogień i delikatnie zdejmij łyżką cedzakową powstałe na powierzchni szumowiny (białka).",
+     "at": 214
+    },
+    {
+     "title": "Dodanie warzyw",
+     "description": "Do odszumowanego wywaru mięsnego dodaj upieczone w piekarniku warzywa.",
+     "at": 231
+    },
+    {
+     "title": "Dodanie przypraw",
+     "description": "Wrzuć do garnka kilka ziaren ziela angielskiego oraz 3-4 liście laurowe.",
+     "at": 252
+    },
+    {
+     "title": "Długie gotowanie",
+     "description": "Gotuj rosół bez przykrycia na bardzo małym ogniu przez 3-4 godziny, pozwalając mu delikatnie „pykać”, aż nabierze głębokiego koloru.",
+     "at": 268
+    },
+    {
+     "title": "Przygotowanie mięsa i warzyw do podania",
+     "description": "Ostrożnie wyjmij z ugotowanego rosołu kawałki mięsa oraz upieczone warzywa. Mięso oddziel od kości i skóry, a warzywa pokrój na mniejsze części.",
+     "at": 324
+    },
+    {
+     "title": "Komponowanie talerza",
+     "description": "W głębokim talerzu ułóż przygotowane kawałki marchewki, pietruszki, porcji mięsa oraz świeży, posiekany lubczyk.",
+     "at": 345
+    },
+    {
+     "title": "Zalanie rosołem",
+     "description": "Zalej ułożone na talerzu składniki gorącym, czystym rosołem. Dopraw do smaku solą i pieprzem bezpośrednio na talerzu.",
+     "at": 403
+    }
+   ],
+   "notes": [
+    "Autor nie podaje dokładnych ilości warzyw korzeniowych ani wagowych proporcji użytego mięsa z kaczki i kurczaka.",
+    "Brak sprecyzowanej objętości zimnej wody potrzebnej do zalania mięsa w garnku.",
+    "Doprawianie rosołu solą i pieprzem odbywa się indywidualnie na talerzu, według własnych preferencji."
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=RbfKeQG_3dQ",
+   "author": "KuchniaLidla.pl"
+  },
+  "thumb": "sddefault"
+ },
+ {
+  "id": "_iGj_Tz5A7k",
+  "category": "sniadania",
+  "dish": "Naleśniki",
+  "videoTitle": "Idealne ciasto na naleśniki. Przepis jak zrobić doskonałe naleśniki. MENU Dorotki.",
+  "author": "Menu Dorotki",
+  "thumb": "maxresdefault",
+  "ingestedAt": "2026-10-02",
+  "recipe": {
+   "language": "pl",
+   "title": "Cienkie i elastyczne naleśniki",
+   "description": "Przepis na uniwersalne ciasto naleśnikowe, z którego placki wychodzą cienkie, elastyczne i nie przywierają do patelni.",
+   "servings": "9",
+   "time": null,
+   "ingredients": [
+    {
+     "name": "mąka tortowa (typ 450)",
+     "amount": "200 g"
+    },
+    {
+     "name": "jajka",
+     "amount": "4 duże lub 5 małych"
+    },
+    {
+     "name": "mleko",
+     "amount": "500 ml"
+    },
+    {
+     "name": "olej",
+     "amount": "2 łyżki"
+    },
+    {
+     "name": "sól",
+     "amount": "1 szczypta"
+    }
+   ],
+   "steps": [
+    {
+     "title": "Roztrzepanie jajek z solą",
+     "description": "Wbij jajka do naczynia i roztrzep je dokładnie za pomocą rózgi kuchennej. Dodaj szczyptę soli i ponownie krótko wymieszaj.",
+     "at": 99
+    },
+    {
+     "title": "Dodanie części mąki i mleka",
+     "description": "Przesiej przez sitko do jajek około jednej łyżki mąki i wymieszaj rózgą. Następnie dolej około połowy przygotowanego mleka i ponownie wymieszaj.",
+     "at": 150
+    },
+    {
+     "title": "Wymieszanie z resztą mąki",
+     "description": "Stopniowo przesiewaj pozostałą mąkę do rzadkiej masy, energicznie mieszając rózgą, aż powstanie gęste, jednolite ciasto bez grudek.",
+     "at": 204
+    },
+    {
+     "title": "Dodanie oleju",
+     "description": "Do gęstego ciasta wlej olej, pozostawiając odrobinę na ściance naczynia do natłuszczenia patelni. Całość dokładnie wymieszaj.",
+     "at": 236
+    },
+    {
+     "title": "Dolewanie reszty mleka i odpoczynek ciasta",
+     "description": "Stopniowo dolewaj resztę mleka, stale mieszając, aż ciasto uzyska pożądaną, rzadką konsystencję. Odstaw ciasto na 15–20 minut, aby lekko zgęstniało.",
+     "at": 269
+    },
+    {
+     "title": "Przygotowanie patelni",
+     "description": "Rozgrzej patelnię na średniej mocy palnika (około połowy maksymalnej). Przed smażeniem pierwszego naleśnika posmaruj jej powierzchnię pędzelkiem zwilżonym resztką oleju.",
+     "at": 348
+    },
+    {
+     "title": "Smażenie naleśników",
+     "description": "Wylewaj chochlą porcje ciasta na rozgrzaną patelnię, szybko rozprowadzając je ruchem dłoni po całej powierzchni. Smaż z pierwszej strony około 2 minut (do momentu, gdy naleśnik swobodnie przesuwa się po patelni), po czym przewróć łopatką i smaż drugą stronę nieco krócej.",
+     "at": 412
+    }
+   ],
+   "notes": [
+    "W przypadku przygotowywania naleśników na słodko do ciasta można opcjonalnie dodać zwykły cukier lub cukier waniliowy.",
+    "Olej jest używany do natłuszczenia patelni tylko jednorazowo – przed pierwszym naleśnikiem."
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=_iGj_Tz5A7k",
+   "author": "Menu Dorotki"
+  }
+ },
+ {
+  "id": "9RZWpWJS_mg",
+  "category": "wege",
+  "dish": "Placki ziemniaczane",
+  "videoTitle": "Placki ziemniaczane - klasyczny przepis",
+  "author": "Anka Gotuje",
+  "ingestedAt": "2026-10-02",
+  "recipe": {
+   "language": "pl",
+   "title": "Tradycyjne placki ziemniaczane",
+   "description": "Klasyczny, prosty przepis na domowe, chrupiące placki ziemniaczane z dodatkiem cebuli, smażone na patelni na złoty kolor.",
+   "servings": null,
+   "time": null,
+   "ingredients": [
+    {
+     "name": "ziemniaki",
+     "amount": "około 1 kg (7 średnich sztuk)"
+    },
+    {
+     "name": "jajka",
+     "amount": "2 sztuki"
+    },
+    {
+     "name": "cebula",
+     "amount": "1 sztuka"
+    },
+    {
+     "name": "mąka pszenna",
+     "amount": "2 czubate łyżki (plus opcjonalnie 1 dodatkowa)"
+    },
+    {
+     "name": "oliwa z oliwek",
+     "amount": "trochę"
+    },
+    {
+     "name": "pieprz",
+     "amount": "odrobina"
+    },
+    {
+     "name": "sól",
+     "amount": null
+    }
+   ],
+   "steps": [
+    {
+     "title": "Przygotowanie ziemniaków",
+     "description": "Ziemniaki dokładnie umyj i obierz ze skórki.",
+     "at": 44
+    },
+    {
+     "title": "Ścieranie ziemniaków",
+     "description": "Obrane ziemniaki zetrzyj na tarce o małych oczkach. Opcjonalnie jeden lub dwa ziemniaki można zetrzeć na grubsze wiórki, aby placki miały lepszą strukturę.",
+     "at": 55
+    },
+    {
+     "title": "Dodanie cebuli",
+     "description": "Obierz cebulę i zetrzyj ją na tarce bezpośrednio do naczynia ze startymi ziemniakami.",
+     "at": 125
+    },
+    {
+     "title": "Odsączenie nadmiaru soku",
+     "description": "Jeśli masa ziemniaczana z cebulą puściła dużo soku, odciśnij go i odlej.",
+     "at": 138
+    },
+    {
+     "title": "Dodanie pozostałych składników",
+     "description": "Do przygotowanej masy dodaj jajka, mąkę pszenną, sól oraz pieprz.",
+     "at": 145
+    },
+    {
+     "title": "Wymieszanie masy",
+     "description": "Wszystkie składniki dokładnie wymieszaj. Jeśli masa okaże się zbyt rzadka, wmieszaj dodatkową czubatą łyżkę mąki pszennej.",
+     "at": 218
+    },
+    {
+     "title": "Smażenie placków",
+     "description": "Na patelni rozgrzej oliwę z oliwek. Nakładaj łyżką porcje ciasta, formując placki, i smaż je z obu stron, aż będą złociste i chrupiące.",
+     "at": 239
+    }
+   ],
+   "notes": [
+    "Ilości soli oraz pieprzu nie zostały dokładnie sprecyzowane w filmie.",
+    "Dokładny czas smażenia placków oraz moc palnika nie zostały podane."
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=9RZWpWJS_mg",
+   "author": "Anka Gotuje"
+  },
+  "thumb": "sddefault"
+ },
+ {
+  "id": "vI6MFvxrRnU",
+  "category": "desery",
+  "dish": "Sernik",
+  "videoTitle": "Najlepszy na świecie puszysty i delikatny sernik",
+  "author": "Orchideli",
+  "ingestedAt": "2026-10-02",
+  "recipe": {
+   "language": "pl",
+   "title": "Puszysty i delikatny sernik",
+   "description": "Przepis na wyjątkowo delikatny, puszysty sernik na miękkim, kruchym spodzie, o strukturze delikatnej jak puch.",
+   "servings": null,
+   "time": null,
+   "ingredients": [
+    {
+     "name": "mąka pszenna typ 500-550",
+     "amount": "130 g"
+    },
+    {
+     "name": "miękkie masło",
+     "amount": "150 g"
+    },
+    {
+     "name": "cukier puder",
+     "amount": "40 g"
+    },
+    {
+     "name": "żółtka z jajek klasy L",
+     "amount": "3 sztuki"
+    },
+    {
+     "name": "proszek do pieczenia",
+     "amount": "4 g"
+    },
+    {
+     "name": "białka z jajek klasy L",
+     "amount": "9 sztuk"
+    },
+    {
+     "name": "cukier",
+     "amount": "200 g"
+    },
+    {
+     "name": "ser sernikowy z wiaderka",
+     "amount": "1 kg"
+    },
+    {
+     "name": "waniliowe serki typu danio",
+     "amount": "260 g"
+    },
+    {
+     "name": "żółtka",
+     "amount": "6 sztuk"
+    },
+    {
+     "name": "cukier waniliowy",
+     "amount": "2 opakowania"
+    },
+    {
+     "name": "budynie śmietankowe lub waniliowe bez cukru",
+     "amount": "3 opakowania"
+    },
+    {
+     "name": "mleko",
+     "amount": "375 ml"
+    },
+    {
+     "name": "olej słonecznikowy lub rzepakowy",
+     "amount": "160 g"
+    }
+   ],
+   "steps": [
+    {
+     "title": "Przygotowanie ciasta na spód",
+     "description": "W misie miksera połącz mąkę pszenną, miękkie masło, cukier puder, 3 żółtka i proszek do pieczenia. Wymieszaj składniki krótko, tylko do połączenia.",
+     "at": 9
+    },
+    {
+     "title": "Wyłożenie spodu",
+     "description": "Gotowe, miękkie ciasto przełóż na papier do pieczenia i wyrównaj, aby utworzyło płaski spód pasujący do blaszki o wymiarach 24 x 35 cm.",
+     "at": 42
+    },
+    {
+     "title": "Podpiekanie spodu",
+     "description": "Wstaw spód do piekarnika nagrzanego do 180°C (bez termoobiegu) lub 160°C (z termoobiegiem) i piecz przez 15–20 minut do złotego koloru.",
+     "at": 58
+    },
+    {
+     "title": "Ubijanie białek",
+     "description": "W czystej misie zacznij ubijać 9 białek na szybkich obrotach przez około minutę, aż zaczną się pienić, a następnie zmniejsz obroty na średnie.",
+     "at": 148
+    },
+    {
+     "title": "Dodawanie cukru",
+     "description": "Gdy piana zacznie robić się sztywna, powoli dodawaj po łyżce cukier, cały czas ubijając pianę na niskich lub średnich obrotach.",
+     "at": 213
+    },
+    {
+     "title": "Mieszanie składników masy serowej",
+     "description": "W osobnej, dużej misce połącz ser sernikowy, serki danio, 6 żółtek, cukry waniliowe, budynie w proszku, mleko oraz olej. Dokładnie wymieszaj całość ręcznie za pomocą trzepaczki.",
+     "at": 334
+    },
+    {
+     "title": "Łączenie masy serowej z pianą",
+     "description": "Rzadką masę serową przelej do ubitej piany z białek. Całość dokładnie i delikatnie wymieszaj mikserem z mieszadłem typu K lub ręcznie trzepaczką na jednolitą, puszystą masę.",
+     "at": 427
+    },
+    {
+     "title": "Przepasanie masy na spód",
+     "description": "Na podpieczony spód załóż wysoki rant cukierniczy (sernik mocno rośnie). Wylej masę serową na podpieczony spód i wyrównaj powierzchnię.",
+     "at": null
+    },
+    {
+     "title": "Pieczenie sernika",
+     "description": "Wstaw sernik do piekarnika i piecz w temperaturze 160°C (bez termoobiegu) lub 150°C (z termoobiegiem) przez 50–60 minut. Środek upieczonego sernika powinien lekko się chybotać.",
+     "at": null
+    },
+    {
+     "title": "Studzenie sernika",
+     "description": "Po upieczeniu wyłącz piekarnik, uchyl drzwiczki na około 1 cm i studź sernik w ten sposób przez 30–40 minut, a następnie wyjmij na blat do całkowitego ostygnięcia.",
+     "at": null
+    },
+    {
+     "title": "Wyjmowanie z formy i krojenie",
+     "description": "Ostrym nożem oddziel brzegi sernika od rantu, zdejmij rant i bezpiecznie zsuń sernik z blaszki. Pokrój po całkowitym ostudzeniu.",
+     "at": null
+    }
+   ],
+   "notes": [
+    "Użyj misy miksera o pojemności minimum 5 litrów, ponieważ ubite białka i masa serowa mają bardzo dużą objętość.",
+    "Masy serowej nie należy miksować tradycyjnym mikserem, aby jej dodatkowo nie napowietrzać – najlepiej wymieszać ją ręcznie trzepaczką.",
+    "Jeśli sernik zbyt mocno rośnie w piekarniku, należy obniżyć temperaturę o 10°C i lekko uchylić drzwiczki na 1-2 minuty."
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=vI6MFvxrRnU",
+   "author": "Orchideli"
+  },
+  "thumb": "maxresdefault"
+ }
+]

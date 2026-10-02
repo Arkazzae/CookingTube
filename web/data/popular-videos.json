@@ -1,0 +1,20 @@
+[
+  { "id": "C_MBzyj2vuc", "dish": "Pierogi ruskie", "category": "wege" },
+  { "id": "JawgWAW1zno", "dish": "Żurek z białą kiełbasą", "category": "zupy" },
+  { "id": "RbfKeQG_3dQ", "dish": "Rosół", "category": "zupy" },
+  { "id": "6SKyIwUQEas", "dish": "Kotlet schabowy", "category": "obiady" },
+  { "id": "NZP7k0ritw0", "dish": "Gołąbki", "category": "obiady" },
+  { "id": "_iGj_Tz5A7k", "dish": "Naleśniki", "category": "sniadania" },
+  { "id": "9RZWpWJS_mg", "dish": "Placki ziemniaczane", "category": "wege" },
+  { "id": "xbKLPZ89Cnk", "dish": "Bigos", "category": "obiady" },
+  { "id": "vI6MFvxrRnU", "dish": "Sernik", "category": "desery" },
+  { "id": "wtnZ_roJsCI", "dish": "Szarlotka", "category": "wypieki" },
+  { "id": "D_2DBLAt57c", "dish": "Spaghetti carbonara", "category": "makarony" },
+  { "id": "ifWWRZSWS18", "dish": "Szakszuka", "category": "sniadania" },
+  { "id": "s2_DepctcIc", "dish": "Kurczak curry", "category": "azjatyckie" },
+  { "id": "HGfo4dJTLgo", "dish": "Ramen miso", "category": "azjatyckie" },
+  { "id": "Ob8eL4mMOys", "dish": "Chlebek bananowy", "category": "wypieki" },
+  { "id": "87V4nizNJiE", "dish": "Tiramisu", "category": "desery" },
+  { "id": "a6yCQdx3Pkg", "dish": "Guacamole", "category": "wege" },
+  { "id": "Wwgn5k_TzKM", "dish": "Smash burger", "category": "obiady" }
+]
