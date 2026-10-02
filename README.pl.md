@@ -25,6 +25,10 @@
 </p>
 
 <p align="center">
+  <img src="docs/showreel.webp" alt="CookingTube w ruchu: wklejony link z YouTube, AI ogląda film i rozpoznaje składniki, składniki zostają odhaczone, potem kroki, minutnik odlicza czas, przepisy trafiają do biblioteki, a „Z filmu na talerz” zamienia się we „From video to plate”" width="100%">
+</p>
+
+<p align="center">
   <img src="docs/screenshots/pl/mobile.jpg" alt="CookingTube na telefonie: start z popularnymi przepisami, przepis z filmem na górze i tryb gotowania" width="100%">
 </p>
 

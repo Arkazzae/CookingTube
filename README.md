@@ -25,6 +25,10 @@
 </p>
 
 <p align="center">
+  <img src="docs/showreel.webp" alt="CookingTube in motion: a YouTube link is pasted, the AI watches the video and picks out the ingredients, they get checked off, the steps follow, a timer counts down, recipes fill the library, and “Z filmu na talerz” becomes “From video to plate”" width="100%">
+</p>
+
+<p align="center">
   <img src="docs/screenshots/en/mobile.jpg" alt="CookingTube on a phone: home with popular recipes, a recipe with the video on top, and cooking mode" width="100%">
 </p>
 
