@@ -9,11 +9,14 @@ import { toast } from "sonner";
 import { useLocale } from "./locale";
 
 type Phase = "idle" | "loading" | "error";
+export type Quota = { limit: number; used: number; remaining: number; resetAt: number | null };
+const isQuota = (value: unknown): value is Quota => !!value && typeof value === "object" && typeof (value as Quota).remaining === "number" && typeof (value as Quota).limit === "number";
 type Result = { error: string } | { title: string; ingredients: number; steps: number };
 type Generation = {
   phase: Phase; url: string; videoId: string | null; error: string; startedAt: number;
   start: (url: string) => Promise<Result>; cancel: () => void; dismiss: () => void;
   sheetOpen: boolean; openSheet: (url?: string) => void; closeSheet: () => void; draft: string;
+  quota: Quota | null;
 };
 const Context = createContext<Generation | null>(null);
 export function useGeneration() {
@@ -39,8 +42,18 @@ export function GenerationProvider({ children }: { children: React.ReactNode }) 
   const [startedAt, setStartedAt] = useState(0);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [draft, setDraft] = useState("");
+  const [quota, setQuota] = useState<Quota | null>(null);
   const requestRef = useRef<AbortController | null>(null);
   useEffect(() => () => { requestRef.current?.abort(); }, []);
+  // How many fresh recipes are left today; the server counts per browser and per address.
+  useEffect(() => {
+    let voter: string | undefined;
+    try { voter = voterId(); } catch { /* Storage blocked. */ }
+    fetch("/api/recipe", { headers: voter ? { "X-Voter-Id": voter } : {} })
+      .then(response => response.ok ? response.json() as Promise<{ quota?: unknown }> : null)
+      .then(data => { if (isQuota(data?.quota)) setQuota(data.quota); })
+      .catch(() => {});
+  }, []);
 
   const start = useCallback(async (value: string): Promise<Result> => {
     if (requestRef.current) return { error: t.form.busy };
@@ -56,8 +69,9 @@ export function GenerationProvider({ children }: { children: React.ReactNode }) 
         method: "POST", signal: controller.signal, body: JSON.stringify({ url: value }),
         headers: { "Content-Type": "application/json", "X-App-Locale": locale, ...(voter ? { "X-Voter-Id": voter } : {}) },
       });
-      const data = await response.json().catch(() => null) as { recipe?: unknown; error?: string; warning?: string } | null;
+      const data = await response.json().catch(() => null) as { recipe?: unknown; error?: string; warning?: string; quota?: unknown } | null;
       if (!data || typeof data !== "object") throw new Error(t.generation.unreadable);
+      if (isQuota(data.quota)) setQuota(data.quota);
       if (!response.ok) throw new Error(typeof data.error === "string" ? data.error : t.generation.failed);
       const parsed = recipeResultSchema.safeParse(data.recipe);
       if (!parsed.success) throw new Error(t.generation.badRecipe);
@@ -100,11 +114,11 @@ export function GenerationProvider({ children }: { children: React.ReactNode }) 
   }, [start]);
 
   const value = useMemo<Generation>(() => ({
-    phase, url, videoId: parseVideoId(url), error, startedAt, start, sheetOpen, draft,
+    phase, url, videoId: parseVideoId(url), error, startedAt, start, sheetOpen, draft, quota,
     cancel: () => requestRef.current?.abort(),
     dismiss: () => { setPhase("idle"); setError(""); },
     openSheet: (next = "") => { setDraft(next); setSheetOpen(true); },
     closeSheet: () => setSheetOpen(false),
-  }), [phase, url, error, startedAt, start, sheetOpen, draft]);
+  }), [phase, url, error, startedAt, start, sheetOpen, draft, quota]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }

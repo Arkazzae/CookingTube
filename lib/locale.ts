@@ -33,6 +33,7 @@ const errors: Record<string, string> = {
   "Nie udało się ułożyć czytelnego przepisu. Spróbuj ponownie lub wybierz krótszy film.": "We could not create a clear recipe. Try again or choose a shorter video.",
   "Nie znaleźliśmy kompletnego przepisu. Wybierz film pokazujący składniki i przygotowanie jednej potrawy.": "We could not find a complete recipe. Choose a video showing ingredients and preparation of one dish.",
   "Nie udało się ułożyć spójnego przepisu. Spróbuj ponownie lub wybierz inny film.": "We could not create a consistent recipe. Try again or choose another video.",
+  "Wykorzystano dzienny limit nowych przepisów. Zapisane i popularne przepisy działają bez ograniczeń.": "You've used today's limit of new recipes. Saved and popular recipes still work without limits.",
   "Nieprawidłowy identyfikator przepisu.": "Invalid recipe ID.",
   "Nie udało się odczytać zapisanego przepisu. Spróbuj ponownie.": "We could not read the saved recipe. Please try again.",
   "Nie udało się odczytać przepisu.": "We could not read this recipe.",

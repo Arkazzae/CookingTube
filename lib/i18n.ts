@@ -142,6 +142,11 @@ const pl = {
     imageAlt: (title: string) => `Grafika z przepisem: ${title}`, back: "Wróć",
   },
   card2: { ingredients: "Składniki", steps: "Przygotowanie", from: "Przepis z filmu", source: "Źródło", made: "Przygotowano w CookingTube", servings: "porcje", print: "Drukuj lub zapisz PDF", printHint: "W oknie drukowania wybierz „Zapisz jako PDF”." },
+  limit: {
+    left: (n: number, max: number) => `Dziś możesz przygotować jeszcze ${n} z ${max} nowych przepisów.`,
+    none: (when: string) => `Dzienny limit nowych przepisów wykorzystany. Kolejny przygotujesz ${when}.`,
+    at: (time: string) => `o ${time}`, tomorrow: (time: string) => `jutro o ${time}`,
+  },
   timer: {
     title: "Minutnik", description: "Ustaw czas i gotuj spokojnie — przypomnimy Ci dźwiękiem i powiadomieniem.", open: "Otwórz minutnik",
     presets: "Szybki wybór", label: "Na co czekasz?", labelPlaceholder: "Np. makaron, jajka, piekarnik", labels: ["Makaron", "Jajka", "Ryż", "Piekarnik", "Ciasto", "Sos"],
@@ -298,6 +303,11 @@ const en: Dictionary = {
     imageAlt: (title: string) => `Recipe image: ${title}`, back: "Back",
   },
   card2: { ingredients: "Ingredients", steps: "Method", from: "Recipe from the video", source: "Source", made: "Made with CookingTube", servings: "servings", print: "Print or save as PDF", printHint: "In the print dialog choose “Save as PDF”." },
+  limit: {
+    left: (n: number, max: number) => `You can make ${n} more of ${max} new recipes today.`,
+    none: (when: string) => `You've used today's new recipes. The next one is available ${when}.`,
+    at: (time: string) => `at ${time}`, tomorrow: (time: string) => `tomorrow at ${time}`,
+  },
   timer: {
     title: "Timer", description: "Set a time and cook calmly — we'll remind you with a sound and a notification.", open: "Open timer",
     presets: "Quick picks", label: "What are you waiting for?", labelPlaceholder: "E.g. pasta, eggs, oven", labels: ["Pasta", "Eggs", "Rice", "Oven", "Cake", "Sauce"],

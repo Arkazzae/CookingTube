@@ -5,11 +5,11 @@ import { parseVideoId } from "@/lib/youtube-url";
 import { useHydrated } from "@/lib/local-library";
 import { useGeneration } from "./generation";
 import { VideoThumb } from "./media";
-import { useT } from "./locale";
+import { useLocale } from "./locale";
 
 export function LinkForm({ initial = "", autoFocus = false, variant = "hero" }: { initial?: string; autoFocus?: boolean; variant?: "hero" | "sheet" }) {
-  const { start, phase } = useGeneration();
-  const t = useT();
+  const { start, phase, quota } = useGeneration();
+  const { t, locale } = useLocale();
   const [url, setUrl] = useState(initial);
   const [error, setError] = useState("");
   const canPaste = useHydrated() && !!navigator.clipboard?.readText;
@@ -43,10 +43,19 @@ export function LinkForm({ initial = "", autoFocus = false, variant = "hero" }: 
       {url && <button type="submit" className="go-btn" disabled={busy || !url.trim()} aria-label={t.form.submit}><ArrowRight size={20} /></button>}
     </div>
     {error && <p id={`${inputId}-error`} className="field-error" role="alert"><AlertCircle size={16} />{error}</p>}
+    {quota && quota.limit > 0 && !error && <p className={`quota-note ${quota.remaining ? "" : "is-out"}`} aria-live="polite">
+      {quota.remaining ? t.limit.left(quota.remaining, quota.limit) : t.limit.none(resetText(quota.resetAt, locale, t))}
+    </p>}
     {id && !error && <div className="link-preview">
       <div className="link-preview-thumb"><VideoThumb id={id} alt={t.form.thumbAlt} /></div>
       <div className="link-preview-text"><span className="eyebrow">{t.form.recognized}</span><strong>{t.form.ready}</strong><span>{t.form.duration}</span></div>
       <button type="submit" className="btn btn-primary" disabled={busy}>{t.form.submit} <ArrowRight size={18} /></button>
     </div>}
   </form>;
+}
+
+function resetText(resetAt: number | null, locale: string, t: ReturnType<typeof useLocale>["t"]) {
+  if (!resetAt) return t.limit.tomorrow("");
+  const date = new Date(resetAt), time = date.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
+  return date.toDateString() === new Date().toDateString() ? t.limit.at(time) : t.limit.tomorrow(time);
 }

@@ -5,11 +5,24 @@ import type { Recipe } from "../../../lib/recipe.ts";
 import { getLibrary, LibraryError, validVoter } from "../../../lib/library.server.ts";
 import { requestLocale, localizeMessage } from "../../../lib/locale.ts";
 import { sameOrigin, jsonError } from "../../../lib/http.ts";
+import { quotaFor, recordGeneration, subjectsFor, type Quota } from "../../../lib/daily-limit.ts";
 
 export const runtime = "nodejs";
 export const maxDuration = 180;
 const cache = new Map<string, { recipe: Recipe; expires: number }>();
 let activeRequests = 0;
+const LIMIT_REACHED = "Wykorzystano dzienny limit nowych przepisów. Zapisane i popularne przepisy działają bez ograniczeń.";
+
+/** How many fresh recipes this person can still make today. */
+export async function GET(request: Request) {
+  if (!sameOrigin(request)) return jsonError(localizeMessage("Odśwież stronę i spróbuj ponownie.", requestLocale(request)), 403);
+  return Response.json({ quota: await quotaFor(await subjectsFor(request)) }, { headers: { "Cache-Control": "no-store" } });
+}
+function limitReached(quota: Quota, locale: ReturnType<typeof requestLocale>) {
+  const retry = quota.resetAt ? Math.max(60, Math.ceil((quota.resetAt - Date.now()) / 1000)) : 3600;
+  return Response.json({ error: localizeMessage(LIMIT_REACHED, locale), quota }, { status: 429, headers: { "Cache-Control": "no-store", "Retry-After": String(retry) } });
+}
+
 export async function POST(request: Request) {
   const locale = requestLocale(request);
   const failure = (message: string, status: number) => jsonError(localizeMessage(message, locale), status);
@@ -25,6 +38,12 @@ export async function POST(request: Request) {
   const cacheKey = `${locale}:${id}`;
   const saved = !library ? cache.get(cacheKey) : null;
   if (saved && saved.expires > Date.now()) return Response.json({ recipe: saved.recipe, saved: false }, { headers: { "Cache-Control": "no-store" } });
+  // Only fresh generations count against the daily limit, so cached and stored recipes are checked first.
+  const subjects = await subjectsFor(request);
+  if (!library) {
+    const quota = await quotaFor(subjects);
+    if (quota.limit && quota.remaining <= 0) return limitReached(quota, locale);
+  }
   // Bound concurrent work per server instance; the provider also enforces its account quota.
   if (activeRequests >= 2) return failure("Przygotowujemy teraz kilka przepisów. Spróbuj ponownie za chwilę.", 429);
   activeRequests++;
@@ -35,10 +54,13 @@ export async function POST(request: Request) {
       if (stored) return Response.json({ recipe: stored, saved: true }, { headers: { "Cache-Control": "no-store" } });
       const voter = request.headers.get("x-voter-id") ?? "";
       if (!validVoter(voter)) return failure("Zezwól na zapis danych tej aplikacji w przeglądarce i spróbuj ponownie.", 400);
+      const quota = await quotaFor(subjects);
+      if (quota.limit && quota.remaining <= 0) return limitReached(quota, locale);
       lease = await library.acquire(id, voter);
     }
     const signal = AbortSignal.any([request.signal, AbortSignal.timeout(130_000)]);
     let recipe: Recipe = await generateRecipe(id, signal, locale);
+    await recordGeneration(subjects);
     let persisted = false;
     let warning: string | undefined;
     if (library) {
@@ -48,7 +70,7 @@ export async function POST(request: Request) {
       if (cache.size >= 50) cache.delete(cache.keys().next().value!);
       cache.set(cacheKey, { recipe, expires: Date.now() + 60 * 60_000 });
     }
-    return Response.json({ recipe, saved: persisted, warning: warning ? localizeMessage(warning, locale) : undefined }, { headers: { "Cache-Control": "no-store" } });
+    return Response.json({ recipe, saved: persisted, warning: warning ? localizeMessage(warning, locale) : undefined, quota: await quotaFor(subjects) }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     if (error instanceof GeminiError) return failure(error.message, error.status);
     if (error instanceof LibraryError) return failure(error.message, error.status);
