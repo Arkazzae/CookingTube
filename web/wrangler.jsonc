@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cooking-tube",
+  "main": "./build/sites-worker.ts",
+  // Matches the runtime pinned by this project's Cloudflare/Vite dependencies.
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true, "head_sampling_rate": 0.1 },
+  "d1_databases": [{
+    "binding": "DB", "database_name": "cooking-tube-catalog",
+    // Local placeholder. Generate an ignored config for deployment.
+    "database_id": "00000000-0000-4000-8000-000000000000",
+    "migrations_dir": "./migrations"
+  }],
+  "r2_buckets": [{ "binding": "RECIPES", "bucket_name": "cooking-tube-recipes" }]
+}

@@ -30,6 +30,7 @@ Thumbs.db
 credentials.json
 service-account*.json
 *-service-account.json
+wrangler.local.jsonc
 
 # local screenshots and other scratch output
 /artifacts/
