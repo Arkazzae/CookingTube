@@ -65,7 +65,10 @@ export async function quotaFor(subjects: string[], now = Date.now()): Promise<Qu
   const limit = dailyLimit();
   // limit 0 means unlimited; without any subject (no headers at all) there is nothing to count against.
   if (!limit || !subjects.length) return { limit, used: 0, remaining: limit, resetAt: null };
-  const usage = await store().usage(subjects, now - WINDOW);
+  let usage: Map<string, number[]>;
+  // A storage failure (for example a missing migration) must not take recipe generation down with it.
+  try { usage = await store().usage(subjects, now - WINDOW); }
+  catch (error) { console.warn("daily_limit_unavailable", error instanceof Error ? error.message : error); return { limit, used: 0, remaining: limit, resetAt: null }; }
   let used = 0, resetAt: number | null = null;
   for (const times of usage.values()) {
     if (times.length > used) used = times.length;
@@ -75,5 +78,7 @@ export async function quotaFor(subjects: string[], now = Date.now()): Promise<Qu
 }
 
 export async function recordGeneration(subjects: string[], now = Date.now()) {
-  if (dailyLimit() && subjects.length) await store().record(subjects, now);
+  if (!dailyLimit() || !subjects.length) return;
+  try { await store().record(subjects, now); }
+  catch (error) { console.warn("daily_limit_record_failed", error instanceof Error ? error.message : error); }
 }
