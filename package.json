@@ -9,7 +9,7 @@
   "scripts": {
     "build:vercel": "next build --webpack",
     "install:ci": "node scripts/install-ci.mjs",
-    "dev": "next dev --hostname 127.0.0.1 --port 5173",
+    "dev": "next dev --webpack --hostname 127.0.0.1 --port 5173",
     "dev:cloudflare": "node scripts/run-framework.mjs dev",
     "build": "next build --webpack",
     "build:cloudflare": "node scripts/run-framework.mjs build",
