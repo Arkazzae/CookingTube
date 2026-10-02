@@ -6,6 +6,7 @@ export type PopularCategory = "sniadania" | "obiady" | "zupy" | "wege" | "makaro
 export type PopularRecipe = {
   id: string; category: PopularCategory; dish: string; videoTitle: string; author: string; ingestedAt: string; recipe: Recipe;
   thumb?: "maxresdefault" | "hq720" | "sddefault" | "hqdefault";
+  translations?: { en?: Recipe };
 };
 
 export const popularRecipes = data as PopularRecipe[];

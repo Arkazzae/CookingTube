@@ -62,11 +62,13 @@ const never = () => () => {};
 /** False during server render and hydration, so local data never causes a mismatch. */
 export function useHydrated() { return useSyncExternalStore(never, () => true, () => false); }
 
-export function findRecipe(library: State, id: string): RecipeEntry | null {
+/** A saved recipe wins; a popular one is shown in the interface language when that version exists. */
+export function findRecipe(library: State, id: string, locale: "pl" | "en" = "pl"): RecipeEntry | null {
   const saved = library.recipes.find(item => item.id === id);
-  if (saved) return { ...saved, saved: true };
   const popular = findPopular(id);
-  return popular ? { id, recipe: popular.recipe, savedAt: 0, favorite: false, cookedAt: null, saved: false } : null;
+  const localized = popular && locale === "en" ? popular.translations?.en : undefined;
+  if (saved) return { ...saved, recipe: localized && saved.recipe.language !== "en" ? localized : saved.recipe, saved: true };
+  return popular ? { id, recipe: localized ?? popular.recipe, savedAt: 0, favorite: false, cookedAt: null, saved: false } : null;
 }
 
 export function saveRecipe(id: string, recipe: Recipe) {
