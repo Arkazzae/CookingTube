@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { LibraryScreen } from "@/components/screens/library";
+import { serverDictionary } from "@/lib/locale-server";
 
-export const metadata: Metadata = { title: "Twoje przepisy" };
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: (await serverDictionary()).meta.recipes };
+}
 export default function Page() {
   return <LibraryScreen />;
 }

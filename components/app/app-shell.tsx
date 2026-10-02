@@ -1,44 +1,48 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Heart, House, Plus, ShoppingBasket } from "lucide-react";
+import { BookOpen, ChefHat, Heart, House, Plus, ShoppingBasket, Timer } from "lucide-react";
 import { Toaster } from "sonner";
+import type { AppLocale } from "@/lib/locale";
 import { useHydrated, useLibrary } from "@/lib/local-library";
+import { useTimers } from "@/lib/kitchen-timers";
+import { PwaStatus } from "@/components/pwa-status";
 import { GenerationProvider, useGeneration } from "./generation";
 import { GenerationOverlay } from "./generation-overlay";
 import { LinkForm } from "./link-form";
 import { Sheet } from "./sheet";
 import { Wordmark } from "./brand";
+import { LanguageSwitch, LocaleProvider, useT } from "./locale";
+import { TimerProvider, useTimerCenter } from "./timers";
 
 const nav = [
-  { href: "/", label: "Start", icon: House },
-  { href: "/przepisy", label: "Przepisy", icon: BookOpen },
-  { href: "/ulubione", label: "Ulubione", icon: Heart },
-  { href: "/zakupy", label: "Zakupy", icon: ShoppingBasket },
+  { href: "/", key: "home", icon: House },
+  { href: "/przepisy", key: "recipes", icon: BookOpen },
+  { href: "/ulubione", key: "favorites", icon: Heart },
+  { href: "/zakupy", key: "shopping", icon: ShoppingBasket },
 ] as const;
 
-export function AppShell({ children }: { children: React.ReactNode }) {
-  return <GenerationProvider><Shell>{children}</Shell></GenerationProvider>;
+export function AppShell({ locale, children }: { locale: AppLocale; children: React.ReactNode }) {
+  return <LocaleProvider initial={locale}><GenerationProvider><TimerProvider><Shell>{children}</Shell></TimerProvider></GenerationProvider></LocaleProvider>;
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
+  const t = useT();
   const pathname = usePathname();
-  const immersive = pathname.endsWith("/gotuj");
+  // Cooking mode and the printable card take the whole screen.
+  const immersive = pathname.endsWith("/gotuj") || pathname.endsWith("/pdf");
   // Recipe pages add a floating "start cooking" bar above the tab bar on phones.
   const detail = pathname.startsWith("/przepis/");
   const { sheetOpen, closeSheet, draft } = useGeneration();
   return <div className={`shell ${immersive ? "shell--immersive" : ""} ${detail ? "shell--detail" : ""}`}>
-    <a href="#tresc" className="skip-link">Przejdź do treści</a>
+    <a href="#tresc" className="skip-link">{t.nav.skip}</a>
     {!immersive && <Sidebar pathname={pathname} />}
     <main id="tresc" className="shell-main">{children}</main>
     {!immersive && <BottomNav pathname={pathname} />}
     <GenerationOverlay />
-    <Sheet open={sheetOpen} onClose={closeSheet} title="Nowy przepis z filmu" description="Wklej link do publicznego filmu z YouTube — także Shorts.">
+    <Sheet open={sheetOpen} onClose={closeSheet} title={t.shell.sheetTitle} description={t.shell.sheetDescription}>
       <LinkForm variant="sheet" initial={draft} autoFocus />
-      <ul className="sheet-tips">
-        <li>Najlepiej działają filmy z jednym przepisem, w których widać składniki i przygotowanie.</li>
-        <li>Przepis zapisze się w Twojej bibliotece na tym urządzeniu.</li>
-      </ul>
+      <ul className="sheet-tips">{t.shell.tips.map(tip => <li key={tip}>{tip}</li>)}</ul>
     </Sheet>
     <Toaster theme="dark" position="top-center" offset={16} mobileOffset={12} toastOptions={{ className: "toast" }}
       style={{ "--normal-bg": "#1d2820", "--normal-border": "rgba(214,255,220,.12)", "--normal-text": "#eef3ea", "--border-radius": "16px" } as React.CSSProperties} />
@@ -55,34 +59,47 @@ function useCounts() {
 }
 
 function Sidebar({ pathname }: { pathname: string }) {
+  const t = useT();
   const { openSheet } = useGeneration();
+  const { open: openTimer } = useTimerCenter();
+  const timers = useTimers();
+  const hydrated = useHydrated();
   const counts = useCounts();
-  return <aside className="sidebar" aria-label="Nawigacja główna">
-    <Link href="/" className="sidebar-brand" aria-label="CookingTube — start"><Wordmark /></Link>
-    <button className="btn btn-primary sidebar-new" onClick={() => openSheet()}><Plus size={19} /> Nowy przepis</button>
+  return <aside className="sidebar" aria-label={t.nav.main}>
+    <Link href="/" className="sidebar-brand" aria-label={t.nav.homeAria}><Wordmark /></Link>
+    <button className="btn btn-primary sidebar-new" onClick={() => openSheet()}><Plus size={19} /> {t.nav.newRecipe}</button>
     <nav><ul>
-      {nav.map(({ href, label, icon: Icon }) => <li key={href}>
+      {nav.map(({ href, key, icon: Icon }) => <li key={href}>
         <Link href={href} className={`sidebar-link ${isActive(pathname, href) ? "is-active" : ""}`} aria-current={isActive(pathname, href) ? "page" : undefined}>
-          <Icon size={20} strokeWidth={1.9} /><span>{label}</span>{!!counts[href] && <span className="count">{counts[href]}</span>}
+          <Icon size={20} strokeWidth={1.9} /><span>{t.nav[key]}</span>{!!counts[href] && <span className="count">{counts[href]}</span>}
         </Link>
       </li>)}
+      <li><button className="sidebar-link" onClick={openTimer}><Timer size={20} strokeWidth={1.9} /><span>{t.nav.timer}</span>{hydrated && timers.length > 0 && <span className="count count--live">{timers.length}</span>}</button></li>
     </ul></nav>
-    <div className="sidebar-note">
-      <img src="/images/insp-soup.webp" alt="" />
-      <p><strong>Wszystko zostaje u Ciebie.</strong> Przepisy i lista zakupów zapisują się tylko w tej przeglądarce.</p>
+    <div className="sidebar-foot">
+      <LanguageSwitch />
+      <div className="sidebar-note">
+        <img src="/images/insp-soup.webp" alt="" />
+        <p><strong>{t.shell.noteTitle}</strong> {t.shell.noteText}</p>
+        <div className="sidebar-pwa"><PwaStatus /></div>
+      </div>
     </div>
   </aside>;
 }
 
 function BottomNav({ pathname }: { pathname: string }) {
+  const t = useT();
   const { openSheet } = useGeneration();
   const counts = useCounts();
-  const item = ({ href, label, icon: Icon }: typeof nav[number]) => <Link key={href} href={href} className={`tab ${isActive(pathname, href) ? "is-active" : ""}`} aria-current={isActive(pathname, href) ? "page" : undefined}>
-    <span className="tab-icon"><Icon size={22} strokeWidth={isActive(pathname, href) ? 2.3 : 1.9} />{href === "/zakupy" && !!counts[href] && <span className="dot">{counts[href]}</span>}</span>{label}
+  const item = ({ href, key, icon: Icon }: typeof nav[number]) => <Link key={href} href={href} className={`tab ${isActive(pathname, href) ? "is-active" : ""}`} aria-current={isActive(pathname, href) ? "page" : undefined}>
+    <span className="tab-icon"><Icon size={22} strokeWidth={isActive(pathname, href) ? 2.3 : 1.9} />{href === "/zakupy" && !!counts[href] && <span className="dot">{counts[href]}</span>}</span>{t.nav[key]}
   </Link>;
-  return <nav className="bottom-nav" aria-label="Nawigacja główna">
+  // On a recipe the centre button becomes the way into cooking mode, so the page needs no second bar.
+  const recipe = pathname.match(/^\/przepis\/([\w-]+)$/)?.[1];
+  return <nav className="bottom-nav" aria-label={t.nav.main}>
     {item(nav[0])}{item(nav[1])}
-    <button className="fab" onClick={() => openSheet()} aria-label="Nowy przepis z filmu"><Plus size={26} strokeWidth={2.4} /></button>
+    {recipe ? <Link href={`/przepis/${recipe}/gotuj`} className="fab fab--cook" aria-label={t.nav.cookAria}><ChefHat size={22} strokeWidth={2.2} /><span>{t.nav.cook}</span></Link>
+      : <button className="fab" onClick={() => openSheet()} aria-label={t.nav.newFromVideo}><Plus size={26} strokeWidth={2.4} /></button>}
     {item(nav[2])}{item(nav[3])}
   </nav>;
 }

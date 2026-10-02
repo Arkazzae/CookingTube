@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { EmptyState } from "@/components/app/empty-state";
+import { serverDictionary } from "@/lib/locale-server";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const t = await serverDictionary();
   return <div className="page page-narrow">
-    <EmptyState image="empty-favorites" title="Tej strony nie ma w menu" action={<Link className="btn btn-primary" href="/">Wróć na start</Link>}>
-      Adres mógł się zmienić. Zacznij od strony głównej.
+    <EmptyState image="empty-favorites" title={t.notFound.title} action={<Link className="btn btn-primary" href="/">{t.notFound.home}</Link>}>
+      {t.notFound.text}
     </EmptyState>
   </div>;
 }

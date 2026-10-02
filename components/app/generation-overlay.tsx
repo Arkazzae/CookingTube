@@ -4,16 +4,13 @@ import { Link2, RotateCcw, X } from "lucide-react";
 import { formatClock } from "@/lib/step-timers";
 import { useGeneration } from "./generation";
 import { VideoThumb } from "./media";
+import { useT } from "./locale";
 
-const tips = [
-  "Odhacz składniki, które masz w kuchni — resztę jednym ruchem dodasz do listy zakupów.",
-  "W trybie gotowania ekran nie zgaśnie, a czasy z kroków uruchomisz jako minutnik.",
-  "Ilości, których autor nie podał w filmie, zostawiamy puste — nic nie zgadujemy.",
-  "Ulubione przepisy oznacz sercem, a znajdziesz je szybciej w zakładce Ulubione.",
-];
 
 export function GenerationOverlay() {
   const { phase, videoId, error, startedAt, cancel, dismiss, start, url, openSheet } = useGeneration();
+  const t = useT();
+  const tips = t.overlay.tips;
   const [now, setNow] = useState(() => Date.now());
   const panelRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -38,23 +35,23 @@ export function GenerationOverlay() {
           <span className="scan-time">{formatClock(elapsed)}</span>
         </div>
         <div role="status" aria-live="polite">
-          <span className="eyebrow">Oglądamy film za Ciebie</span>
-          <h2 id="overlay-title">Przepis się robi</h2>
-          <p className="overlay-copy">Sztuczna inteligencja ogląda i słucha filmu, a potem spisuje składniki i kroki. {elapsed > 50 ? "Dłuższe filmy potrzebują więcej czasu — zostaw tę kartę otwartą." : "To zwykle trwa do dwóch minut."}</p>
+          <span className="eyebrow">{t.overlay.eyebrow}</span>
+          <h2 id="overlay-title">{t.overlay.title}</h2>
+          <p className="overlay-copy">{t.overlay.copy} {elapsed > 50 ? t.overlay.long : t.overlay.short}</p>
         </div>
         <div className="indeterminate" aria-hidden="true"><span /></div>
-        <p className="overlay-tip" key={tip}><b>Wskazówka</b>{tip}</p>
-        <button className="btn btn-ghost" onClick={cancel}><X size={18} /> Anuluj</button>
+        <p className="overlay-tip" key={tip}><b>{t.overlay.tip}</b>{tip}</p>
+        <button className="btn btn-ghost" onClick={cancel}><X size={18} /> {t.overlay.cancel}</button>
       </> : <>
         <div className="error-photo" aria-hidden="true"><img src="/images/error.webp" alt="" /></div>
-        <span className="eyebrow eyebrow--warm">Coś się przypaliło</span>
-        <h2 id="overlay-title">Nie udało się przygotować przepisu</h2>
+        <span className="eyebrow eyebrow--warm">{t.overlay.burnt}</span>
+        <h2 id="overlay-title">{t.overlay.failTitle}</h2>
         <p className="overlay-copy" role="alert">{error}</p>
         <div className="overlay-actions">
-          <button className="btn btn-primary" onClick={() => void start(url)}><RotateCcw size={18} /> Spróbuj ponownie</button>
-          <button className="btn btn-secondary" onClick={() => { dismiss(); openSheet(url); }}><Link2 size={18} /> Zmień link</button>
+          <button className="btn btn-primary" onClick={() => void start(url)}><RotateCcw size={18} /> {t.overlay.retry}</button>
+          <button className="btn btn-secondary" onClick={() => { dismiss(); openSheet(url); }}><Link2 size={18} /> {t.overlay.changeLink}</button>
         </div>
-        <button className="btn btn-ghost" onClick={dismiss}>Zamknij</button>
+        <button className="btn btn-ghost" onClick={dismiss}>{t.overlay.close}</button>
       </>}
     </div>
   </div>;

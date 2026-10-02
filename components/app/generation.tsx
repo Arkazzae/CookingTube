@@ -4,6 +4,9 @@ import { useRouter } from "next/navigation";
 import { recipeResultSchema } from "@/lib/recipe";
 import { parseVideoId } from "@/lib/youtube-url";
 import { saveRecipe } from "@/lib/local-library";
+import { voterId } from "@/lib/browser-identity";
+import { toast } from "sonner";
+import { useLocale } from "./locale";
 
 type Phase = "idle" | "loading" | "error";
 type Result = { error: string } | { title: string; ingredients: number; steps: number };
@@ -21,6 +24,7 @@ export function useGeneration() {
 
 export function GenerationProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const { locale, t } = useLocale();
   const [phase, setPhase] = useState<Phase>("idle");
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
@@ -31,19 +35,25 @@ export function GenerationProvider({ children }: { children: React.ReactNode }) 
   useEffect(() => () => { requestRef.current?.abort(); }, []);
 
   const start = useCallback(async (value: string): Promise<Result> => {
-    if (requestRef.current) return { error: "Przepis już się przygotowuje." };
+    if (requestRef.current) return { error: t.form.busy };
     const id = parseVideoId(value);
-    if (!id) return { error: "Wklej pełny link do filmu z YouTube." };
+    if (!id) return { error: t.form.invalid };
     const controller = new AbortController(); requestRef.current = controller;
     setUrl(value); setError(""); setSheetOpen(false); setStartedAt(Date.now()); setPhase("loading");
-    const timeout = setTimeout(() => controller.abort(new Error("Przygotowanie trwało zbyt długo. Spróbuj ponownie.")), 145000);
+    const timeout = setTimeout(() => controller.abort(new Error(t.generation.timeout)), 145000);
     try {
-      const response = await fetch("/api/recipe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: value }), signal: controller.signal });
-      const data = await response.json().catch(() => null) as { recipe?: unknown; error?: string } | null;
-      if (!data || typeof data !== "object") throw new Error("Nie udało się odczytać odpowiedzi. Spróbuj ponownie za chwilę.");
-      if (!response.ok) throw new Error(typeof data.error === "string" ? data.error : "Nie udało się przygotować przepisu. Spróbuj ponownie.");
+      let voter: string | undefined;
+      try { voter = voterId(); } catch { /* Storage blocked: the server applies its own limits. */ }
+      const response = await fetch("/api/recipe", {
+        method: "POST", signal: controller.signal, body: JSON.stringify({ url: value }),
+        headers: { "Content-Type": "application/json", "X-App-Locale": locale, ...(voter ? { "X-Voter-Id": voter } : {}) },
+      });
+      const data = await response.json().catch(() => null) as { recipe?: unknown; error?: string; warning?: string } | null;
+      if (!data || typeof data !== "object") throw new Error(t.generation.unreadable);
+      if (!response.ok) throw new Error(typeof data.error === "string" ? data.error : t.generation.failed);
       const parsed = recipeResultSchema.safeParse(data.recipe);
-      if (!parsed.success) throw new Error("Nie udało się odczytać przepisu. Spróbuj ponownie.");
+      if (!parsed.success) throw new Error(t.generation.badRecipe);
+      if (typeof data.warning === "string") toast(data.warning);
       if (controller.signal.aborted) throw new DOMException("Anulowano", "AbortError");
       saveRecipe(id, parsed.data);
       router.push(`/przepis/${id}`);
@@ -52,14 +62,14 @@ export function GenerationProvider({ children }: { children: React.ReactNode }) 
     } catch (err) {
       if (controller.signal.aborted && !(controller.signal.reason instanceof Error && controller.signal.reason.name !== "AbortError")) {
         setPhase("idle");
-        return { error: "Przygotowywanie anulowane. Możesz spróbować ponownie." };
+        return { error: t.generation.cancelled };
       }
       const message = controller.signal.aborted && controller.signal.reason instanceof Error ? controller.signal.reason.message
-        : err instanceof Error ? err.message : "Coś poszło nie tak. Spróbuj ponownie.";
+        : err instanceof Error ? err.message : t.generation.generic;
       setError(message); setPhase("error");
       return { error: message };
     } finally { clearTimeout(timeout); if (requestRef.current === controller) requestRef.current = null; }
-  }, [router]);
+  }, [router, locale, t]);
 
   // Optional WebMCP capability: lets a browser agent use the same action as the visible form.
   useEffect(() => {
