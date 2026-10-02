@@ -21,6 +21,8 @@ export function PrintScreen({ id }: { id: string }) {
   useEffect(() => {
     if (!item || printed.current) return;
     printed.current = true;
+    // ?preview shows the card without opening the print dialog (handy for screenshots and previews).
+    if (new URLSearchParams(location.search).has("preview")) return;
     // Wait for the cover and fonts so the PDF never captures a half-loaded page.
     const cover = document.querySelector<HTMLImageElement>(".print-cover img");
     const ready = Promise.all([document.fonts.ready, cover?.decode().catch(() => {})]);
