@@ -17,7 +17,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Next.js starts on http://127.0.0.1:5173. Generation works on Next.js/Vercel;
+Next.js starts on http://127.0.0.1:5173. Generation works on the local Next.js server;
 shared storage and voting require Cloudflare bindings. Missing bindings return an
 explicit unavailable response, never a pretend successful save or vote.
 
@@ -42,8 +42,7 @@ plugin pinned in this project; upgrade them together before advancing the date.
 
 ## Later deployment to Cloudflare
 
-No production resources are created by installing or building the app. Keep the
-existing Vercel deployment until the Cloudflare version has been verified.
+No production resources are created by installing or building the app.
 
 1. Create an R2 bucket named `cooking-tube-recipes` and a D1 database named
    `cooking-tube-catalog` (or adjust the non-secret resource names in the template).
@@ -54,14 +53,13 @@ existing Vercel deployment until the Cloudflare version has been verified.
 5. Run `npm run build:cloudflare`, then
    `wrangler deploy --config dist/server/wrangler.json`.
 6. Verify generation, reload/share a stored recipe, vote from two browsers,
-   install the PWA and open a saved recipe offline before retiring Vercel.
+   install the PWA and open a saved recipe offline before opening production traffic.
 
 Use a dedicated bucket with public access disabled. The Worker serves recipe
 JSON through the validated API; browsers never receive R2 or Gemini credentials.
 Do not commit actual project/database/account IDs, `.env*`, `.dev.vars`, private
-keys or `wrangler.local.jsonc`. The Vercel upload also excludes local metadata.
-The legacy Sites plugin still has an identifier-free `.openai/hosting.example.json`
-fallback; application bindings now come from the Wrangler configuration.
+keys or `wrangler.local.jsonc`. Application bindings come from the Wrangler
+configuration.
 
 ## Storage and voting
 
@@ -147,7 +145,7 @@ The browser can evict local caches; offline copies are not a cloud backup.
 ```sh
 npm test
 npx tsc --noEmit
-npm run build:vercel
+npm run build
 npm run build:cloudflare
 npm run cloudflare:types
 ```

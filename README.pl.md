@@ -86,7 +86,7 @@ npm run dev                  # http://127.0.0.1:5173
 
 ## Więcej
 
-- **[Przewodnik techniczny](docs/TECHNICAL.md)** (EN): wdrożenie na Vercel albo Cloudflare (Workers, D1, R2), wspólna biblioteka, głosowanie i limity.
+- **[Przewodnik techniczny](docs/TECHNICAL.md)** (EN): wdrożenie na Cloudflare (Workers, D1, R2), wspólna biblioteka, głosowanie i limity.
 - **[Architektura](docs/ARCHITECTURE.md)** (EN): jak zbudowane są interfejs, dane lokalne, „oglądaj i gotuj”, minutniki i udostępnianie.
 - **[Podziękowania](CREDITS.md)** (EN): twórcy popularnych przepisów, fonty, ikony i AI.
 

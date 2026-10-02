@@ -7,7 +7,6 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "build:vercel": "next build --webpack",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "next dev --webpack --hostname 127.0.0.1 --port 5173",
     "dev:cloudflare": "node scripts/run-framework.mjs dev",

@@ -1,10 +1,7 @@
 // Vendored from @openai/sites-vite-plugin 0.2.0 (openai/sites#9).
 // See sites-vite-plugin.LICENSE for the upstream MIT license.
-import { access, cp, mkdir, rm } from "node:fs/promises";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { resolve } from "node:path";
 import type { Plugin } from "vite";
-import { hostingConfigPath } from "../scripts/hosting-config.mjs";
 
 const localUserId = "local_seedy";
 const localEmail = "seedy@sites.test";
@@ -18,28 +15,9 @@ const authPaths = new Set([
   "/callback",
 ]);
 
-async function exists(path: string): Promise<boolean> {
-  try {
-    await access(path);
-    return true;
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return false;
-    }
-    throw error;
-  }
-}
-
 export function sites({ mockAuth = true } = {}): Plugin {
-  let root = process.cwd();
-  let command: "build" | "serve" = "build";
-
   return {
     name: "sites",
-    configResolved(config) {
-      root = config.root;
-      command = config.command;
-    },
     configureServer(server) {
       if (!mockAuth) return;
       const secure = Boolean(server.config.server.https);
@@ -171,23 +149,7 @@ export function sites({ mockAuth = true } = {}): Plugin {
         response.end();
       });
     },
-    async closeBundle() {
-      if (command !== "build") return;
 
-      const outputDirectory = resolve(root, "dist", ".openai");
-      const hostingConfig = hostingConfigPath(root);
-      const drizzleSource = resolve(root, "drizzle");
-
-      await rm(outputDirectory, { recursive: true, force: true });
-      await mkdir(outputDirectory, { recursive: true });
-
-      await cp(hostingConfig, resolve(outputDirectory, "hosting.json"));
-      if (await exists(drizzleSource)) {
-        await cp(drizzleSource, resolve(outputDirectory, "drizzle"), {
-          recursive: true,
-        });
-      }
-    },
   };
 }
 

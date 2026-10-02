@@ -44,8 +44,7 @@ yarn-error.log*
 .env*
 !.env.example
 .dev.vars*
-**/.openai/*
-!**/.openai/hosting.example.json
+.openai/
 .vercel/
 .wrangler/
 .sites-runtime/

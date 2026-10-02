@@ -86,7 +86,7 @@ npm run dev                  # http://127.0.0.1:5173
 
 ## Learn more
 
-- **[Technical guide](docs/TECHNICAL.md)**: deployment to Vercel or Cloudflare (Workers, D1, R2), the shared library, voting and limits.
+- **[Technical guide](docs/TECHNICAL.md)**: deployment to Cloudflare (Workers, D1, R2), the shared library, voting and limits.
 - **[Architecture](docs/ARCHITECTURE.md)**: how the interface, local data, watch & cook, timers and sharing are built.
 - **[Credits](CREDITS.md)**: the creators behind the popular recipes, fonts, icons and AI.
 
