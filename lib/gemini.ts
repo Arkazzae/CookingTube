@@ -1,6 +1,7 @@
 import { formatVideoRecipe, videoRecipeInstructions, videoRecipeSchema } from "./recipe-format.ts";
 import { limitedText } from "./video.ts";
 import { assessVideo, assessmentInstructions, assessmentSchema } from "./video-assessment.ts";
+import { youtubeLength } from "./youtube-length.ts";
 
 import type { AppLocale } from "./locale.ts";
 
@@ -31,10 +32,12 @@ export async function generateRecipe(id: string, signal?: AbortSignal, locale: A
   if (!/^[\w-]{11}$/.test(id)) throw new GeminiError("Wklej prawidłowy link do filmu z YouTube.", 400);
   const timeout = AbortSignal.timeout(120_000);
   const combined = signal ? AbortSignal.any([signal, timeout]) : timeout;
-  const assessment = assessVideo(await videoInteraction(id, assessmentInstructions, assessmentSchema, 1800, combined));
+  // The real length comes from YouTube in parallel; it checks the model's timeline.
+  const [verdict, realLength] = await Promise.all([videoInteraction(id, assessmentInstructions, assessmentSchema, 1800, combined), youtubeLength(id, combined)]);
+  const assessment = assessVideo(verdict, realLength);
   const instructions = locale === "pl" ? videoRecipeInstructions : videoRecipeInstructions.replace(/PO POLSKU/gi, "po angielsku").replace(/polskie nazwy/g, "angielskie nazwy") + "\nAll user-facing recipe content MUST be in English: title, description, ingredients, amounts, steps and notes. Keep evidence in the original language.";
   const output = await videoInteraction(id, instructions, videoRecipeSchema, 6000, combined);
-  return { ...formatVideoRecipe(output, id, assessment.durationSeconds), language: locale };
+  return { ...formatVideoRecipe(output, id, assessment.durationSeconds, assessment.timelineTrusted), language: locale };
 }
 
 async function videoInteraction(id: string, instructions: string, schema: object, maxTokens: number, signal: AbortSignal) {

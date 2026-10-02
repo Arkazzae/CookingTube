@@ -70,15 +70,17 @@ Time oznacza CAŁKOWITY czas przygotowania podany w filmie, nie długość filmu
 Opis krótki i rzeczowy. Do 12 kroków z krótkim tytułem i 1–2 konkretnymi zdaniami. Pole at to czas początku widocznej czynności w SEKUNDACH OD POCZĄTKU FILMU (np. 2:30 = 150, nie 2.30). atEvidence to konkretna krótka obserwacja z tego momentu, nie ogólnik. Czas musi być wewnątrz filmu. Zachowaj chronologię. Gdy nie potrafisz wskazać momentu pewnie, at=null i atEvidence="". Nie zgaduj. Do 3 uwag notes, tylko o brakujących informacjach potrzebnych do gotowania. Nie powtarzaj uwagi dla każdego składnika.
 Sprawdź przed odpowiedzią: naturalne polskie nazwy, wszystkie składniki z kroków obecne na liście, brak dopisanych ilości i brak czynności nieobecnych w filmie.`;
 
-export function formatVideoRecipe(output: string, id: string, durationSeconds?: number): Recipe {
+export function formatVideoRecipe(output: string, id: string, durationSeconds?: number, timelineTrusted = true): Recipe {
   if (!/^[\w-]{11}$/.test(id)) throw new Error("Invalid video ID");
   const data = parseRecipe(output);
   // These quotes are model observations, not independently verified captions.
   // Timestamps are model observations, not independently verified annotations.
   const observed = (value: string | null, evidence: string) => value && evidence.trim() ? value : null;
   let previous = -1;
+  // A single moment past the end of the video means the whole timeline is invented, so none of it is shown.
+  const usable = timelineTrusted && durationSeconds !== undefined && data.steps.every(step => step.at === null || step.at < durationSeconds);
   const steps = data.steps.map(({ title, description, at, atEvidence }) => {
-    const accepted = durationSeconds !== undefined && at !== null && at < durationSeconds && at >= previous && atEvidence.trim().length >= 8;
+    const accepted = usable && at !== null && at >= previous && atEvidence.trim().length >= 8;
     if (accepted) previous = at!;
     return { title, description, at: accepted ? Math.floor(at!) : null };
   });

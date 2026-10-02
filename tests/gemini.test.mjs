@@ -4,6 +4,7 @@ import { generateRecipe, readGeminiOutput } from '../lib/gemini.ts';
 import { formatVideoRecipe } from '../lib/recipe-format.ts';
 import { recipeResultSchema } from '../lib/recipe.ts';
 import { POST } from '../app/api/recipe/route.ts';
+process.env.YOUTUBE_LENGTH_LOOKUP = 'off'; // These tests mock the Gemini calls only.
 
 process.env.GEMINI_API_KEY = 'test-only-key';
 const output = { isRecipe: true, title: 'Makaron', description: 'Makaron z cytryną.',
@@ -141,15 +142,20 @@ test('rejects non-cooking, uncertain and incomplete videos before recipe generat
   }
 });
 
-test('keeps only chronological, evidenced timestamps inside the assessed video duration', () => {
-  const recipe = formatVideoRecipe(JSON.stringify({ ...output, steps: [
+test('keeps only chronological, evidenced timestamps inside the video duration', () => {
+  const steps = [
     { title: 'Start', description: 'Rozpocznij.', at: 0, atEvidence: 'Autor pokazuje przygotowanie składników.' },
     { title: 'Gotuj', description: 'Gotuj.', at: 42.9, atEvidence: 'Autor wkłada makaron do gotującej wody.' },
     { title: 'Błędny', description: 'Cofnięty znacznik.', at: 12, atEvidence: 'Opis widocznej czynności w kuchni.' },
-    { title: 'Po filmie', description: 'Poza zakresem.', at: 180, atEvidence: 'Opis widocznej czynności w kuchni.' },
     { title: 'Bez dowodu', description: 'Brak obserwacji.', at: 70, atEvidence: '' },
-  ] }), 'SwDJi_PB-wY', 180);
-  assert.deepEqual(recipe.steps.map(step => step.at), [0, 42, null, null, null]);
+  ];
+  const recipe = formatVideoRecipe(JSON.stringify({ ...output, steps }), 'SwDJi_PB-wY', 180);
+  assert.deepEqual(recipe.steps.map(step => step.at), [0, 42, null, null]);
+  // One moment past the end shows the timeline is invented, so every timestamp is dropped.
+  const past = formatVideoRecipe(JSON.stringify({ ...output, steps: [...steps, { title: 'Po filmie', description: 'Poza zakresem.', at: 180, atEvidence: 'Opis widocznej czynności w kuchni.' }] }), 'SwDJi_PB-wY', 180);
+  assert.ok(past.steps.every(step => step.at === null));
+  const untrusted = formatVideoRecipe(JSON.stringify({ ...output, steps }), 'SwDJi_PB-wY', 180, false);
+  assert.ok(untrusted.steps.every(step => step.at === null));
 });
 
 test('English locale instructs generation in English and is isolated from the Polish cache', async t => {
@@ -170,11 +176,13 @@ test('English locale instructs generation in English and is isolated from the Po
   assert.equal(calls, 2);
 });
 
-test('accepts a cooking video whose length estimate is shorter than its own observations', async () => {
+test('keeps a cooking video with an invented timeline but distrusts its timestamps', async () => {
   const { assessVideo } = await import('../lib/video-assessment.ts');
-  const verdict = assessVideo(JSON.stringify({ ...accepted, durationSeconds: 196, observations: [
-    { at: 100, evidence: 'Wbijanie jajek do miski i miksowanie z cukrem.' }, { at: 244, evidence: 'Wlewanie ciasta do formy keksowej.' },
-  ] }));
-  assert.equal(verdict.durationSeconds, 245);
+  // The real case: a 196 s cake video with observations at 207 s and 244 s.
+  const observations = [{ at: 100, evidence: 'Wbijanie jajek do miski i miksowanie z cukrem.' }, { at: 244, evidence: 'Wlewanie ciasta do formy keksowej.' }];
+  assert.deepEqual(assessVideo(JSON.stringify({ ...accepted, durationSeconds: 196, observations }), 196), { durationSeconds: 196, timelineTrusted: false });
+  // The real length wins over the model's estimate, and a large mismatch also distrusts the timeline.
+  assert.deepEqual(assessVideo(JSON.stringify({ ...accepted, durationSeconds: 600 }), 180), { durationSeconds: 180, timelineTrusted: false });
+  assert.deepEqual(assessVideo(JSON.stringify({ ...accepted, durationSeconds: 185 }), 180), { durationSeconds: 180, timelineTrusted: true });
   assert.throws(() => assessVideo(JSON.stringify({ ...accepted, observations: [{ at: 50, evidence: 'Mieszanie ciasta w misce.' }, { at: 50, evidence: 'Mieszanie ciasta w misce.' }] })));
 });

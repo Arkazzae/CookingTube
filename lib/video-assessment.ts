@@ -24,7 +24,12 @@ export const assessmentInstructions = `Oceń film, NIE twórz jeszcze przepisu. 
 Zaakceptuj tylko materiał pokazujący przygotowanie jednej jadalnej potrawy: rozpoznawalne składniki ORAZ konkretne czynności kuchenne. Recenzja restauracji, mukbang, samo jedzenie, zakupy, reklama, kompilacja wielu dań, zwiastun, gra i film niezwiązany z kuchnią nie wystarczają. Nie wnioskuj wyłącznie z tytułu. Odrzuć materiały promujące spożywanie substancji toksycznych lub niejadalnych.
 category=cooking wyłącznie gdy widzisz kompletny proces. W pozostałych przypadkach non_cooking, incomplete, unavailable lub unsafe. Przy braku dostępu użyj unavailable. Podaj pewność 0–1, rzeczywistą długość filmu w sekundach i 2–3 krótkie obserwacje czynności przygotowania z czasem w SEKUNDACH OD POCZĄTKU FILMU. Nie używaj zapisu MM.SS. Nie zmyślaj dowodów. Niepewny wynik oznacza odrzucenie.`;
 
-export function assessVideo(output: string): { durationSeconds: number } {
+/**
+ * Accepts a cooking video and decides how far its timeline can be trusted. realLength is the video's actual
+ * length from YouTube when known. Moments past the end, or a length far from the real one, mean the model's
+ * timeline is invented: the recipe is kept, but none of its timestamps are.
+ */
+export function assessVideo(output: string, realLength: number | null = null): { durationSeconds: number; timelineTrusted: boolean } {
   const parsed = assessment.safeParse(JSON.parse(output));
   if (!parsed.success) throw new Error("Nie udało się ułożyć pewnej oceny filmu. Wybierz wyraźny film z jednym przepisem.");
   const value = parsed.data;
@@ -32,9 +37,9 @@ export function assessVideo(output: string): { durationSeconds: number } {
       value.observations.length < 2 || new Set(value.observations.map(item => item.at)).size < 2) {
     throw new Error("Nie znaleźliśmy w tym filmie przygotowania jednej potrawy. Wybierz film pokazujący składniki i kolejne czynności gotowania.");
   }
-  // The model's length estimate is sometimes shorter than the moments it cites (196 s with observations at
-  // 207 s and 244 s for a real cake recipe). Trust the observed timeline instead of rejecting a cooking video.
-  const durationSeconds = Math.max(value.durationSeconds, ...value.observations.map(item => item.at + 1));
+  const durationSeconds = realLength ?? value.durationSeconds;
   if (durationSeconds > 3600) throw new Error("Ten film jest za długi. Wybierz film z jednym przepisem, krótszy niż godzinę.");
-  return { durationSeconds };
+  const lengthMatches = realLength === null || Math.abs(value.durationSeconds - realLength) <= Math.max(20, realLength * 0.1);
+  const timelineTrusted = lengthMatches && value.observations.every(item => item.at < durationSeconds);
+  return { durationSeconds, timelineTrusted };
 }
