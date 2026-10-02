@@ -109,7 +109,7 @@ The backend and frontend modules have distinct files:
 - `lib/library.server.ts`: request-scoped D1/R2 access (never import into client code).
 - `lib/local-library.ts`: the browser's saved recipes, shopping and progress.
 - `lib/browser-identity.ts`: persistent anonymous UUID used in `X-Voter-Id`.
-- `components/recipe-film.tsx`: embedded YouTube player and clickable timed steps.
+- `components/app/watch-along.tsx`: embedded YouTube player and clickable timed steps.
 - `components/recipe-votes.tsx`: votes for a stored recipe; pass its `id` and `language`.
 - `components/shared-recipes.tsx`: public catalogue; its `onOpen(id, recipe)` callback
   lets the interface save locally and navigate to the recipe.
@@ -126,7 +126,7 @@ and the browser ID header.
 
 Integration of these components and translation of the existing screens are
 deferred while another agent finishes the interface. Mount `PwaStatus` in the
-application shell, `RecipeFilm` and `RecipeVotes` on a real recipe, and
+application shell, `WatchAlong` and `RecipeVotes` on a real recipe, and
 `SharedRecipes` on the library screen. The service worker only registers after
 `PwaStatus` is mounted in a production build. The matching manifest/icons belong
 to the interface work. Existing local recipe storage should retain language
