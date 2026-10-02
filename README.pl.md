@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/showreel.webp" alt="CookingTube w 15 sekund: wklejony link z YouTube, AI ogląda film i rozpoznaje składniki, składniki zostają odhaczone, potem kroki, minutnik odlicza czas, przepisy trafiają do biblioteki, a „Z filmu na talerz” zamienia się we „From video to plate”" width="100%">
+  <a href="https://cooking-tube.maciej-36d.workers.dev"><b>🌐 Wypróbuj na żywo → cooking-tube.maciej-36d.workers.dev</b></a>
 </p>
 
 <p align="center">
@@ -41,6 +41,7 @@
 - **⭐ Popularne przepisy od pierwszego dnia.** Polskie klasyki i ulubione filmy, przygotowane tym samym procesem AI i podpisane nazwiskami ich twórców.
 - **🌍 Polski i angielski.** Jedno dotknięcie zmienia język interfejsu, a nowe przepisy powstają w języku, którego używasz.
 - **🔒 Twoje, na Twoim urządzeniu.** Przepisy, ulubione, postępy i lista zakupów zostają w przeglądarce. Bez zakładania konta.
+- **⚖️ Uczciwie dla wszystkich.** Każdy może przygotować 5 nowych przepisów dziennie; zapisane, wspólne i popularne przepisy otwierasz bez limitu.
 - **🎨 Zaprojektowane z dbałością.** Ciemna, kuchenna stylistyka z 33 okładkami potraw, 149 ikonami i zdjęciami jedzenia wygenerowanymi dla tego projektu.
 
 ## Zajrzyj do środka
@@ -82,10 +83,13 @@ npm run dev                  # http://127.0.0.1:5173
 | `npm run dev` | Serwer deweloperski na porcie 5173 |
 | `npm test` | Testy (proces AI, ikony, minutniki, okładki) |
 | `npm run build` | Build produkcyjny |
+| `npm run build:cloudflare` | Buduje Workera dla Cloudflare |
+| `npx wrangler deploy --config dist/server/wrangler.json` | Wdraża na Cloudflare Workers |
 | `node --experimental-strip-types scripts/ingest-popular.mjs` | Przygotowuje popularne przepisy z listy `data/popular-videos.json` |
 
 ## Więcej
 
+- **[Aplikacja na żywo](https://cooking-tube.maciej-36d.workers.dev)**: działa na Cloudflare Workers z D1 i R2.
 - **[Przewodnik techniczny](docs/TECHNICAL.md)** (EN): wdrożenie na Cloudflare (Workers, D1, R2), wspólna biblioteka, głosowanie i limity.
 - **[Architektura](docs/ARCHITECTURE.md)** (EN): jak zbudowane są interfejs, dane lokalne, „oglądaj i gotuj”, minutniki i udostępnianie.
 - **[Podziękowania](CREDITS.md)** (EN): twórcy popularnych przepisów, fonty, ikony i AI.

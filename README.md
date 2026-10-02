@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/showreel.webp" alt="CookingTube in 15 seconds: a YouTube link is pasted, the AI watches the video and picks out the ingredients, they get checked off, the steps follow, a timer counts down, recipes fill the library, and “Z filmu na talerz” becomes “From video to plate”" width="100%">
+  <a href="https://cooking-tube.maciej-36d.workers.dev"><b>🌐 Try it live → cooking-tube.maciej-36d.workers.dev</b></a>
 </p>
 
 <p align="center">
@@ -41,6 +41,7 @@
 - **⭐ Popular recipes from day one.** Polish classics and favourite videos, prepared with the same AI pipeline and credited to their creators.
 - **🌍 Polish & English.** One tap switches the interface; new recipes are generated in the language you use.
 - **🔒 Yours, on your device.** Recipes, favourites, progress and the shopping list stay in your browser. No account needed.
+- **⚖️ Fair for everyone.** Everyone can make 5 new recipes a day; cached, shared and popular recipes are always free to open.
 - **🎨 Designed with care.** A dark kitchen art direction with 33 dish covers, 149 icons and food photography generated for this project.
 
 ## A look inside
@@ -82,10 +83,13 @@ npm run dev                  # http://127.0.0.1:5173
 | `npm run dev` | Development server on port 5173 |
 | `npm test` | Unit tests (pipeline, icons, timers, covers) |
 | `npm run build` | Production build |
+| `npm run build:cloudflare` | Builds the Cloudflare Worker |
+| `npx wrangler deploy --config dist/server/wrangler.json` | Deploys to Cloudflare Workers |
 | `node --experimental-strip-types scripts/ingest-popular.mjs` | Prepares the popular recipes listed in `data/popular-videos.json` |
 
 ## Learn more
 
+- **[Live app](https://cooking-tube.maciej-36d.workers.dev)**: running on Cloudflare Workers with D1 and R2.
 - **[Technical guide](docs/TECHNICAL.md)**: deployment to Cloudflare (Workers, D1, R2), the shared library, voting and limits.
 - **[Architecture](docs/ARCHITECTURE.md)**: how the interface, local data, watch & cook, timers and sharing are built.
 - **[Credits](CREDITS.md)**: the creators behind the popular recipes, fonts, icons and AI.
