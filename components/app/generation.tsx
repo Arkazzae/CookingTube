@@ -22,6 +22,14 @@ export function useGeneration() {
   return value;
 }
 
+async function channelName(id: string) {
+  try {
+    const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`, { signal: AbortSignal.timeout(4000) });
+    const data = response.ok ? await response.json() as { author_name?: unknown } : null;
+    return typeof data?.author_name === "string" ? data.author_name.slice(0, 200) : null;
+  } catch { return null; }
+}
+
 export function GenerationProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { locale, t } = useLocale();
@@ -55,7 +63,9 @@ export function GenerationProvider({ children }: { children: React.ReactNode }) 
       if (!parsed.success) throw new Error(t.generation.badRecipe);
       if (typeof data.warning === "string") toast(data.warning);
       if (controller.signal.aborted) throw new DOMException("Anulowano", "AbortError");
-      saveRecipe(id, parsed.data);
+      // Credit the channel: YouTube's oEmbed gives its name; the recipe still saves if it is unreachable.
+      const author = parsed.data.author ?? await channelName(id);
+      saveRecipe(id, { ...parsed.data, author });
       router.push(`/przepis/${id}`);
       setPhase("idle");
       return { title: parsed.data.title, ingredients: parsed.data.ingredients.length, steps: parsed.data.steps.length };
