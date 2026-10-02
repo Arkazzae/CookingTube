@@ -5,6 +5,7 @@
 //   node --experimental-strip-types scripts/ingest-popular.mjs --all    # re-ingest everything
 //   --concurrency=1 --pause=60                                           # gentler pacing for free-tier quotas
 //   --thumbs-only                                                        # only record which thumbnail sizes exist
+//   --locale=en                                                          # add English versions of ingested recipes
 //
 // Needs GEMINI_API_KEY (read from the environment or .env.local). Each video costs two provider requests.
 import { readFile, writeFile } from "node:fs/promises";
@@ -32,6 +33,7 @@ const results = new Map(process.argv.includes("--all") ? [] : previous.map(entry
 const failures = [];
 const option = (name, fallback) => Number(process.argv.find(arg => arg.startsWith(`--${name}=`))?.split("=")[1] ?? fallback);
 const concurrency = option("concurrency", 1), pause = option("pause", 30) * 1000;
+const locale = process.argv.find(arg => arg.startsWith("--locale="))?.split("=")[1] === "en" ? "en" : "pl";
 
 async function oembed(id) {
   // Confirms the video is public and gives the channel name; the recipe pipeline itself never invents an author.
@@ -67,7 +69,21 @@ async function ingest(video) {
 }
 
 for (const entry of results.values()) entry.thumb ??= await bestThumb(entry.id);
-const queue = process.argv.includes("--thumbs-only") ? [] : videos.filter(video => !results.has(video.id));
+if (locale === "en") {
+  // English versions run the same pipeline in English and are stored next to the Polish recipe.
+  const pending = [...results.values()].filter(entry => !entry.translations?.en);
+  console.log(`Translating ${pending.length} recipes to English…`);
+  for (const entry of pending) {
+    try {
+      const recipe = recipeResultSchema.parse(await generateRecipe(entry.id, undefined, "en"));
+      entry.translations = { ...entry.translations, en: { ...recipe, author: entry.author } };
+      console.log(`✓ ${entry.dish} → ${recipe.title}`);
+      await save();
+      await new Promise(resolve => setTimeout(resolve, pause));
+    } catch (error) { failures.push(entry); console.log(`✗ ${entry.dish} — ${error instanceof Error ? error.message : error}`); }
+  }
+}
+const queue = process.argv.includes("--thumbs-only") || locale === "en" ? [] : videos.filter(video => !results.has(video.id));
 console.log(`Ingesting ${queue.length} of ${videos.length} videos…`);
 async function worker() {
   for (let video = queue.shift(); video; video = queue.shift()) {
