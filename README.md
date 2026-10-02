@@ -25,8 +25,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/showreel.webp" alt="CookingTube in motion: a YouTube link is pasted, the AI watches the video and picks out the ingredients, they get checked off, the steps follow, a timer counts down, recipes fill the library, and “Z filmu na talerz” becomes “From video to plate”" width="100%"><br>
-  <sub>🎬 <a href="docs/showreel.mp4">Download the reel as MP4</a> · 1080p, 22 s, no sound</sub>
+  <img src="docs/showreel.webp" alt="CookingTube in motion: a YouTube link is pasted, the AI watches the video and picks out the ingredients, they get checked off, the steps follow, a timer counts down, recipes fill the library, and “Z filmu na talerz” becomes “From video to plate”" width="100%">
 </p>
 
 <p align="center">
