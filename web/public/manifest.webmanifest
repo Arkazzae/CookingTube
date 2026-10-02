@@ -1,0 +1,15 @@
+{
+  "name": "CookingTube — z filmu na talerz",
+  "short_name": "CookingTube",
+  "description": "Zamień film z YouTube w czytelny przepis i gotuj krok po kroku.",
+  "lang": "pl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f0b",
+  "theme_color": "#0a0f0b",
+  "icons": [
+    { "src": "/icons/app-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/app-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/app-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
