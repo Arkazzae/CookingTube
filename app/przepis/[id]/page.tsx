@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { RecipeScreen } from "@/components/screens/recipe";
-import { serverDictionary, serverLocale } from "@/lib/locale-server";
+import { serverLocale } from "@/lib/locale-server";
+import { dictionaries } from "@/lib/i18n";
 import { findPopular } from "@/lib/popular";
 import { recipeCover } from "@/lib/recipe-cover";
 
 // Popular recipes are known on the server, so their links get a real title, description and cover in previews.
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const [{ id }, t, locale] = await Promise.all([params, serverDictionary(), serverLocale()]);
+// Shared links carry ?lang= so crawlers, which rarely send the sharer's language, preview it in that language.
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ lang?: string }> }): Promise<Metadata> {
+  const [{ id }, { lang }, browserLocale] = await Promise.all([params, searchParams, serverLocale()]);
+  const locale = lang === "pl" || lang === "en" ? lang : browserLocale;
+  const t = dictionaries[locale];
   const popular = findPopular(id);
   if (!popular) return { title: t.meta.recipe };
   const recipe = (locale === "en" && popular.translations?.en) || popular.recipe;

@@ -9,7 +9,7 @@ import { Sheet } from "./sheet";
 import { RecipeImage } from "./media";
 import { BrandIcon, type Brand } from "./brand-icons";
 import { renderRecipeImage, type ImageFormat } from "./recipe-image";
-import { useT } from "./locale";
+import { useLocale, useT } from "./locale";
 
 export function recipeAsText(recipe: Recipe, t: ReturnType<typeof useT>) {
   return [recipe.title, recipe.description, "", `${t.card2.ingredients}:`, ...recipe.ingredients.map(i => `• ${i.name}${i.amount ? ` — ${i.amount}` : ""}`), "",
@@ -37,9 +37,9 @@ export function ShareSheet({ open, onClose, id, recipe }: { open: boolean; onClo
 }
 
 function ShareOptions({ id, recipe, onImage }: { id: string; recipe: Recipe; onImage: () => void }) {
-  const t = useT();
+  const { t, locale } = useLocale();
   const hydrated = useHydrated();
-  const url = hydrated ? `${location.origin}/przepis/${id}` : `/przepis/${id}`;
+  const url = `${hydrated ? location.origin : ""}/przepis/${id}?lang=${locale}`;
   const image = hydrated ? `${location.origin}${recipeCover(recipe, id).src}` : "";
   const text = t.share.message(recipe.title);
   const canShare = hydrated && typeof navigator.share === "function";
