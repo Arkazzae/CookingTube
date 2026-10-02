@@ -70,6 +70,17 @@
 3. **Keep it honest.** A quantity stays only if the model can quote where the cook says it, and timestamps must be in order and inside the video. Anything uncertain is left blank rather than guessed.
 4. **Make it delightful.** The app picks a dish cover, matches each ingredient to an icon, finds timers in the steps and links every step to its moment in the video.
 
+## Why Gemini?
+
+CookingTube needs a model that can actually **watch** a cooking video, and today Gemini is the one that does it end to end:
+
+- **It takes a YouTube link directly.** Google's API reads a public video from its URL, so the app never downloads or re-hosts videos and stays within YouTube's rules.
+- **It sees and hears.** Gemini follows the picture and the soundtrack together, so it catches the "add two spoons of this" that is only *shown*, the pinch of salt that is only *said*, and the order in which things really happen.
+- **It knows *when*.** Because it watches the whole timeline, it can point each step to its moment in the video. That is what makes watch & cook possible.
+- **It answers in a strict format.** Recipes come back as JSON that follows a schema, which the app validates before showing anything.
+
+Text-only models (for example DeepSeek) cannot take video at all, and recipes built from captions miss everything that is only visible and fail on videos without subtitles. CookingTube is pinned to **`gemini-3.8-flash`**, the fast multimodal model, so every recipe is made the same way. The API key stays on the server.
+
 ## Quick start
 
 ```sh

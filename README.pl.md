@@ -70,6 +70,17 @@
 3. **Zostajemy uczciwi.** Ilość zostaje tylko wtedy, gdy model potrafi zacytować, gdzie autor ją podał, a momenty kroków muszą być po kolei i mieścić się w filmie. Wszystko niepewne zostaje puste, zamiast być zgadywane.
 4. **Dodajemy radości.** Aplikacja dobiera okładkę potrawy, dopasowuje ikonę do każdego składnika, znajduje minutniki w krokach i łączy każdy krok z jego momentem w filmie.
 
+## Dlaczego Gemini?
+
+CookingTube potrzebuje modelu, który naprawdę **ogląda** film kulinarny, a dziś od początku do końca robi to Gemini:
+
+- **Przyjmuje link do YouTube wprost.** API Google samo odczytuje publiczny film po adresie, więc aplikacja nigdy nie pobiera ani nie przechowuje filmów i trzyma się zasad YouTube.
+- **Widzi i słyszy.** Gemini śledzi jednocześnie obraz i dźwięk, więc wyłapie „dodaj dwie łyżki tego”, które autor tylko *pokazuje*, szczyptę soli, o której tylko *mówi*, i prawdziwą kolejność czynności.
+- **Wie, *kiedy*.** Ogląda całą oś czasu, dlatego potrafi wskazać moment w filmie dla każdego kroku. Na tym opiera się tryb „oglądaj i gotuj”.
+- **Odpowiada w ścisłym formacie.** Przepis wraca jako JSON zgodny ze schematem, który aplikacja sprawdza, zanim cokolwiek pokaże.
+
+Modele tylko tekstowe (na przykład DeepSeek) w ogóle nie przyjmują wideo, a przepisy z samych napisów gubią wszystko, co widać tylko na ekranie, i nie działają dla filmów bez napisów. CookingTube używa na stałe **`gemini-3.8-flash`**, szybkiego modelu multimodalnego, więc każdy przepis powstaje tak samo. Klucz API zostaje na serwerze.
+
 ## Szybki start
 
 ```sh
