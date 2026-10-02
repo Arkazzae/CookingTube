@@ -4,6 +4,8 @@
 
 <h1 align="center">CookingTube</h1>
 
+<p align="center"><b>English</b> · <a href="README.pl.md">Polski</a></p>
+
 <p align="center">
   <b>Turn any YouTube cooking video into a beautiful recipe — then cook along with the video.</b><br>
   Paste a link, give it a minute, and get the ingredients, the steps, timers and the exact moment in the video for every step.<br>
@@ -78,68 +80,12 @@ npm run dev                  # http://127.0.0.1:5173
 | `npm run build` | Production build |
 | `node --experimental-strip-types scripts/ingest-popular.mjs` | Prepares the popular recipes listed in `data/popular-videos.json` |
 
-Deployment to Vercel or Cloudflare (Workers, D1, R2), the shared library, voting and all limits are described in the **[technical guide](docs/TECHNICAL.md)**.
+## Learn more
 
-## Under the hood
-
-- **Next.js 16 + React 19**, TypeScript, plain CSS design tokens, self-hosted Onest and Bricolage Grotesque fonts.
-- **Gemini** video understanding through the Interactions API; the key stays on the server.
-- **Local-first data**: `useSyncExternalStore` stores for the library, progress, shopping list and timers, validated with Zod.
-- **Watch & cook** with the YouTube IFrame API on `youtube-nocookie.com`, loaded only when you press play.
-- **Canvas-rendered** share images and a print stylesheet for the PDF card.
-- **PWA** with an offline fallback, plus optional Cloudflare storage for a shared, votable library.
-
-```
-app/            routes: home, recipe, cooking mode, PDF card, library, favourites, shopping, API
-components/app  shell, generation, sheets, watch & cook, timer, sharing
-components/screens  one file per screen
-lib/            Gemini pipeline, local library, i18n, icons, timers, covers
-data/           the curated list of popular videos
-public/         fonts, icon sprites, covers and photography
-```
-
-## Popular recipes and their creators
-
-The popular recipes are AI-written summaries of public videos. All credit for the cooking goes to their authors. Please watch, like and subscribe to them:
-
-| Recipe | Creator | Video |
-| --- | --- | --- |
-| Tradycyjne pierogi ruskie z okrasą ze śmietany | Tomasz Strzelczyk ODDASZFARTUCHA | [watch](https://www.youtube.com/watch?v=C_MBzyj2vuc) |
-| Domowy żurek na zakwasie z białą kiełbasą | SkutecznieTv | [watch](https://www.youtube.com/watch?v=JawgWAW1zno) |
-| Klasyczny domowy rosół drobiowy | KuchniaLidla.pl | [watch](https://www.youtube.com/watch?v=RbfKeQG_3dQ) |
-| Cienkie i elastyczne naleśniki | Menu Dorotki | [watch](https://www.youtube.com/watch?v=_iGj_Tz5A7k) |
-| Tradycyjne placki ziemniaczane | Anka Gotuje | [watch](https://www.youtube.com/watch?v=9RZWpWJS_mg) |
-| Puszysty i delikatny sernik | Orchideli | [watch](https://www.youtube.com/watch?v=vI6MFvxrRnU) |
-
-More are queued in `data/popular-videos.json`. Run the ingest script again when your Gemini quota allows. Creators who would like a video removed can open an issue, and it will be taken down.
-
-## Credits
-
-- **Videos and recipes**: the creators listed above and on each recipe page. Videos stay on YouTube and play through YouTube's own player.
-- **AI**: recipes are generated with Google Gemini. Photography, dish covers and icons were generated for this project with OpenAI's image model via Codex.
-- **Fonts**: [Onest](https://github.com/simpals/onest) and [Bricolage Grotesque](https://github.com/ateliertriay/bricolage), SIL Open Font License 1.1 (see `public/fonts`).
-- **Icons**: [Lucide](https://lucide.dev) (ISC) and brand glyphs from [Simple Icons](https://simpleicons.org) (CC0 1.0).
+- **[Technical guide](docs/TECHNICAL.md)**: deployment to Vercel or Cloudflare (Workers, D1, R2), the shared library, voting and limits.
+- **[Architecture](docs/ARCHITECTURE.md)**: how the interface, local data, watch & cook, timers and sharing are built.
+- **[Credits](CREDITS.md)**: the creators behind the popular recipes, fonts, icons and AI.
 
 ## License
 
-CookingTube is released under the **[Apache License 2.0](LICENSE)**. You can use, change and share it, including commercially, as long as you keep the copyright notice and the **[NOTICE](NOTICE)** file, which credits the project. A visible "Based on CookingTube" with a link to this repository is warmly appreciated.
-
----
-
-<details>
-<summary><b>🇵🇱 Po polsku</b></summary>
-
-**CookingTube zamienia film kulinarny z YouTube w piękny przepis, a potem pozwala gotować razem z filmem.**
-
-Wklejasz link, czekasz chwilę i dostajesz składniki, kroki, minutniki oraz moment w filmie dla każdego kroku. Do tego:
-
-- **Oglądaj i gotuj**: film nad przepisem, a dotknięcie czasu przy kroku przewija do tego momentu.
-- **Tryb gotowania**: jeden duży krok naraz, gesty, ekran, który nie gaśnie, i fragment filmu dla bieżącego kroku.
-- **Minutnik**: czasy z kroków jednym dotknięciem, kilka minutników naraz, dźwięk, wibracja i powiadomienie.
-- **Lista zakupów**: odhacz, co masz w kuchni, a resztę dodasz jednym ruchem.
-- **Udostępnianie**: karta PDF, grafiki na Instagram i linki z podglądem w mediach społecznościowych.
-- **Popularne przepisy** z polskiej kuchni, z podziękowaniami dla autorów filmów.
-- **PL / EN** jednym przełącznikiem. Dane zostają w przeglądarce, bez konta.
-
-Start: `npm ci`, wpisz `GEMINI_API_KEY` do `.env.local`, potem `npm run dev`. Licencja Apache 2.0 z wymogiem zachowania pliku NOTICE (atrybucja).
-</details>
+[Apache License 2.0](LICENSE). Keep the [NOTICE](NOTICE) with its credit when you share or build on CookingTube.
