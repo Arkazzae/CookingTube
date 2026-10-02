@@ -25,7 +25,8 @@
 </p>
 
 <p align="center">
-  <img src="docs/showreel.webp" alt="CookingTube w ruchu: wklejony link z YouTube, AI ogląda film i rozpoznaje składniki, składniki zostają odhaczone, potem kroki, minutnik odlicza czas, przepisy trafiają do biblioteki, a „Z filmu na talerz” zamienia się we „From video to plate”" width="100%">
+  <img src="docs/showreel.webp" alt="CookingTube w ruchu: wklejony link z YouTube, AI ogląda film i rozpoznaje składniki, składniki zostają odhaczone, potem kroki, minutnik odlicza czas, przepisy trafiają do biblioteki, a „Z filmu na talerz” zamienia się we „From video to plate”" width="100%"><br>
+  <sub>🎬 <a href="docs/showreel.mp4">Pobierz animację jako MP4</a> · 1080p, 22 s, bez dźwięku</sub>
 </p>
 
 <p align="center">
