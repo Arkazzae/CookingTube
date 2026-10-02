@@ -115,9 +115,13 @@ img{display:block;max-width:100%}
 .tab.is-active{color:var(--accent)}
 .tab-icon{position:relative;display:grid}
 .dot{position:absolute;top:-5px;right:-10px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--gold);color:var(--accent-ink);font-size:10px;font-weight:750;display:grid;place-items:center;box-shadow:0 0 0 2px var(--surface)}
-.fab{justify-self:center;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);box-shadow:0 10px 26px -6px rgba(143,223,106,.65),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .2s var(--ease)}
-.fab:active{transform:scale(.92)}
-.fab--cook{width:auto;min-width:88px;height:50px;padding:0 16px;border-radius:999px;display:inline-flex;gap:6px;font-size:14px;font-weight:700;animation:pop .35s var(--ease)}
+/* The centre tab is a raised orb sitting in a notch of the bar: "New" everywhere, "Cook" on a recipe. */
+.tab--action{color:var(--accent);font-weight:650;overflow:visible}
+.tab-orb{display:grid;place-items:center;width:54px;height:54px;margin:-32px 0 1px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+  box-shadow:0 0 0 6px #121a14,0 12px 26px -8px rgba(143,223,106,.7),inset 0 1px 0 rgba(255,255,255,.45);transition:transform .2s var(--ease),background-color .2s;animation:orb-in .35s var(--ease)}
+.tab--action:hover .tab-orb{background:var(--accent-2)}
+.tab--action:active .tab-orb{transform:scale(.92)}
+@keyframes orb-in{from{transform:scale(.6) rotate(-25deg);opacity:0}to{transform:none;opacity:1}}
 .recipe-topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(10px + var(--safe-t)) 0 12px}
 .recipe-topbar .recipe-hero-actions{display:flex;gap:8px}
 .recipe-topbar .fav-btn{color:var(--text)}

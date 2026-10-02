@@ -6,7 +6,7 @@ const pl = {
   htmlTitle: "CookingTube — z filmu na talerz",
   description: "Zamień film z YouTube w czytelny przepis. Składniki, lista zakupów i gotowanie krok po kroku.",
   nav: {
-    home: "Start", recipes: "Przepisy", favorites: "Ulubione", shopping: "Zakupy", timer: "Minutnik", cook: "Gotuj", cookAria: "Zacznij gotować krok po kroku", newRecipe: "Nowy przepis", main: "Nawigacja główna",
+    home: "Start", recipes: "Przepisy", favorites: "Ulubione", shopping: "Zakupy", timer: "Minutnik", new: "Nowy", cook: "Gotuj", cookAria: "Zacznij gotować krok po kroku", newRecipe: "Nowy przepis", main: "Nawigacja główna",
     skip: "Przejdź do treści", homeAria: "CookingTube — start", newFromVideo: "Nowy przepis z filmu", language: "Język",
   },
   shell: {
@@ -98,7 +98,7 @@ const pl = {
     see: "Zobacz", allDone: "Wszystkie kroki zrobione. Smacznego!",
     aiNote: (author: string | null) => `Przepis przygotowała sztuczna inteligencja na podstawie obrazu i dźwięku filmu${author ? ` „${author}”` : ""}. Ilości, których autor nie podał wprost, zostały puste, a momenty kroków w filmie są przybliżone. Jeśli coś budzi wątpliwości, zajrzyj do filmu.`,
     popularNote: "To jeden z popularnych przepisów. Dotknij serca, aby zapisać go na tym urządzeniu — postępy i lista zakupów działają także bez zapisywania.",
-    languageNote: "", openOnYoutube: "Otwórz film na YouTube",
+    languageNote: "Ten przepis jest po angielsku.", openOnYoutube: "Otwórz film na YouTube",
     stepCheck: (done: boolean, i: number) => `${done ? "Cofnij wykonanie" : "Oznacz jako wykonany"}: krok ${i}`,
   },
   watch: {
@@ -162,7 +162,7 @@ const en: Dictionary = {
   htmlTitle: "CookingTube — from video to plate",
   description: "Turn a YouTube video into a clear recipe. Ingredients, a shopping list and step-by-step cooking.",
   nav: {
-    home: "Home", recipes: "Recipes", favorites: "Favourites", shopping: "Shopping", timer: "Timer", cook: "Cook", cookAria: "Start cooking step by step", newRecipe: "New recipe", main: "Main navigation",
+    home: "Home", recipes: "Recipes", favorites: "Favourites", shopping: "Shopping", timer: "Timer", new: "New", cook: "Cook", cookAria: "Start cooking step by step", newRecipe: "New recipe", main: "Main navigation",
     skip: "Skip to content", homeAria: "CookingTube — home", newFromVideo: "New recipe from a video", language: "Language",
   },
   shell: {

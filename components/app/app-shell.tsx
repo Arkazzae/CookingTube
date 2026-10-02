@@ -98,8 +98,12 @@ function BottomNav({ pathname }: { pathname: string }) {
   const recipe = pathname.match(/^\/przepis\/([\w-]+)$/)?.[1];
   return <nav className="bottom-nav" aria-label={t.nav.main}>
     {item(nav[0])}{item(nav[1])}
-    {recipe ? <Link href={`/przepis/${recipe}/gotuj`} className="fab fab--cook" aria-label={t.nav.cookAria}><ChefHat size={22} strokeWidth={2.2} /><span>{t.nav.cook}</span></Link>
-      : <button className="fab" onClick={() => openSheet()} aria-label={t.nav.newFromVideo}><Plus size={26} strokeWidth={2.4} /></button>}
+    {recipe ? <Link href={`/przepis/${recipe}/gotuj`} className="tab tab--action" aria-label={t.nav.cookAria}>
+        <span className="tab-orb" key="cook"><ChefHat size={24} strokeWidth={2.1} /></span>{t.nav.cook}
+      </Link>
+      : <button className="tab tab--action" onClick={() => openSheet()} aria-label={t.nav.newFromVideo}>
+        <span className="tab-orb" key="new"><Plus size={26} strokeWidth={2.4} /></span>{t.nav.new}
+      </button>}
     {item(nav[2])}{item(nav[3])}
   </nav>;
 }
