@@ -1,6 +1,6 @@
 "use client";
 import Link from "@/components/app/app-link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Check, Heart, ListChecks, Pause, Play, Sun, Timer, X } from "lucide-react";
 import { findRecipe, markCooked, progressOf, setProgress, toggleFavorite, useHydrated, useLibrary, type RecipeEntry } from "@/lib/local-library";
@@ -77,6 +77,12 @@ function CookingView({ item }: { item: RecipeEntry }) {
   const stepTimers = useMemo(() => recipe.steps.map(step => findTimers(`${step.title}. ${step.description}`)), [recipe.steps]);
   const finished = index >= total;
   const step = recipe.steps[Math.min(index, total - 1)];
+  const player = useRef<CookPlayerHandle>(null);
+  // The player reports the real length once it loads; until then the stored length of a popular video is used.
+  const [length, setLength] = useState<number | null>(() => findPopular(id)?.videoSeconds ?? null);
+  const timeline = videoId !== null && recipe.steps.some(s => s.at !== null) && timelineFits(recipe.steps, length);
+  const momentOf = (i: number) => timeline ? recipe.steps[i]?.at ?? null : null;
+  const at = finished ? null : momentOf(index);
 
   const go = useCallback((next: number) => {
     const target = Math.max(0, Math.min(total, next));
@@ -88,6 +94,13 @@ function CookingView({ item }: { item: RecipeEntry }) {
     setIndex(target);
     window.scrollTo({ top: 0 });
   }, [index, total, id, library, item]);
+
+  /** Opens a step from the list and plays the video from its moment, if it has one. */
+  function pick(i: number) {
+    const moment = momentOf(i);
+    go(i);
+    if (moment !== null) player.current?.play(moment);
+  }
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -115,7 +128,7 @@ function CookingView({ item }: { item: RecipeEntry }) {
       </div>
       <div className="cook-actions">
         <button className="icon-btn icon-btn--surface" onClick={openTimer} aria-label={t.timer.open}><Timer size={20} /></button>
-        <button className="icon-btn icon-btn--surface" onClick={() => setIngredientsOpen(true)} aria-label={t.cooking.showIngredients}><ListChecks size={20} /></button>
+        <button className="icon-btn icon-btn--surface cook-ingredients-btn" onClick={() => setIngredientsOpen(true)} aria-label={t.cooking.showIngredients}><ListChecks size={20} /></button>
       </div>
     </header>
     <div className="cook-progress" role="progressbar" aria-label={t.cooking.progress} aria-valuemin={0} aria-valuemax={total} aria-valuenow={Math.min(index, total)}>
@@ -123,7 +136,7 @@ function CookingView({ item }: { item: RecipeEntry }) {
     </div>
 
     {finished ? <div className="cook-body cook-body--finish"><FinishView item={item} onRestart={() => go(0)} /></div> : <div className="cook-body">
-      {videoId && <div className="cook-media"><CookPlayer videoId={videoId} steps={recipe.steps} index={index} knownLength={findPopular(id)?.videoSeconds ?? null} /></div>}
+      {videoId && <div className="cook-media"><CookPlayer ref={player} videoId={videoId} at={at} timeline={timeline} onLength={setLength} /></div>}
       <div className="cook-panel">
         {timers.length > 0 && <ul className="timer-tray" aria-label={t.cooking.timers}>
           {timers.map(timer => {
@@ -140,7 +153,12 @@ function CookingView({ item }: { item: RecipeEntry }) {
           })}
         </ul>}
         <article className="cook-step" key={index} aria-live="polite">
-          <span className="cook-num" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          <div className="cook-step-head">
+            <span className="cook-num" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            {at !== null && <button className="chip chip--video chip--lg" onClick={() => player.current?.play(at)} aria-label={t.watch.seek(formatClock(at))}>
+              <Play size={12} fill="currentColor" />{formatClock(at)}
+            </button>}
+          </div>
           <h1>{step.title}</h1>
           <p>{step.description}</p>
           {stepTimers[index].length > 0 && <div className="cook-timers">
@@ -148,25 +166,71 @@ function CookingView({ item }: { item: RecipeEntry }) {
           </div>}
         </article>
       </div>
+      {/* On wide screens the step list with its video moments and the checklist stay beside the step. */}
+      <aside className="cook-side">
+        <section className="cook-side-block cook-side-block--steps" aria-label={t.recipe.steps}>
+          <header>
+            <h2>{t.recipe.steps}</h2>
+            {timeline && <span>{t.cooking.chaptersHint}</span>}
+          </header>
+          <StepList steps={recipe.steps} index={index} momentOf={momentOf} onPick={pick} />
+        </section>
+        <section className="cook-side-block" aria-label={t.recipe.ingredients}>
+          <header>
+            <h2>{t.recipe.ingredients}</h2>
+            <span>{t.cooking.ingredientsChecked(have.length, recipe.ingredients.length)}</span>
+          </header>
+          <div className="meter" aria-hidden="true"><span style={{ width: `${(have.length / recipe.ingredients.length) * 100}%` }} /></div>
+          <IngredientList recipe={recipe} have={have} onToggle={i => setProgress(id, { have: toggle(have, i) })} />
+        </section>
+      </aside>
+      <nav className="cook-nav" aria-label={t.cooking.nav}>
+        <span className="cook-keys">{t.cooking.keys}</span>
+        <button className="btn btn-secondary" onClick={() => go(index - 1)} disabled={index === 0}><ArrowLeft size={18} /><span>{t.cooking.back}</span></button>
+        <button className="btn btn-primary" onClick={() => go(index + 1)}>{index === total - 1 ? <>{t.cooking.finish} <Check size={18} /></> : <>{t.cooking.next} <ArrowRight size={18} /></>}</button>
+      </nav>
     </div>}
 
-    {!finished && <nav className="cook-nav" aria-label={t.cooking.nav}>
-      <button className="btn btn-secondary btn-xl" onClick={() => go(index - 1)} disabled={index === 0}><ArrowLeft size={20} /><span>{t.cooking.back}</span></button>
-      <button className="btn btn-primary btn-xl" onClick={() => go(index + 1)}>{index === total - 1 ? <>{t.cooking.finish} <Check size={20} /></> : <>{t.cooking.next} <ArrowRight size={20} /></>}</button>
-    </nav>}
-
     <Sheet open={ingredientsOpen} onClose={() => setIngredientsOpen(false)} title={t.recipe.ingredients} description={t.cooking.ingredientsChecked(have.length, recipe.ingredients.length)}>
-      <ul className="ingredients ingredients--sheet">
-        {recipe.ingredients.map((ingredient, i) => <li key={i}>
-          <button className={`ingredient ${have.includes(i) ? "is-checked" : ""}`} aria-pressed={have.includes(i)} onClick={() => setProgress(id, { have: toggle(have, i) })}>
-            <span className="ingredient-icon">{have.includes(i) ? <Check size={18} strokeWidth={2.6} /> : <IngredientIcon name={ingredient.name} size={22} />}</span>
-            <span className="ingredient-name">{ingredient.name}</span>
-            <span className={`ingredient-amount ${ingredient.amount ? "" : "is-empty"}`}>{ingredient.amount ?? t.recipe.noAmount}</span>
-          </button>
-        </li>)}
-      </ul>
+      <IngredientList recipe={recipe} have={have} onToggle={i => setProgress(id, { have: toggle(have, i) })} sheet />
     </Sheet>
   </div>;
+}
+
+function StepList({ steps, index, momentOf, onPick }: { steps: RecipeEntry["recipe"]["steps"]; index: number; momentOf: (i: number) => number | null; onPick: (i: number) => void }) {
+  const t = useT();
+  const list = useRef<HTMLOListElement>(null);
+  useEffect(() => {
+    // Keep the current step in view inside the list without scrolling the page around it.
+    const box = list.current, current = box?.querySelector<HTMLElement>(".is-current");
+    if (box && current) box.scrollTo({ top: current.offsetTop - box.clientHeight / 2 + current.clientHeight / 2, behavior: "smooth" });
+  }, [index]);
+  return <ol className="cook-chapters" ref={list}>
+    {steps.map((step, i) => {
+      const at = momentOf(i);
+      return <li key={i}>
+        <button className={`cook-chapter ${i === index ? "is-current" : i < index ? "is-done" : ""}`} aria-current={i === index ? "step" : undefined}
+          onClick={() => onPick(i)} aria-label={at === null ? t.cooking.goTo(i + 1) : `${t.cooking.goTo(i + 1)} · ${t.watch.seek(formatClock(at))}`}>
+          <span className="cook-chapter-num">{i < index ? <Check size={13} strokeWidth={2.8} /> : String(i + 1).padStart(2, "0")}</span>
+          <span className="cook-chapter-title">{step.title}</span>
+          {at !== null && <span className="cook-chapter-time"><Play size={9} fill="currentColor" />{formatClock(at)}</span>}
+        </button>
+      </li>;
+    })}
+  </ol>;
+}
+
+function IngredientList({ recipe, have, onToggle, sheet = false }: { recipe: RecipeEntry["recipe"]; have: number[]; onToggle: (index: number) => void; sheet?: boolean }) {
+  const t = useT();
+  return <ul className={`ingredients ${sheet ? "ingredients--sheet" : "ingredients--side"}`}>
+    {recipe.ingredients.map((ingredient, i) => <li key={i}>
+      <button className={`ingredient ${have.includes(i) ? "is-checked" : ""}`} aria-pressed={have.includes(i)} onClick={() => onToggle(i)}>
+        <span className="ingredient-icon">{have.includes(i) ? <Check size={18} strokeWidth={2.6} /> : <IngredientIcon name={ingredient.name} size={22} />}</span>
+        <span className="ingredient-name">{ingredient.name}</span>
+        <span className={`ingredient-amount ${ingredient.amount ? "" : "is-empty"}`}>{ingredient.amount ?? t.recipe.noAmount}</span>
+      </button>
+    </li>)}
+  </ul>;
 }
 
 function FinishView({ item, onRestart }: { item: RecipeEntry; onRestart: () => void }) {
@@ -184,31 +248,34 @@ function FinishView({ item, onRestart }: { item: RecipeEntry; onRestart: () => v
   </section>;
 }
 
+type CookPlayerHandle = { play: (seconds: number) => void };
+
 /**
  * The recipe video stays on screen for the whole cooking session. When the timeline fits inside the video,
  * moving between steps jumps it to the step's moment; it keeps playing if it was playing.
  */
-function CookPlayer({ videoId, steps, index, knownLength }: { videoId: string; steps: { at: number | null }[]; index: number; knownLength: number | null }) {
+function CookPlayer({ ref, videoId, at, timeline, onLength }: { ref: React.Ref<CookPlayerHandle>; videoId: string; at: number | null; timeline: boolean; onLength: (seconds: number | null) => void }) {
   const t = useT();
   const host = useRef<HTMLDivElement>(null);
   const player = useRef<Player | null>(null);
   const [state, setState] = useState<"idle" | "loading" | "ready" | "error">("idle");
-  const [length, setLength] = useState<number | null>(knownLength);
-  const timeline = steps.some(step => step.at !== null) && timelineFits(steps, length);
-  const at = timeline && index < steps.length ? steps[index].at : null;
+  const ready = useRef(false);
   const atRef = useRef(at);
-  useEffect(() => { atRef.current = at; }, [at]);
+  // A moment the viewer already jumped to by hand, so the step change that follows does not pause it again.
+  const jumped = useRef<number | null>(null);
   useEffect(() => {
-    const current = player.current;
-    if (!current || state !== "ready" || at === null) return;
-    const playing = current.getPlayerState() === 1;
+    if (atRef.current === at) return;
+    atRef.current = at;
+    const current = player.current, handled = jumped.current === at;
+    jumped.current = null;
+    if (!current || !ready.current || at === null || handled) return;
+    const playing = [1, 3].includes(current.getPlayerState());
     current.seekTo(at, true);
     if (!playing) current.pauseVideo();
-  }, [at, state]);
+  }, [at]);
   useEffect(() => () => player.current?.destroy(), []);
 
-  async function start() {
-    if (state !== "idle") return;
+  async function start(from: number | null) {
     setState("loading");
     try {
       const YT = await loadApi();
@@ -217,22 +284,39 @@ function CookPlayer({ videoId, steps, index, knownLength }: { videoId: string; s
       host.current.replaceChildren(target);
       player.current = new YT.Player(target, {
         host: "https://www.youtube-nocookie.com", videoId,
-        playerVars: { autoplay: 1, playsinline: 1, rel: 0, start: Math.floor(atRef.current ?? 0) },
+        playerVars: { autoplay: 1, playsinline: 1, rel: 0, start: Math.floor(from ?? 0) },
         events: {
-          onReady: (event: { target: Player }) => { setState("ready"); setLength(event.target.getDuration() || null); event.target.playVideo(); },
+          onReady: (event: { target: Player }) => {
+            ready.current = true;
+            setState("ready");
+            onLength(event.target.getDuration() || null);
+            // The step may have changed while the player was loading.
+            if (atRef.current !== null && atRef.current !== from) event.target.seekTo(atRef.current, true);
+            event.target.playVideo();
+          },
           onError: () => setState("error"),
         },
       });
     } catch { setState("error"); }
   }
 
+  useImperativeHandle(ref, () => ({
+    play(seconds: number) {
+      if (seconds !== atRef.current) jumped.current = seconds;
+      if (state === "idle") { void start(seconds); return; }
+      if (!player.current || !ready.current) return;
+      player.current.seekTo(seconds, true);
+      player.current.playVideo();
+    },
+  }));
+
   return <div className="cook-player">
     <div className="watch-frame">
       <div ref={host} className="watch-host" />
-      {state !== "ready" && <button className="film-facade" onClick={() => void start()} aria-label={t.watch.playAria}>
+      {state !== "ready" && <button className="film-facade" onClick={() => { if (state === "idle") void start(at); }} aria-label={t.watch.playAria}>
         <VideoThumb id={videoId} alt="" priority variant={findPopular(videoId)?.thumb} /><span className="film-play">{state === "loading" ? <span className="spinner" /> : <Play size={28} fill="currentColor" />}</span>
       </button>}
     </div>
-    <p className="cook-player-caption">{state === "error" ? t.watch.error : at !== null ? t.cooking.stepMoment(formatClock(at)) : timeline ? t.cooking.noMoment : t.cooking.noTimeline}</p>
+    <p className="cook-player-caption">{state === "error" ? t.watch.error : at !== null ? t.cooking.follows : timeline ? t.cooking.noMoment : t.cooking.noTimeline}</p>
   </div>;
 }

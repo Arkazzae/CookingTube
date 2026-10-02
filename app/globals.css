@@ -410,8 +410,8 @@ a.shop-group-title:hover{color:var(--accent)}
 .skeleton-list{height:240px;border-radius:var(--r-l);background:var(--surface)}
 
 /* ---------- Cooking mode ---------- */
-/* Cooking mode fills exactly one screen: top bar, progress, video + step, navigation. Only the step panel scrolls. */
-.cook{position:relative;z-index:1;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;height:100dvh;overflow:hidden;max-width:1440px;margin:0 auto;padding:calc(10px + var(--safe-t)) var(--gutter) calc(12px + var(--safe-b))}
+/* Cooking mode fills exactly one screen: top bar, progress, then video, step and navigation. Only the step panel and the side lists scroll. */
+.cook{position:relative;z-index:1;display:grid;grid-template-rows:auto auto minmax(0,1fr);height:100dvh;overflow:hidden;max-width:1440px;margin:0 auto;padding:calc(10px + var(--safe-t)) var(--gutter) calc(12px + var(--safe-b))}
 .cook-top{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:12px}
 .cook-title{display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center}
 .cook-title strong{font-size:14px;font-weight:600;color:var(--text-2);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -436,7 +436,9 @@ a.shop-group-title:hover{color:var(--accent)}
 .cook-top{grid-template-columns:auto 1fr auto}
 .icon-btn.is-on{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent-line)}
 .cook-step{padding:4px 0 12px;animation:step-in .4s var(--ease)}
-.cook-num{display:block;font-family:var(--display);font-size:clamp(40px,10vw,72px);font-weight:750;line-height:.9;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--accent-line);margin-bottom:8px}
+.cook-step-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.cook-num{display:block;font-family:var(--display);font-size:clamp(40px,10vw,72px);font-weight:750;line-height:.9;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--accent-line)}
+.cook-step-head .chip{font-variant-numeric:tabular-nums}
 .cook-step h1{font-size:clamp(22px,5vw,36px);letter-spacing:-.03em}
 .cook-step p{margin-top:10px;font-size:clamp(17px,3.6vw,23px);line-height:1.55;color:var(--text);max-width:44ch}
 .cook-timers{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
@@ -447,17 +449,53 @@ a.shop-group-title:hover{color:var(--accent)}
 .cook-player .film-facade{border-radius:var(--r)}
 .cook-player-caption{margin-top:8px;font-size:12.5px;color:var(--text-3)}
 .cook-panel{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 28px),transparent)}
+.cook-side,.cook-keys{display:none}
+.cook-nav{flex:none;display:grid;grid-template-columns:1fr 1.7fr;gap:10px}
+.cook-nav .btn{height:52px;border-radius:17px}
 @media (min-width:900px){
   .cook{padding-left:32px;padding-right:32px}
-  .cook-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(340px,1fr);gap:36px;align-items:start}
+  .cook-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(340px,1fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"media panel" "media nav";gap:16px 36px;height:100%}
   .cook-step h1{font-size:38px}
   .cook-step p{font-size:22px}
-  .cook-media{align-self:start}
-  .cook-panel{height:100%;padding-top:4px}
+  .cook-media{grid-area:media;align-self:start}
+  .cook-panel{grid-area:panel;height:100%;padding-top:4px}
   .cook-body--finish{display:block}
+  .cook-nav{grid-area:nav;display:flex;align-items:center;justify-content:flex-end;gap:10px}
+  .cook-nav .btn{height:46px;padding:0 18px;border-radius:15px;font-size:14.5px}
+  .cook-nav .btn-primary{min-width:140px}
+}
+@media (min-width:1100px){
+  .cook-body{grid-template-columns:minmax(0,1fr) 380px;grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"media side" "panel side" "nav side";gap:14px 32px}
+  .cook-media .watch-frame{width:min(100%, calc((100dvh - 470px) * 16 / 9), 920px);aspect-ratio:16/9}
+  .cook-num{font-size:44px}
+  .cook-step h1{font-size:30px}
+  .cook-step p{font-size:19px;margin-top:8px}
+  .cook-keys{display:block;margin-right:auto;font-size:12.5px;color:var(--text-3)}
+  .cook-side{grid-area:side;display:flex;flex-direction:column;gap:12px;min-height:0;height:100%}
+  .cook-side-block{flex:1.3 1 0;display:flex;flex-direction:column;min-height:0;padding:14px 14px 4px;border-radius:var(--r-l);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+  .cook-side-block--steps{flex:1 1 0}
+  .cook-side-block header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:0 4px}
+  .cook-side-block h2{font-size:18px}
+  .cook-side-block header span{font-size:12px;color:var(--text-3)}
+  .cook-side-block .meter{margin:10px 4px 4px;flex:none}
+  .cook-chapters{position:relative;list-style:none;margin:8px 0 0;padding:0 0 8px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+  .cook-chapter{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;min-height:40px;padding:5px 6px;border-radius:12px;text-align:left;font-size:14px;color:var(--text-2);transition:background-color .2s,color .2s}
+  .cook-chapter:hover{background:var(--surface-2);color:var(--text)}
+  .cook-chapter.is-current{background:var(--accent-soft);color:var(--text);font-weight:600}
+  .cook-chapter-num{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--surface-2);font-family:var(--display);font-size:12px;font-weight:700;color:var(--text-3)}
+  .cook-chapter.is-done .cook-chapter-num{color:var(--accent)}
+  .cook-chapter.is-current .cook-chapter-num{background:var(--accent);color:var(--accent-ink)}
+  .cook-chapter-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cook-chapter-time{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:999px;background:var(--surface-2);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent)}
+  .cook-chapter.is-current .cook-chapter-time{background:var(--accent);color:var(--accent-ink)}
+  .ingredients--side{flex:1;min-height:0;overflow-y:auto;margin:0;overscroll-behavior:contain}
+  .ingredients--side .ingredient{min-height:46px;gap:12px;grid-template-columns:32px 1fr auto;padding:6px 4px}
+  .ingredients--side .ingredient-icon{width:32px;height:32px;border-radius:10px}
+  .ingredients--side .ingredient-name{font-size:14px}
+  .ingredients--side .ingredient-amount{font-size:12.5px;max-width:120px}
+  .cook-ingredients-btn{display:none}
 }
 @media (max-height:640px) and (max-width:899px){.cook-media .watch-frame{max-height:34vh;aspect-ratio:auto;height:34vh}}
-.cook-nav{display:grid;grid-template-columns:1fr 1.7fr;gap:10px;padding-top:12px}
 .cook-finish{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px 0;animation:step-in .5s var(--ease)}
 .finish-photo{width:100%;max-width:520px;aspect-ratio:4/3;border-radius:var(--r-xl);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow)}
 .finish-photo img{width:100%;height:100%;object-fit:cover}
