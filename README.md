@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/screenshots/banner.jpg" alt="CookingTube — from video to plate" width="100%">
+  <img src="docs/screenshots/en/banner.jpg" alt="CookingTube — from video to plate" width="100%">
 </p>
 
 <h1 align="center">CookingTube</h1>
@@ -21,7 +21,11 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/mobile.jpg" alt="CookingTube on a phone: home, recipe with the video on top, ingredient checklist and cooking mode" width="100%">
+  <img src="docs/showreel.webp" alt="CookingTube in 15 seconds: a YouTube link is pasted, the AI watches the video and picks out the ingredients, they get checked off, the steps follow, a timer counts down, recipes fill the library, and “Z filmu na talerz” becomes “From video to plate”" width="100%">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/en/mobile.jpg" alt="CookingTube on a phone: home with popular recipes, a recipe with the video on top, and cooking mode" width="100%">
 </p>
 
 ---
@@ -42,15 +46,15 @@
 ## A look inside
 
 <p align="center">
-  <img src="docs/screenshots/desktop-home.jpg" alt="Home screen on desktop with popular recipes" width="100%">
+  <img src="docs/screenshots/en/desktop-home.jpg" alt="Home screen on desktop with popular recipes" width="100%">
 </p>
 <p align="center">
-  <img src="docs/screenshots/desktop-recipe.jpg" alt="Recipe on desktop with the video, stats and ingredient checklist" width="100%">
+  <img src="docs/screenshots/en/desktop-recipe.jpg" alt="Recipe on desktop with the video, stats and ingredient checklist" width="100%">
 </p>
 <table>
   <tr>
-    <td width="58%"><img src="docs/screenshots/pdf-card.jpg" alt="Printable PDF recipe card"></td>
-    <td width="42%"><img src="docs/screenshots/share-image.jpg" alt="Shareable recipe image for Instagram"></td>
+    <td width="58%"><img src="docs/screenshots/en/pdf-card.jpg" alt="Printable PDF recipe card"></td>
+    <td width="42%"><img src="docs/screenshots/en/share-image.jpg" alt="Shareable recipe image for Instagram"></td>
   </tr>
   <tr>
     <td align="center"><sub>Printable PDF card</sub></td>
