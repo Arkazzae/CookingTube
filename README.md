@@ -1,157 +1,145 @@
-# CookingTube
+<p align="center">
+  <img src="docs/screenshots/banner.jpg" alt="CookingTube — from video to plate" width="100%">
+</p>
 
-Recipes from public YouTube cooking videos, with Polish and English generation.
-The Cloudflare target runs the app and API on **Workers**, stores immutable recipe
-JSON in **R2**, and keeps the catalogue, anonymous votes and generation leases in
-**D1**. R2 is object storage; it does not run the application server.
+<h1 align="center">CookingTube</h1>
 
-## Run locally
+<p align="center">
+  <b>Turn any YouTube cooking video into a beautiful recipe — then cook along with the video.</b><br>
+  Paste a link, give it a minute, and get the ingredients, the steps, timers and the exact moment in the video for every step.<br>
+  In Polish 🇵🇱 or English 🇬🇧.
+</p>
+
+<p align="center">
+  <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-0a0f0b?logo=nextdotjs">
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-0a0f0b?logo=react">
+  <img alt="Gemini" src="https://img.shields.io/badge/AI-Gemini-8fdf6a">
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-installable-8fdf6a">
+  <img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-f2c14e">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/mobile.jpg" alt="CookingTube on a phone: home, recipe with the video on top, ingredient checklist and cooking mode" width="100%">
+</p>
+
+---
+
+## Why you'll love it
+
+- **🎬 From video to plate in about a minute.** Paste a YouTube link (Shorts too). AI watches and listens to the video and writes down every ingredient and step.
+- **▶️ Watch & cook.** The video sits on top of the recipe. Every step has its timestamp, so one tap shows you exactly how the cook did it, and the step being played lights up.
+- **👩‍🍳 A cooking mode built for messy hands.** One big step at a time, swipe or arrow keys, a screen that stays on, and the video clip for the current step.
+- **⏱️ A real kitchen timer.** Durations in the steps ("8–10 minutes", "half an hour") become one-tap timers. Name them, run several at once, snooze with +1 min, and get a chime, a vibration and a notification when time's up.
+- **🛒 A shopping list that writes itself.** Tick what you already have, and the rest goes to your list with one tap. Share or copy it on the way to the shop.
+- **📄 Share it beautifully.** A printable PDF recipe card, Instagram-ready images (post and story), and links with rich previews on Facebook, X, WhatsApp, Messenger, Telegram, Pinterest, Threads and Reddit.
+- **⭐ Popular recipes from day one.** Polish classics and favourite videos, prepared with the same AI pipeline and credited to their creators.
+- **🌍 Polish & English.** One tap switches the interface; new recipes are generated in the language you use.
+- **🔒 Yours, on your device.** Recipes, favourites, progress and the shopping list stay in your browser. No account needed.
+- **🎨 Designed with care.** A dark kitchen art direction with 33 dish covers, 149 icons and food photography generated for this project.
+
+## A look inside
+
+<p align="center">
+  <img src="docs/screenshots/desktop-home.jpg" alt="Home screen on desktop with popular recipes" width="100%">
+</p>
+<p align="center">
+  <img src="docs/screenshots/desktop-recipe.jpg" alt="Recipe on desktop with the video, stats and ingredient checklist" width="100%">
+</p>
+<table>
+  <tr>
+    <td width="58%"><img src="docs/screenshots/pdf-card.jpg" alt="Printable PDF recipe card"></td>
+    <td width="42%"><img src="docs/screenshots/share-image.jpg" alt="Shareable recipe image for Instagram"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Printable PDF card</sub></td>
+    <td align="center"><sub>Shareable image (4:5 and 9:16)</sub></td>
+  </tr>
+</table>
+
+## How it works
+
+1. **Check the video.** Gemini first checks that the video really shows one dish being cooked. Reviews, compilations and vlogs are politely declined.
+2. **Write the recipe.** A second pass writes the recipe in the chosen language as structured JSON: title, ingredients, steps, notes and a timestamp for each step.
+3. **Keep it honest.** A quantity stays only if the model can quote where the cook says it, and timestamps must be in order and inside the video. Anything uncertain is left blank rather than guessed.
+4. **Make it delightful.** The app picks a dish cover, matches each ingredient to an icon, finds timers in the steps and links every step to its moment in the video.
+
+## Quick start
 
 ```sh
 npm ci
-cp .env.example .env.local
-# Set GEMINI_API_KEY in the ignored .env.local file.
-npm run dev
+cp .env.example .env.local   # add your GEMINI_API_KEY
+npm run dev                  # http://127.0.0.1:5173
 ```
 
-Next.js starts on http://127.0.0.1:5173. Generation works on Next.js/Vercel;
-shared storage and voting require Cloudflare bindings. Missing bindings return an
-explicit unavailable response, never a pretend successful save or vote.
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Development server on port 5173 |
+| `npm test` | Unit tests (pipeline, icons, timers, covers) |
+| `npm run build` | Production build |
+| `node --experimental-strip-types scripts/ingest-popular.mjs` | Prepares the popular recipes listed in `data/popular-videos.json` |
 
-For the Cloudflare runtime, set `GEMINI_API_KEY` in an ignored `.dev.vars` file,
-then run:
+Deployment to Vercel or Cloudflare (Workers, D1, R2), the shared library, voting and all limits are described in the **[technical guide](docs/TECHNICAL.md)**.
 
-```sh
-npm run db:migrate:local
-npm run dev:cloudflare
+## Under the hood
+
+- **Next.js 16 + React 19**, TypeScript, plain CSS design tokens, self-hosted Onest and Bricolage Grotesque fonts.
+- **Gemini** video understanding through the Interactions API; the key stays on the server.
+- **Local-first data**: `useSyncExternalStore` stores for the library, progress, shopping list and timers, validated with Zod.
+- **Watch & cook** with the YouTube IFrame API on `youtube-nocookie.com`, loaded only when you press play.
+- **Canvas-rendered** share images and a print stylesheet for the PDF card.
+- **PWA** with an offline fallback, plus optional Cloudflare storage for a shared, votable library.
+
+```
+app/            routes: home, recipe, cooking mode, PDF card, library, favourites, shopping, API
+components/app  shell, generation, sheets, watch & cook, timer, sharing
+components/screens  one file per screen
+lib/            Gemini pipeline, local library, i18n, icons, timers, covers
+data/           the curated list of popular videos
+public/         fonts, icon sprites, covers and photography
 ```
 
-To test the production Worker locally with the same database:
+## Popular recipes and their creators
 
-```sh
-npm run build:cloudflare
-npm run preview:cloudflare
-```
+The popular recipes are AI-written summaries of public videos. All credit for the cooking goes to their authors. Please watch, like and subscribe to them:
 
-Local D1/R2 state stays in `.wrangler`. The checked-in database UUID is a local
-placeholder. The compatibility date matches the versions of Wrangler and the Vite
-plugin pinned in this project; upgrade them together before advancing the date.
+| Recipe | Creator | Video |
+| --- | --- | --- |
+| Tradycyjne pierogi ruskie z okrasą ze śmietany | Tomasz Strzelczyk ODDASZFARTUCHA | [watch](https://www.youtube.com/watch?v=C_MBzyj2vuc) |
+| Domowy żurek na zakwasie z białą kiełbasą | SkutecznieTv | [watch](https://www.youtube.com/watch?v=JawgWAW1zno) |
+| Klasyczny domowy rosół drobiowy | KuchniaLidla.pl | [watch](https://www.youtube.com/watch?v=RbfKeQG_3dQ) |
+| Cienkie i elastyczne naleśniki | Menu Dorotki | [watch](https://www.youtube.com/watch?v=_iGj_Tz5A7k) |
+| Tradycyjne placki ziemniaczane | Anka Gotuje | [watch](https://www.youtube.com/watch?v=9RZWpWJS_mg) |
+| Puszysty i delikatny sernik | Orchideli | [watch](https://www.youtube.com/watch?v=vI6MFvxrRnU) |
 
-## Later deployment to Cloudflare
+More are queued in `data/popular-videos.json`. Run the ingest script again when your Gemini quota allows. Creators who would like a video removed can open an issue, and it will be taken down.
 
-No production resources are created by installing or building the app. Keep the
-existing Vercel deployment until the Cloudflare version has been verified.
+## Credits
 
-1. Create an R2 bucket named `cooking-tube-recipes` and a D1 database named
-   `cooking-tube-catalog` (or adjust the non-secret resource names in the template).
-2. Set `CLOUDFLARE_DATABASE_ID` in your shell/CI secret configuration. Run
-   `npm run cloudflare:config`; it writes ignored `wrangler.local.jsonc`.
-3. Apply `wrangler d1 migrations apply DB --remote --config wrangler.local.jsonc`.
-4. Set the Worker secret with `wrangler secret put GEMINI_API_KEY --config wrangler.local.jsonc`.
-5. Run `npm run build:cloudflare`, then
-   `wrangler deploy --config dist/server/wrangler.json`.
-6. Verify generation, reload/share a stored recipe, vote from two browsers,
-   install the PWA and open a saved recipe offline before retiring Vercel.
+- **Videos and recipes**: the creators listed above and on each recipe page. Videos stay on YouTube and play through YouTube's own player.
+- **AI**: recipes are generated with Google Gemini. Photography, dish covers and icons were generated for this project with OpenAI's image model via Codex.
+- **Fonts**: [Onest](https://github.com/simpals/onest) and [Bricolage Grotesque](https://github.com/ateliertriay/bricolage), SIL Open Font License 1.1 (see `public/fonts`).
+- **Icons**: [Lucide](https://lucide.dev) (ISC) and brand glyphs from [Simple Icons](https://simpleicons.org) (CC0 1.0).
 
-Use a dedicated bucket with public access disabled. The Worker serves recipe
-JSON through the validated API; browsers never receive R2 or Gemini credentials.
-Do not commit actual project/database/account IDs, `.env*`, `.dev.vars`, private
-keys or `wrangler.local.jsonc`. The Vercel upload also excludes local metadata.
-The legacy Sites plugin still has an identifier-free `.openai/hosting.example.json`
-fallback; application bindings now come from the Wrangler configuration.
+## License
 
-## Storage and voting
+CookingTube is released under the **[Apache License 2.0](LICENSE)**. You can use, change and share it, including commercially, as long as you keep the copyright notice and the **[NOTICE](NOTICE)** file, which credits the project. A visible "Based on CookingTube" with a link to this repository is warmly appreciated.
 
-- The budget is **200,000,000 UTF-8 bytes** of recipe JSON across both languages,
-  with a maximum of 65,536 bytes per recipe. This excludes Worker assets, D1
-  metadata/votes and device-local copies. Videos stay on YouTube.
-- Each `(video ID, language)` has one immutable object at
-  `recipes/{pl|en}/{videoId}.json`. Reopening a recipe avoids another AI request.
-- A SQLite trigger reserves capacity in the same transaction as a durable upload
-  outbox. Failed/interrupted R2 writes keep their reservation and payload in D1;
-  opening that recipe retries the exact same upload. Pending uploads are hidden
-  from the public listing. There is no automatic eviction of existing recipes.
-- A unique `(recipe, language, browser ID)` vote can be set to `1`, `-1` or removed
-  with `0`. Retries do not increment it. This is browser-level voting, not proof
-  of a unique person: clearing site data or using a different browser permits a
-  new vote. No IP addresses or accounts are collected for this feature.
-- D1 leases cap active generation at two requests across Worker instances and
-  six attempts per browser per hour. Leases expire after three minutes if a
-  request crashes. These limits do not replace provider account quotas.
+---
 
-## Video safeguards and timestamps
+<details>
+<summary><b>🇵🇱 Po polsku</b></summary>
 
-The server first asks Gemini to classify the actual video. Acceptance requires
-one cooking recipe, ingredients, preparation, confidence of at least 0.85 and at
-least two distinct in-range observations. Non-cooking, incomplete, unavailable,
-unsafe or uncertain material stops before the recipe-generation call. Videos
-over one hour are rejected. Both calls share a two-minute provider deadline.
+**CookingTube zamienia film kulinarny z YouTube w piękny przepis, a potem pozwala gotować razem z filmem.**
 
-The second call produces the recipe in the requested language. Quantities need
-supporting quotations. Step timestamps need an observation, chronological order
-and a position inside the assessed duration; invalid or missing timestamps become
-`null`. Timestamps come from model observations, not independently verified
-captions, and can be approximate. The player additionally checks the actual video
-duration before seeking. Private/unavailable videos and disabled embedding have
-an explicit fallback link to YouTube. Model classification reduces mistakes but
-cannot guarantee that every accepted video or generated instruction is correct.
+Wklejasz link, czekasz chwilę i dostajesz składniki, kroki, minutniki oraz moment w filmie dla każdego kroku. Do tego:
 
-## Language and frontend integration
+- **Oglądaj i gotuj**: film nad przepisem, a dotknięcie czasu przy kroku przewija do tego momentu.
+- **Tryb gotowania**: jeden duży krok naraz, gesty, ekran, który nie gaśnie, i fragment filmu dla bieżącego kroku.
+- **Minutnik**: czasy z kroków jednym dotknięciem, kilka minutników naraz, dźwięk, wibracja i powiadomienie.
+- **Lista zakupów**: odhacz, co masz w kuchni, a resztę dodasz jednym ruchem.
+- **Udostępnianie**: karta PDF, grafiki na Instagram i linki z podglądem w mediach społecznościowych.
+- **Popularne przepisy** z polskiej kuchni, z podziękowaniami dla autorów filmów.
+- **PL / EN** jednym przełącznikiem. Dane zostają w przeglądarce, bez konta.
 
-`lib/locale.ts` selects Polish for `pl` / `pl-*`; other preferred languages fall
-back to English. APIs use `Accept-Language`; `?lang=pl|en` or `X-App-Locale` selects
-an explicit variant. `hooks/use-app-locale.ts` provides the same browser-language
-selection for React without hydration mismatches. Generated `Recipe.language`
-records the language; public library entries and votes are separated by language.
-
-The backend and frontend modules have distinct files:
-
-- `lib/library.server.ts`: request-scoped D1/R2 access (never import into client code).
-- `lib/local-library.ts`: the browser's saved recipes, shopping and progress.
-- `lib/browser-identity.ts`: persistent anonymous UUID used in `X-Voter-Id`.
-- `components/app/watch-along.tsx`: embedded YouTube player and clickable timed steps.
-- `components/recipe-votes.tsx`: votes for a stored recipe; pass its `id` and `language`.
-- `components/shared-recipes.tsx`: public catalogue; its `onOpen(id, recipe)` callback
-  lets the interface save locally and navigate to the recipe.
-- `components/pwa-status.tsx`: installation, offline feedback and production service-worker registration.
-
-For generation, send `X-Voter-Id: voterId()` and `X-App-Locale` from the locale
-hook to `POST /api/recipe` with `{ "url": "<public YouTube URL>" }`. The response
-contains `recipe`, `saved` (shared-storage status), and an optional localized
-`warning`. Display that warning; still keep a local copy if shared storage fails.
-For a shared link, load `GET /api/library?id=<videoId>&lang=<locale>` before offering
-to generate the recipe again. `GET /api/library?lang=<locale>&offset=0` returns
-20 entries plus `nextOffset`; `POST /api/vote?lang=<locale>` accepts `{ id, value }`
-and the browser ID header.
-
-Integration of these components and translation of the existing screens are
-deferred while another agent finishes the interface. Mount `PwaStatus` in the
-application shell, `WatchAlong` and `RecipeVotes` on a real recipe, and
-`SharedRecipes` on the library screen. The service worker only registers after
-`PwaStatus` is mounted in a production build. The matching manifest/icons belong
-to the interface work. Existing local recipe storage should retain language
-variants before switching the UI locale.
-
-The PWA service worker caches same-origin application pages/assets and visited
-route responses. API requests, generated POST responses, votes, YouTube videos
-and third-party content are never cached. The offline fallback can also read the
-validated app library's localStorage format without loading React. Generating,
-voting, syncing the shared library and watching YouTube require a connection.
-The browser can evict local caches; offline copies are not a cloud backup.
-
-## Verification
-
-```sh
-npm test
-npx tsc --noEmit
-npm run build:vercel
-npm run build:cloudflare
-npm run cloudflare:types
-```
-
-Tests cover classification rejection, timestamp bounds, language selection and
-cache isolation, byte quotas with real SQLite constraints, upload recovery,
-idempotent votes, generation leases, request validation and credential isolation.
-Provider responses are mocked in automated tests; a live Gemini smoke test needs
-an API key and consumes quota. Test installability and offline navigation over
-HTTPS or localhost, with a production build (service workers are disabled in dev).
+Start: `npm ci`, wpisz `GEMINI_API_KEY` do `.env.local`, potem `npm run dev`. Licencja Apache 2.0 z wymogiem zachowania pliku NOTICE (atrybucja).
+</details>

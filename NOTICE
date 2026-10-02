@@ -1,0 +1,20 @@
+CookingTube
+Copyright 2026 Arkazzae
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+Redistributions and derivative works must keep this NOTICE file and give
+appropriate credit, for example: "Based on CookingTube by Arkazzae"
+with a link to the original repository.
+
+Third-party material included in this repository:
+
+- Onest font, Copyright 2022 The Onest Project Authors,
+  SIL Open Font License 1.1 (public/fonts/LICENSE-Onest.txt).
+- Bricolage Grotesque font, Copyright 2022 The Bricolage Grotesque Project Authors,
+  SIL Open Font License 1.1 (public/fonts/LICENSE-BricolageGrotesque.txt).
+- Brand glyphs from Simple Icons (https://simpleicons.org), CC0 1.0.
+- Lucide icons (https://lucide.dev), ISC License, used through the lucide-react package.
+
+Popular recipes in lib/popular-recipes.json are AI-generated summaries of public
+YouTube videos. The videos, and the recipes they show, belong to their creators,
+who are credited on every recipe page and in the README.
