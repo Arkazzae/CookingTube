@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/app/app-link";
 import { useState } from "react";
 import { Plus, Search, X } from "lucide-react";
 import { saveRecipe, useHydrated, useLibrary } from "@/lib/local-library";

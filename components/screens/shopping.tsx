@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/app/app-link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Check, Copy, Plus, Share2, Trash2 } from "lucide-react";

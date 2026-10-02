@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app/app-link";
 import { EmptyState } from "@/components/app/empty-state";
 import { serverDictionary } from "@/lib/locale-server";
 

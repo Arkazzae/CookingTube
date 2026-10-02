@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/app/app-link";
 import { useEffect, useRef } from "react";
 import { ArrowLeft, Clock3, ListChecks, ListOrdered, Printer, Users } from "lucide-react";
 import { findRecipe, useHydrated, useLibrary } from "@/lib/local-library";

@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/app/app-link";
 import { Clock3, Heart, ListChecks, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { removeRecipe, restoreRecipe, toggleFavorite, type SavedRecipe } from "@/lib/local-library";

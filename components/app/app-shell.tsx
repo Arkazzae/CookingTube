@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/app/app-link";
 import { usePathname } from "next/navigation";
 import { BookOpen, ChefHat, Heart, House, Plus, ShoppingBasket, Timer } from "lucide-react";
 import { Toaster } from "sonner";
