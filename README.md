@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <a href="https://cooking-tube.maciej-36d.workers.dev"><b>🌐 Try it live → cooking-tube.maciej-36d.workers.dev</b></a>
+  <a href="https://cookingtube.designhouse.me"><b>🌐 Try it live → cookingtube.designhouse.me</b></a>
 </p>
 
 <p align="center">
@@ -100,7 +100,7 @@ npm run dev                  # http://127.0.0.1:5173
 
 ## Learn more
 
-- **[Live app](https://cooking-tube.maciej-36d.workers.dev)**: running on Cloudflare Workers with D1 and R2.
+- **[Live app](https://cookingtube.designhouse.me)**: running on Cloudflare Workers with D1 and R2.
 - **[Technical guide](docs/TECHNICAL.md)**: deployment to Cloudflare (Workers, D1, R2), the shared library, voting and limits.
 - **[Architecture](docs/ARCHITECTURE.md)**: how the interface, local data, watch & cook, timers and sharing are built.
 - **[Credits](CREDITS.md)**: the creators behind the popular recipes, fonts, icons and AI.

@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <a href="https://cooking-tube.maciej-36d.workers.dev"><b>🌐 Wypróbuj na żywo → cooking-tube.maciej-36d.workers.dev</b></a>
+  <a href="https://cookingtube.designhouse.me"><b>🌐 Wypróbuj na żywo → cookingtube.designhouse.me</b></a>
 </p>
 
 <p align="center">
@@ -100,7 +100,7 @@ npm run dev                  # http://127.0.0.1:5173
 
 ## Więcej
 
-- **[Aplikacja na żywo](https://cooking-tube.maciej-36d.workers.dev)**: działa na Cloudflare Workers z D1 i R2.
+- **[Aplikacja na żywo](https://cookingtube.designhouse.me)**: działa na Cloudflare Workers z D1 i R2.
 - **[Przewodnik techniczny](docs/TECHNICAL.md)** (EN): wdrożenie na Cloudflare (Workers, D1, R2), wspólna biblioteka, głosowanie i limity.
 - **[Architektura](docs/ARCHITECTURE.md)** (EN): jak zbudowane są interfejs, dane lokalne, „oglądaj i gotuj”, minutniki i udostępnianie.
 - **[Podziękowania](CREDITS.md)** (EN): twórcy popularnych przepisów, fonty, ikony i AI.
