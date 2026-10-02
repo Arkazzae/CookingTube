@@ -140,7 +140,6 @@ function RecipeBody({ item, videoId }: { item: RecipeEntry; videoId: string | nu
           <dl className="stats">{stats.map(({ icon: Icon, label, value }) => <div key={label}><Icon size={20} strokeWidth={1.7} aria-hidden="true" /><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
           <div className="recipe-cta">
             <Link href={`/przepis/${id}/gotuj`} className="btn btn-primary btn-xl">{t.recipe.start} <ArrowRight size={20} /></Link>
-            <button className="icon-btn icon-btn--outline" onClick={() => setSharing(true)} aria-label={t.recipe.share}><Share2 size={20} /></button>
           </div>
         </div>
       </aside>
