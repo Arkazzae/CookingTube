@@ -6,6 +6,10 @@
   "compatibility_date": "2026-05-15",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true, "head_sampling_rate": 0.1 },
+  // Production address; Cloudflare manages its DNS record and certificate.
+  "routes": [{ "pattern": "cookingtube.designhouse.me", "custom_domain": true }],
+  // Keep the workers.dev address so links shared before the move still work; the Worker redirects it.
+  "workers_dev": true,
   "d1_databases": [{
     "binding": "DB", "database_name": "cooking-tube-catalog",
     // Local placeholder. Generate an ignored config for deployment.
