@@ -42,6 +42,18 @@ There is no model download or WebGPU requirement. The UI supports cancellation a
 
 The previous WebGPU experiment remains in `lib/local-recipe.ts` and `workers/recipe.worker.ts`, with a manual `build:worker` command. It is not imported by the current page or built during deployment. Legacy caption helpers and their tests remain for reference. The optional Cloudflare scripts are retained separately; the Gemini integration is verified on Next.js/Vercel.
 
+## Local configuration
+
+Keep API keys in `.env.local` (see `.env.example`). Git ignores environment
+files, private keys, local deployment metadata and tool state throughout the
+repository. Only templates without credentials or project identifiers belong
+in version control.
+
+The optional Cloudflare build uses `.openai/hosting.example.json` by default.
+To configure deployment-specific bindings, copy it to `.openai/hosting.json`
+and edit that ignored local file. The build reads the same configuration and
+copies it into the ignored `dist` output. Vercel does not upload `.openai`.
+
 ## Checks
 
 ```sh

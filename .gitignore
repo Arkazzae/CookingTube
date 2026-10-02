@@ -12,6 +12,25 @@ Thumbs.db
 # logs
 *.log
 
+# Credentials and machine-local service configuration at any depth
+.env*
+!.env.example
+.dev.vars*
+**/.openai/*
+!**/.openai/hosting.example.json
+.vercel/
+.wrangler/
+.sites-runtime/
+.codex/
+.agents/
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+*-service-account.json
+
 # local screenshots and other scratch output
 /artifacts/
 web/AGENTS.md
