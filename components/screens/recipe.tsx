@@ -75,7 +75,7 @@ function MissingRecipe({ id }: { id: string }) {
 
 function RecipeView({ item }: { item: RecipeEntry }) {
   const videoId = videoIdOf(item.recipe);
-  return videoId ? <WatchProvider videoId={videoId} recipe={item.recipe}><RecipeBody item={item} videoId={videoId} /></WatchProvider> : <RecipeBody item={item} videoId={null} />;
+  return videoId ? <WatchProvider videoId={videoId} recipe={item.recipe} knownLength={findPopular(item.id)?.videoSeconds ?? null}><RecipeBody item={item} videoId={videoId} /></WatchProvider> : <RecipeBody item={item} videoId={null} />;
 }
 
 function RecipeBody({ item, videoId }: { item: RecipeEntry; videoId: string | null }) {

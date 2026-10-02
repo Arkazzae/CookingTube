@@ -7,12 +7,17 @@ import { findPopular } from "@/lib/popular";
 import { VideoThumb } from "./media";
 import { useT } from "./locale";
 
-type Player = { seekTo(seconds: number, allowSeekAhead: boolean): void; playVideo(): void; pauseVideo(): void; getCurrentTime(): number; destroy(): void };
+export type Player = { seekTo(seconds: number, allowSeekAhead: boolean): void; playVideo(): void; pauseVideo(): void; getCurrentTime(): number; getDuration(): number; getPlayerState(): number; destroy(): void };
 type YouTubeApi = { Player: new (element: HTMLElement, options: Record<string, unknown>) => Player; PlayerState: { PLAYING: number } };
+
+/** Step moments are shown only when every one fits inside the video; one impossible moment means the timeline was guessed. */
+export function timelineFits(steps: { at: number | null }[], duration: number | null) {
+  return duration === null || steps.every(step => step.at === null || step.at < duration);
+}
 const page = () => window as unknown as { YT?: YouTubeApi; onYouTubeIframeAPIReady?: () => void };
 
 let api: Promise<YouTubeApi> | null = null;
-function loadApi() {
+export function loadApi() {
   // The IFrame API is fetched only after the viewer asks for the video.
   api ??= new Promise<YouTubeApi>((resolve, reject) => {
     const w = page();
@@ -29,14 +34,14 @@ function loadApi() {
 }
 
 type Watch = {
-  videoId: string; state: "idle" | "loading" | "ready" | "error"; playing: boolean; time: number; current: number; collapsed: boolean;
+  videoId: string; state: "idle" | "loading" | "ready" | "error"; playing: boolean; time: number; current: number; collapsed: boolean; timeline: boolean;
   host: React.RefObject<HTMLDivElement | null>; start: (at: number) => void; toggle: () => void; setCollapsed: (value: boolean) => void;
 };
 const Context = createContext<Watch | null>(null);
 export const useWatch = () => useContext(Context);
 
 /** Owns the recipe video: the player on top and the timestamps in the steps share it. */
-export function WatchProvider({ videoId, recipe, children }: { videoId: string; recipe: Recipe; children: React.ReactNode }) {
+export function WatchProvider({ videoId, recipe, knownLength = null, children }: { videoId: string; recipe: Recipe; knownLength?: number | null; children: React.ReactNode }) {
   const host = useRef<HTMLDivElement>(null);
   const player = useRef<Player | null>(null);
   const pending = useRef<number | null>(null);
@@ -44,6 +49,8 @@ export function WatchProvider({ videoId, recipe, children }: { videoId: string; 
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
+  const [length, setLength] = useState<number | null>(knownLength);
+  const timeline = recipe.steps.some(step => step.at !== null) && timelineFits(recipe.steps, length);
 
   const start = useCallback(async (at: number) => {
     if (player.current) { player.current.seekTo(at, true); player.current.playVideo(); return; }
@@ -59,7 +66,7 @@ export function WatchProvider({ videoId, recipe, children }: { videoId: string; 
         host: "https://www.youtube-nocookie.com", videoId,
         playerVars: { autoplay: 1, playsinline: 1, rel: 0, start: Math.floor(pending.current ?? 0) },
         events: {
-          onReady: (event: { target: Player }) => { setState("ready"); event.target.playVideo(); },
+          onReady: (event: { target: Player }) => { setState("ready"); setLength(event.target.getDuration() || null); event.target.playVideo(); },
           onStateChange: (event: { data: number }) => setPlaying(event.data === YT.PlayerState.PLAYING),
           onError: () => setState("error"),
         },
@@ -74,12 +81,12 @@ export function WatchProvider({ videoId, recipe, children }: { videoId: string; 
   }, [playing]);
   useEffect(() => () => player.current?.destroy(), []);
 
-  const current = playing || time > 0 ? recipe.steps.reduce<number>((active, step, i) => step.at !== null && step.at <= time + 0.5 ? i : active, -1) : -1;
+  const current = timeline && (playing || time > 0) ? recipe.steps.reduce<number>((active, step, i) => step.at !== null && step.at <= time + 0.5 ? i : active, -1) : -1;
   const value = useMemo<Watch>(() => ({
-    videoId, state, playing, time, current, collapsed, host, setCollapsed,
+    videoId, state, playing, time, current, collapsed, timeline, host, setCollapsed,
     start: at => void start(at),
     toggle: () => { if (!player.current) return void start(0); if (playing) player.current.pauseVideo(); else player.current.playVideo(); },
-  }), [videoId, state, playing, time, current, collapsed, start]);
+  }), [videoId, state, playing, time, current, collapsed, timeline, start]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
@@ -87,7 +94,7 @@ export function WatchPlayer({ recipe }: { recipe: Recipe }) {
   const t = useT();
   const watch = useWatch()!;
   const { state, playing, time, current, collapsed, host } = watch;
-  const hasStamps = recipe.steps.some(step => step.at !== null);
+  const hasStamps = watch.timeline;
   return <div className={`watch-player ${collapsed ? "is-collapsed" : ""} ${state !== "idle" ? "is-active" : ""}`}>
     <div className="watch-frame">
       <div ref={host} className="watch-host" />
@@ -122,8 +129,8 @@ export function WatchSteps({ recipe, done, onToggleDone, timers }: { recipe: Rec
       <div>
         <h3>{step.title}</h3>
         <p>{step.description}</p>
-        {((watch && step.at !== null) || timers[i].length > 0) && <div className="step-timers">
-          {watch && step.at !== null && <button className="chip chip--video" onClick={() => watch.start(step.at!)} aria-label={t.watch.seek(formatClock(step.at))}>
+        {((watch?.timeline && step.at !== null) || timers[i].length > 0) && <div className="step-timers">
+          {watch?.timeline && step.at !== null && <button className="chip chip--video" onClick={() => watch.start(step.at!)} aria-label={t.watch.seek(formatClock(step.at))}>
             <Play size={11} fill="currentColor" /> {formatClock(step.at)}
           </button>}
           {timers[i].map(x => <span key={x.seconds} className="chip chip--outline"><Clock3 size={13} />{x.label}</span>)}

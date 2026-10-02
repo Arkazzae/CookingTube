@@ -410,18 +410,19 @@ a.shop-group-title:hover{color:var(--accent)}
 .skeleton-list{height:240px;border-radius:var(--r-l);background:var(--surface)}
 
 /* ---------- Cooking mode ---------- */
-.cook{position:relative;z-index:1;overflow-x:clip;display:flex;flex-direction:column;min-height:100dvh;max-width:880px;margin:0 auto;padding:calc(12px + var(--safe-t)) var(--gutter) calc(16px + var(--safe-b))}
+/* Cooking mode fills exactly one screen: top bar, progress, video + step, navigation. Only the step panel scrolls. */
+.cook{position:relative;z-index:1;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;height:100dvh;overflow:hidden;max-width:1440px;margin:0 auto;padding:calc(10px + var(--safe-t)) var(--gutter) calc(12px + var(--safe-b))}
 .cook-top{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:12px}
 .cook-title{display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center}
 .cook-title strong{font-size:14px;font-weight:600;color:var(--text-2);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cook-progress{display:flex;gap:5px;margin-top:14px}
+.cook-progress{display:flex;gap:5px;margin:10px 0 12px}
 .cook-progress button{flex:1;height:18px;position:relative}
 .cook-progress button::before{content:"";position:absolute;left:0;right:0;top:6.5px;height:5px;border-radius:5px;background:var(--surface-3);transition:background-color .3s}
 .cook-progress button.is-done::before{background:rgba(143,223,106,.55)}
 .cook-progress button.is-current::before{background:var(--accent);box-shadow:0 0 12px rgba(143,223,106,.6)}
-.cook-awake{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;font-size:12px;color:var(--text-3)}
-.cook-awake svg{color:var(--gold)}
-.timer-tray{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cook-title .eyebrow{gap:6px}
+.cook-awake{color:var(--gold)}
+.timer-tray{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .timer{display:flex;align-items:center;gap:10px;padding:6px 6px 6px 6px;border-radius:999px;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line-2);animation:rise .3s var(--ease)}
 .timer-ring{--p:0;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;color:var(--gold);background:radial-gradient(closest-side,var(--surface-2) 76%,transparent 78%),conic-gradient(var(--gold) calc(var(--p) * 360deg),var(--surface-3) 0)}
 .timer-text{display:flex;flex-direction:column;line-height:1.15;padding-right:4px}
@@ -434,16 +435,30 @@ a.shop-group-title:hover{color:var(--accent)}
 .cook-actions{display:flex;gap:8px}
 .cook-top{grid-template-columns:auto 1fr auto}
 .icon-btn.is-on{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent-line)}
-.cook-video{margin-top:14px;animation:rise .3s var(--ease)}
-.cook-video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:var(--r);background:#000;box-shadow:var(--shadow)}
-.cook-video p,.cook-video-missing{margin-top:8px;font-size:12.5px;color:var(--text-3);text-align:center}
-.cook-step{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 0 32px;animation:step-in .45s var(--ease)}
-.cook-num{font-family:var(--display);font-size:clamp(72px,18vw,132px);font-weight:750;line-height:.85;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--accent-line);margin-bottom:18px}
-.cook-step h1{font-size:clamp(26px,6vw,42px);letter-spacing:-.03em}
-.cook-step p{margin-top:16px;font-size:clamp(19px,3.8vw,26px);line-height:1.55;color:var(--text);max-width:34ch}
-.cook-timers{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-.cook-nav{position:sticky;bottom:calc(12px + var(--safe-b));display:grid;grid-template-columns:1fr 1.7fr;gap:10px;padding-top:10px}
-.cook-finish{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px 0;animation:step-in .5s var(--ease)}
+.cook-step{padding:4px 0 12px;animation:step-in .4s var(--ease)}
+.cook-num{display:block;font-family:var(--display);font-size:clamp(40px,10vw,72px);font-weight:750;line-height:.9;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--accent-line);margin-bottom:8px}
+.cook-step h1{font-size:clamp(22px,5vw,36px);letter-spacing:-.03em}
+.cook-step p{margin-top:10px;font-size:clamp(17px,3.6vw,23px);line-height:1.55;color:var(--text);max-width:44ch}
+.cook-timers{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.cook-body{min-height:0;display:flex;flex-direction:column;gap:14px}
+.cook-body--finish{overflow-y:auto}
+.cook-media{flex:none}
+.cook-player .watch-frame{border-radius:var(--r);box-shadow:inset 0 0 0 1px var(--line),var(--shadow)}
+.cook-player .film-facade{border-radius:var(--r)}
+.cook-player-caption{margin-top:8px;font-size:12.5px;color:var(--text-3)}
+.cook-panel{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 28px),transparent)}
+@media (min-width:900px){
+  .cook{padding-left:32px;padding-right:32px}
+  .cook-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(340px,1fr);gap:36px;align-items:start}
+  .cook-step h1{font-size:38px}
+  .cook-step p{font-size:22px}
+  .cook-media{align-self:start}
+  .cook-panel{height:100%;padding-top:4px}
+  .cook-body--finish{display:block}
+}
+@media (max-height:640px) and (max-width:899px){.cook-media .watch-frame{max-height:34vh;aspect-ratio:auto;height:34vh}}
+.cook-nav{display:grid;grid-template-columns:1fr 1.7fr;gap:10px;padding-top:12px}
+.cook-finish{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px 0;animation:step-in .5s var(--ease)}
 .finish-photo{width:100%;max-width:520px;aspect-ratio:4/3;border-radius:var(--r-xl);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow)}
 .finish-photo img{width:100%;height:100%;object-fit:cover}
 .cook-finish h1{font-size:clamp(44px,10vw,64px);color:var(--accent);letter-spacing:-.04em}
@@ -736,8 +751,6 @@ button.timer-ring{border:0}
   .watch-bar{padding-right:12px}
   .steps>li.is-playing::after{left:-16px}
   .ingredient-amount{max-width:260px}
-  .cook{padding-top:28px}
-  .cook-step p{max-width:40ch}
 }
 @media (min-width:1400px){.rail--popular{grid-template-columns:repeat(4,1fr)}}
 
