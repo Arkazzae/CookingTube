@@ -1,5 +1,8 @@
-import { formatVideoRecipe, videoRecipeInstructions, recipeSchema } from "./recipe-format.ts";
+import { formatVideoRecipe, videoRecipeInstructions, videoRecipeSchema } from "./recipe-format.ts";
 import { limitedText } from "./video.ts";
+import { assessVideo, assessmentInstructions, assessmentSchema } from "./video-assessment.ts";
+
+import type { AppLocale } from "./locale.ts";
 
 export class GeminiError extends Error {
   status: number;
@@ -23,21 +26,29 @@ export function readGeminiOutput(data: Interaction): string {
   return output;
 }
 
-export async function generateRecipe(id: string, signal?: AbortSignal) {
+export async function generateRecipe(id: string, signal?: AbortSignal, locale: AppLocale = "pl") {
   if (!/^[\w-]{11}$/.test(id)) throw new GeminiError("Wklej prawidłowy link do filmu z YouTube.", 400);
-  const { apiKey, model } = geminiConfig();
   const timeout = AbortSignal.timeout(120_000);
+  const combined = signal ? AbortSignal.any([signal, timeout]) : timeout;
+  const assessment = assessVideo(await videoInteraction(id, assessmentInstructions, assessmentSchema, 1800, combined));
+  const instructions = locale === "pl" ? videoRecipeInstructions : videoRecipeInstructions.replace(/PO POLSKU/gi, "po angielsku").replace(/polskie nazwy/g, "angielskie nazwy") + "\nAll user-facing recipe content MUST be in English: title, description, ingredients, amounts, steps and notes. Keep evidence in the original language.";
+  const output = await videoInteraction(id, instructions, videoRecipeSchema, 6000, combined);
+  return { ...formatVideoRecipe(output, id, assessment.durationSeconds), language: locale };
+}
+
+async function videoInteraction(id: string, instructions: string, schema: object, maxTokens: number, signal: AbortSignal) {
+  const { apiKey, model } = geminiConfig();
   const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
     method: "POST", redirect: "manual",
-    signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+    signal,
     headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
     body: JSON.stringify({
       model, input: [
         { type: "video", uri: `https://www.youtube.com/watch?v=${id}` },
-        { type: "text", text: "Przygotuj przepis z tego filmu zgodnie z instrukcjami. Zwróć cały przepis w jednym JSON." },
-      ], system_instruction: videoRecipeInstructions, store: false,
-      generation_config: { max_output_tokens: 6000, thinking_level: "low", thinking_summaries: "none" },
-      response_format: { type: "text", mime_type: "application/json", schema: recipeSchema },
+        { type: "text", text: "Przeanalizuj ten film zgodnie z instrukcjami. Zwróć wynik w jednym JSON." },
+      ], system_instruction: instructions, store: false,
+      generation_config: { max_output_tokens: maxTokens, thinking_level: "low", thinking_summaries: "none" },
+      response_format: { type: "text", mime_type: "application/json", schema },
     }),
   });
   if (!response.ok) {
@@ -50,5 +61,5 @@ export async function generateRecipe(id: string, signal?: AbortSignal) {
     throw new GeminiError("Nie udało się teraz przygotować przepisu. Spróbuj ponownie za chwilę.");
   }
   const data = JSON.parse(await limitedText(response, 200_000)) as Interaction;
-  return formatVideoRecipe(readGeminiOutput(data), id);
+  return readGeminiOutput(data);
 }
