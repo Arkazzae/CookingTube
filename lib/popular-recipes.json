@@ -159,32 +159,32 @@
      {
       "title": "Prepare the dough",
       "description": "Pour flour onto the board, make a well, add water, and knead into a smooth dough.",
-      "at": 28
+      "at": null
      },
      {
       "title": "Fry the onion",
       "description": "Melt butter in a pan and fry chopped onion until golden.",
-      "at": 397
+      "at": null
      },
      {
       "title": "Prepare the filling",
       "description": "Combine mashed potatoes, fried onion, cottage cheese, salt, and pepper in a bowl, then mix well.",
-      "at": 490
+      "at": null
      },
      {
       "title": "Form the pierogi",
       "description": "Roll out small pieces of dough, place filling inside, and pinch the edges closed.",
-      "at": 707
+      "at": null
      },
      {
       "title": "Cook the pierogi",
       "description": "Boil the pierogi in a pot of water until cooked.",
-      "at": 947
+      "at": null
      },
      {
       "title": "Serve",
       "description": "Plate the cooked pierogi, top with sour cream and melted butter or pan drippings, and enjoy.",
-      "at": 1030
+      "at": null
      }
     ],
     "notes": [
@@ -193,7 +193,8 @@
     "sourceUrl": "https://www.youtube.com/watch?v=C_MBzyj2vuc",
     "author": "Tomasz Strzelczyk ODDASZFARTUCHA"
    }
-  }
+  },
+  "videoSeconds": 738
  },
  {
   "id": "JawgWAW1zno",
@@ -430,52 +431,52 @@
      {
       "title": "Cook the white sausage",
       "description": "Place the white sausage in a pot along with 1 bay leaf, 3-4 allspice berries, 4-5 black peppercorns, 1 flat teaspoon of salt, and 1 liter of water. Cover and simmer on low heat.",
-      "at": 128
+      "at": null
      },
      {
       "title": "Chop onions, bacon, and sausage",
       "description": "Dice the onion, cut the smoked sausage and peeled white sausage into cubes or half-slices, and dice the smoked bacon.",
-      "at": 208
+      "at": null
      },
      {
       "title": "Fry bacon, sausage, and mushrooms",
       "description": "Heat a pan and render the bacon. Add the smoked sausage and a few soaked mushrooms, frying until the fat renders and the meats begin to brown.",
-      "at": 240
+      "at": null
      },
      {
       "title": "Add onion and garlic",
       "description": "Add the diced onion to the pan and fry until translucent. Then add 2 minced or pressed garlic cloves and fry until they release their aroma.",
-      "at": 323
+      "at": null
      },
      {
       "title": "Add marjoram",
       "description": "Add 2 teaspoons of marjoram to the pan and fry briefly with the meat and vegetables.",
-      "at": 352
+      "at": null
      },
      {
       "title": "Remove white sausage",
       "description": "Remove the boiled white sausage from the simmering water and set aside to cool slightly for a few minutes.",
-      "at": 420
+      "at": null
      },
      {
       "title": "Combine meats and broth",
       "description": "Add the fried bacon, sausage, onion, and mushrooms into the remaining hot broth. Cover and simmer on low heat for about 10 minutes.",
-      "at": 428
+      "at": null
      },
      {
       "title": "Prepare cream and flour mixture",
       "description": "In a small container, mix sour cream with a tablespoon of flour until smooth, tempering it with a few spoonfuls of hot broth before adding.",
-      "at": 510
+      "at": null
      },
      {
       "title": "Add rye soup starter",
       "description": "Stir the rye soup starter (zakwas) and pour 500 ml of it into the soup pot.",
-      "at": 551
+      "at": null
      },
      {
       "title": "Thicken with cream",
       "description": "Stir the tempered cream mixture into the soup and bring it to a simmer until the soup thickens.",
-      "at": 618
+      "at": null
      },
      {
       "title": "Slice white sausage and serve",
@@ -489,7 +490,8 @@
     "sourceUrl": "https://www.youtube.com/watch?v=JawgWAW1zno",
     "author": "SkutecznieTv"
    }
-  }
+  },
+  "videoSeconds": 504
  },
  {
   "id": "RbfKeQG_3dQ",
@@ -740,7 +742,8 @@
     "sourceUrl": "https://www.youtube.com/watch?v=RbfKeQG_3dQ",
     "author": "KuchniaLidla.pl"
    }
-  }
+  },
+  "videoSeconds": 465
  },
  {
   "id": "_iGj_Tz5A7k",
@@ -859,32 +862,32 @@
      {
       "title": "Crack and beat the eggs",
       "description": "Crack the eggs into a bowl and whisk them well.",
-      "at": 140
+      "at": null
      },
      {
       "title": "Add salt",
       "description": "Add a pinch of salt to the eggs and whisk again.",
-      "at": 222
+      "at": null
      },
      {
       "title": "Add flour and milk gradually",
       "description": "Sift in some flour, then pour in about half of the milk, whisking, and continue sifting in the remaining flour and milk while mixing.",
-      "at": 334
+      "at": null
      },
      {
       "title": "Add oil",
       "description": "Pour two tablespoons of oil into the batter and mix thoroughly.",
-      "at": 408
+      "at": null
      },
      {
       "title": "Rest the batter",
       "description": "Let the batter rest for about 20 minutes so it thickens properly.",
-      "at": 542
+      "at": null
      },
      {
       "title": "Fry the crepes",
       "description": "Heat a pan, grease it with oil before the first crepe, pour in the batter with a quick swirling motion, and fry on both sides until golden.",
-      "at": 635
+      "at": null
      }
     ],
     "notes": [
@@ -893,7 +896,8 @@
     "sourceUrl": "https://www.youtube.com/watch?v=_iGj_Tz5A7k",
     "author": "Menu Dorotki"
    }
-  }
+  },
+  "videoSeconds": 619
  },
  {
   "id": "9RZWpWJS_mg",
@@ -1024,32 +1028,32 @@
      {
       "title": "Grating potatoes",
       "description": "Peel, wash, and grate the potatoes on a grater.",
-      "at": 56
+      "at": null
      },
      {
       "title": "Grating onion",
       "description": "Peel the onion and grate it directly into the potatoes.",
-      "at": 126
+      "at": null
      },
      {
       "title": "Adding ingredients",
       "description": "Add eggs, wheat flour, salt, and a pinch of pepper to the potato and onion mixture.",
-      "at": 149
+      "at": null
      },
      {
       "title": "Mixing",
       "description": "Mix everything thoroughly. If the mixture is too thin, add another heaping spoonful of flour.",
-      "at": 221
+      "at": null
      },
      {
       "title": "Frying",
       "description": "Heat olive oil in a pan, then use a spoon to place portions of the batter onto the pan.",
-      "at": 240
+      "at": null
      },
      {
       "title": "Flipped over",
       "description": "Flip the pancakes when one side becomes golden brown so they are golden on both sides.",
-      "at": 317
+      "at": null
      }
     ],
     "notes": [
@@ -1058,7 +1062,8 @@
     "sourceUrl": "https://www.youtube.com/watch?v=9RZWpWJS_mg",
     "author": "Anka Gotuje"
    }
-  }
+  },
+  "videoSeconds": 255
  },
  {
   "id": "vI6MFvxrRnU",
@@ -1266,47 +1271,47 @@
      {
       "title": "Prepare the dough",
       "description": "Mix flour, soft butter, icing sugar, 3 egg yolks, and baking powder briefly until combined.",
-      "at": 25
+      "at": null
      },
      {
       "title": "Spread the dough",
       "description": "Spread the dough evenly on a baking tray lined with baking paper (24 x 35 cm).",
-      "at": 42
+      "at": null
      },
      {
       "title": "Bake the base",
       "description": "Bake the base at 180°C without convection (or 160°C with convection) for 15-20 minutes until golden.",
-      "at": 99
+      "at": null
      },
      {
       "title": "Whip egg whites",
       "description": "Whip 9 egg whites until stiff, then gradually add 1 cup of sugar while continuing to whip.",
-      "at": 148
+      "at": null
      },
      {
       "title": "Prepare the cheese mass",
       "description": "In a large bowl, combine cream cheese, vanilla cheese, 6 egg yolks, vanilla sugar, pudding powders, milk, and vegetable oil. Mix well with a whisk.",
-      "at": 326
+      "at": null
      },
      {
       "title": "Combine mass with egg whites",
       "description": "Pour the cheese mixture into the whipped egg whites and mix gently until combined.",
-      "at": 427
+      "at": null
      },
      {
       "title": "Pour into the pan",
       "description": "Pour the cheesecake mass over the baked base and smooth the top.",
-      "at": 534
+      "at": null
      },
      {
       "title": "Bake the cheesecake",
       "description": "Bake at 160°C without convection (or 150°C with convection) for 50-60 minutes.",
-      "at": 554
+      "at": null
      },
      {
       "title": "Cool and serve",
       "description": "Turn off the oven, leave the door slightly open to cool, then slice once cooled.",
-      "at": 643
+      "at": null
      }
     ],
     "notes": [
@@ -1316,6 +1321,7 @@
     "sourceUrl": "https://www.youtube.com/watch?v=vI6MFvxrRnU",
     "author": "Orchideli"
    }
-  }
+  },
+  "videoSeconds": 481
  }
 ]

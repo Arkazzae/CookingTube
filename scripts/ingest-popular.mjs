@@ -59,7 +59,8 @@ async function ingest(video) {
     try {
       const generated = await generateRecipe(video.id);
       const recipe = recipeResultSchema.parse(generated);
-      return { id: video.id, category: video.category, dish: video.dish, ...meta, thumb: await bestThumb(video.id), ingestedAt: new Date().toISOString().slice(0, 10), recipe: { ...recipe, author: meta.author } };
+      const videoSeconds = (await import("../lib/youtube-length.ts").then(m => m.youtubeLength(video.id))) ?? undefined;
+      return { id: video.id, category: video.category, dish: video.dish, ...meta, videoSeconds, thumb: await bestThumb(video.id), ingestedAt: new Date().toISOString().slice(0, 10), recipe: { ...recipe, author: meta.author } };
     } catch (error) {
       // Overload and quota errors are temporary; validation failures are final.
       if (attempt >= 4 || ![429, 503].includes(error?.status)) throw error;

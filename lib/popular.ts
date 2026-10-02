@@ -7,6 +7,8 @@ export type PopularRecipe = {
   id: string; category: PopularCategory; dish: string; videoTitle: string; author: string; ingestedAt: string; recipe: Recipe;
   thumb?: "maxresdefault" | "hq720" | "sddefault" | "hqdefault";
   translations?: { en?: Recipe };
+  /** The video's real length from YouTube, used to check step timestamps. */
+  videoSeconds?: number;
 };
 
 export const popularRecipes = data as PopularRecipe[];
