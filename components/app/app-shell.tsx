@@ -11,7 +11,7 @@ import { GenerationProvider, useGeneration } from "./generation";
 import { GenerationOverlay } from "./generation-overlay";
 import { LinkForm } from "./link-form";
 import { Sheet } from "./sheet";
-import { BuiltBy, Wordmark } from "./brand";
+import { AppFooter, BuiltBy, Wordmark } from "./brand";
 import { LanguageSwitch, LocaleProvider, useT } from "./locale";
 import { TimerProvider, useTimerCenter } from "./timers";
 
@@ -39,8 +39,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     {!immersive && <Sidebar pathname={pathname} />}
     <main id="tresc" className="shell-main">
       {children}
-      {/* Phones have no sidebar, so the credit closes every page instead. */}
-      {!immersive && <footer className="shell-credit"><BuiltBy label={t.shell.builtBy} /></footer>}
+      {!immersive && <AppFooter builtBy={t.shell.builtBy} license={t.shell.license} source={t.shell.source} />}
     </main>
     {!immersive && <BottomNav pathname={pathname} />}
     <GenerationOverlay />

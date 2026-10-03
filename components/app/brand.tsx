@@ -1,3 +1,5 @@
+import { BrandIcon } from "./brand-icons";
+
 export function BrandMark({ size = 30 }: { size?: number }) {
   return <svg className="brand-mark" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
     <path d="M13 51C13 27 27 13 51 13c0 24-14 38-38 38Z" fill="currentColor" />
@@ -11,6 +13,7 @@ export function Wordmark() {
 }
 
 export const DESIGN_HOUSE_URL = "https://designhouse.me";
+export const SOURCE_URL = "https://github.com/designhouseme/CookingTube";
 
 /** The Design House mark from designhouse.me: three squares, lime on dark and ink on paper. */
 export function DesignHouseMark({ width = 20, color = "#e6ff32" }: { width?: number; color?: string }) {
@@ -26,4 +29,20 @@ export function BuiltBy({ label, className = "" }: { label: string; className?: 
   return <a className={`built-by ${className}`} href={DESIGN_HOUSE_URL} target="_blank" rel="noopener noreferrer">
     <span>{label}</span><DesignHouseMark /><b>Design House</b>
   </a>;
+}
+
+/** Closes every page: the Design House logo, copyright, licence and the source code. */
+export function AppFooter({ builtBy, license, source }: { builtBy: string; license: string; source: string }) {
+  const external = { target: "_blank", rel: "noopener noreferrer" } as const;
+  return <footer className="app-footer">
+    <a className="app-footer-logo" href={DESIGN_HOUSE_URL} {...external}>
+      <span>{builtBy}</span>
+      <img src="/images/design-house.svg" alt="Design House" width={136} height={17} loading="lazy" />
+    </a>
+    <p className="app-footer-meta">
+      <span>© 2026 Design House</span>
+      <a href={`${SOURCE_URL}/blob/master/LICENSE`} {...external}>{license}</a>
+      <a href={SOURCE_URL} {...external}><BrandIcon brand="github" size={14} />{source}</a>
+    </p>
+  </footer>;
 }

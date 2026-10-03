@@ -14,7 +14,7 @@ const pl = {
     sheetTitle: "Nowy przepis z filmu", sheetDescription: "Wklej link do publicznego filmu z YouTube — także Shorts.",
     tips: ["Najlepiej działają filmy z jednym przepisem, w których widać składniki i przygotowanie.", "Przepis zapisze się w Twojej bibliotece na tym urządzeniu."],
     close: "Zamknij",
-    builtBy: "Zbudowane przez",
+    builtBy: "Zbudowane przez", license: "Licencja Apache 2.0", source: "Kod na GitHubie",
   },
   form: {
     label: "Link do filmu z YouTube", placeholder: "Wklej link do filmu z YouTube…", paste: "Wklej", clear: "Wyczyść link", submit: "Przygotuj przepis",
@@ -176,7 +176,7 @@ const en: Dictionary = {
     sheetTitle: "New recipe from a video", sheetDescription: "Paste a link to a public YouTube video — Shorts work too.",
     tips: ["Videos with a single recipe that show the ingredients and preparation work best.", "The recipe will be saved to your library on this device."],
     close: "Close",
-    builtBy: "Built by",
+    builtBy: "Built by", license: "Apache 2.0 licence", source: "Source on GitHub",
   },
   form: {
     label: "YouTube video link", placeholder: "Paste a YouTube video link…", paste: "Paste", clear: "Clear link", submit: "Make the recipe",
