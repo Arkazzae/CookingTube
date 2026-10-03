@@ -121,7 +121,7 @@ npm run dev                  # http://127.0.0.1:5173
   </a>
 </p>
 
-CookingTube was designed and built by **[Design House](https://designhouse.me)**: websites, automations, video and apps for businesses. Want something like this for your company? Write to [hello@designhouse.me](mailto:hello@designhouse.me).
+CookingTube was designed and built by **[Design House](https://designhouse.me)**: websites, automations, video and apps for businesses. Want something like this for your company? Write to [maciej@designhouse.me](mailto:maciej@designhouse.me).
 
 ## License
 
