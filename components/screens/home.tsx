@@ -4,7 +4,7 @@ import { ArrowUpRight, Info, LayoutGrid, Timer } from "lucide-react";
 import { useState } from "react";
 import { findRecipe, useHydrated, useLibrary } from "@/lib/local-library";
 import { popularCategories, popularRecipes, type PopularCategory } from "@/lib/popular";
-import { Wordmark } from "@/components/app/brand";
+import { BuiltBy, Wordmark } from "@/components/app/brand";
 import { LinkForm } from "@/components/app/link-form";
 import { CategoryIcon, type CategoryIconName } from "@/components/app/media";
 import { RecipeCard } from "@/components/app/recipe-card";
@@ -97,6 +97,7 @@ export function HomeScreen() {
     <Sheet open={about} onClose={() => setAbout(false)} title={t.home.aboutTitle} description={t.home.aboutDescription}>
       <HowItWorks compact />
       <p className="sheet-small">{t.home.aboutText}</p>
+      <BuiltBy label={t.shell.builtBy} className="sheet-credit" />
       <div className="sheet-lang"><span>{t.nav.language}</span><LanguageSwitch /></div>
     </Sheet>
   </div>;

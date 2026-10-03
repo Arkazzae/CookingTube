@@ -19,6 +19,7 @@ Creators who would like a video removed can open an issue, and it will be taken 
 
 ## Software, design and AI
 
+- **Design and development**: [Design House](https://designhouse.me) designed and built CookingTube.
 - **Videos and recipes**: the creators listed above and on each recipe page. Videos stay on YouTube and play through YouTube's own player.
 - **AI**: recipes are generated with Google Gemini. Photography, dish covers and icons were generated for this project with OpenAI's image model via Codex.
 - **Fonts**: [Onest](https://github.com/simpals/onest) and [Bricolage Grotesque](https://github.com/ateliertriay/bricolage), SIL Open Font License 1.1 (see `public/fonts`).

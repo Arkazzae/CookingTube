@@ -5,6 +5,7 @@ import { ArrowLeft, Clock3, ListChecks, ListOrdered, Printer, Users } from "luci
 import { findRecipe, useHydrated, useLibrary } from "@/lib/local-library";
 import { recipeCover } from "@/lib/recipe-cover";
 import { formatClock } from "@/lib/step-timers";
+import { DesignHouseMark } from "@/components/app/brand";
 import { IngredientIcon } from "@/components/app/media";
 import { useLocale, useT } from "@/components/app/locale";
 import { RecipeScreen } from "./recipe";
@@ -89,6 +90,7 @@ export function PrintScreen({ id }: { id: string }) {
       <footer className="paper-foot">
         <span>{t.card2.made} · {pageUrl.replace(/^https?:\/\//, "")}</span>
         {recipe.sourceUrl && <span>{t.card2.source}: {recipe.sourceUrl.replace(/^https?:\/\//, "")}</span>}
+        <span className="paper-credit">{t.shell.builtBy} <DesignHouseMark width={14} color="#13241a" /><b>Design House</b> · designhouse.me</span>
       </footer>
     </article>
   </div>;

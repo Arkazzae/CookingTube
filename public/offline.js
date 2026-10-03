@@ -5,6 +5,7 @@ const text = (pl, en) => polish ? pl : en;
 document.querySelector("#title").textContent = text("Jesteś offline.", "You're offline.");
 document.querySelector("#message").textContent = text("Zapisane przepisy są nadal na tym urządzeniu. Filmy i głosowanie wymagają internetu.", "Your saved recipes are still on this device. Videos and voting need an internet connection.");
 document.querySelector("#retry").textContent = text("Otwórz przepisy", "Open recipes");
+document.querySelector("#built-by").textContent = text("Zbudowane przez", "Built by");
 function element(tag, value) { const node = document.createElement(tag); node.textContent = String(value); return node; }
 try {
   const state = JSON.parse(localStorage.getItem("cookingtube:v1") || "{}");

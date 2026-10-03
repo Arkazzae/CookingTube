@@ -1,6 +1,7 @@
 # CookingTube — architecture
 
 An overview of the interface. Deployment, storage and the API are covered in the [technical guide](TECHNICAL.md).
+CookingTube is designed and built by [Design House](https://designhouse.me).
 
 ## Stack
 

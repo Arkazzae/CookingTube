@@ -109,6 +109,12 @@ img{display:block;max-width:100%}
 .wordmark{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:-.03em}
 .wordmark b{font-weight:700;color:var(--accent)}
 .brand-mark{color:var(--accent);flex-shrink:0}
+.built-by{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-3);transition:color .2s}
+.built-by .dh-mark{flex-shrink:0}
+.built-by b{font-weight:650;color:var(--text-2);transition:color .2s}
+.built-by:hover b{color:var(--text)}
+.shell-credit{display:flex;justify-content:center;padding:36px var(--gutter) 8px}
+.sheet-credit{margin-top:14px}
 .bottom-nav{position:fixed;z-index:50;left:12px;right:12px;bottom:calc(10px + var(--safe-b));height:68px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;padding:0 6px;border-radius:24px;
   background:rgba(19,27,21,.86);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);box-shadow:inset 0 0 0 1px var(--line-2),0 18px 40px -12px rgba(0,0,0,.8)}
 .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:550;color:var(--text-3);padding:8px 0;transition:color .2s}
@@ -664,6 +670,8 @@ button.timer-ring{border:0}
 .paper-time{font-size:11px;font-weight:600;color:var(--leaf)}
 .paper-steps p{font-size:13px;line-height:1.55;color:#2b3a30}
 .paper-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 18px;margin-top:26px;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-2)}
+.paper-credit{display:inline-flex;align-items:center;gap:5px}
+.paper-credit b{color:var(--ink);font-weight:650}
 @media (max-width:700px){.paper{padding:26px 20px}.paper-intro,.paper-body{grid-template-columns:1fr}.print-cover{order:-1}}
 @media print{
   @page{size:A4;margin:12mm}
@@ -746,6 +754,9 @@ button.timer-ring{border:0}
   .sidebar-note img{aspect-ratio:16/8;width:100%;object-fit:cover;opacity:.85}
   .sidebar-note p{padding:12px 14px 14px;font-size:12.5px;color:var(--text-3);line-height:1.55}
   .sidebar-note strong{display:block;color:var(--text-2);font-weight:650;margin-bottom:2px}
+  .sidebar-foot .built-by{justify-self:start;margin-left:6px}
+  /* The sidebar carries the credit on wide screens. */
+  .shell-credit{display:none}
   .page{padding-top:36px}
   .page-head{padding-top:12px}
   .page-home{padding-top:32px}

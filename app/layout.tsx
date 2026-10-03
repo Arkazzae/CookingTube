@@ -11,6 +11,10 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: t.htmlTitle, template: "%s · CookingTube" },
     description: t.description,
     applicationName: "CookingTube",
+    // Designed and built by Design House.
+    authors: [{ name: "Design House", url: "https://designhouse.me" }],
+    creator: "Design House",
+    publisher: "Design House",
     manifest: "/manifest.webmanifest",
     icons: { icon: "/favicon.svg", shortcut: "/favicon.svg", apple: "/icons/app-180.png" },
     appleWebApp: { capable: true, title: "CookingTube", statusBarStyle: "black-translucent" },

@@ -1,6 +1,6 @@
 /* Public, same-origin application shell only. Never cache API responses, votes,
    generation requests, YouTube video, or third-party content. */
-const CACHE = "cooking-tube-pwa-v1";
+const CACHE = "cooking-tube-pwa-v2";
 const PAGES = ["/", "/przepisy", "/ulubione", "/zakupy"];
 const CORE = [...PAGES, "/offline.html", "/offline.js", "/manifest.webmanifest", "/icons/app-192.png", "/icons/app-512.png", "/icons/app-maskable-512.png"];
 const isAsset = path => /^\/(?:_next\/static\/|assets\/|icons\/|fonts\/|images\/)/.test(path) || ["/offline.js", "/favicon.svg", "/manifest.webmanifest"].includes(path);

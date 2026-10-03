@@ -18,6 +18,7 @@
   <img alt="Gemini" src="https://img.shields.io/badge/AI-Gemini-8fdf6a">
   <img alt="PWA" src="https://img.shields.io/badge/PWA-do%20zainstalowania-8fdf6a">
   <img alt="Licencja: Apache 2.0" src="https://img.shields.io/badge/licencja-Apache%202.0-f2c14e">
+  <a href="https://designhouse.me"><img alt="Zbudowane przez Design House" src="https://img.shields.io/badge/zbudowane%20przez-Design%20House-e6ff32"></a>
 </p>
 
 <p align="center">
@@ -108,6 +109,19 @@ npm run dev                  # http://127.0.0.1:5173
 - **[Przewodnik techniczny](docs/TECHNICAL.md)** (EN): wdrożenie na Cloudflare (Workers, D1, R2), wspólna biblioteka, głosowanie i limity.
 - **[Architektura](docs/ARCHITECTURE.md)** (EN): jak zbudowane są interfejs, dane lokalne, „oglądaj i gotuj”, minutniki i udostępnianie.
 - **[Podziękowania](CREDITS.md)** (EN): twórcy popularnych przepisów, fonty, ikony i AI.
+
+## Zbudowane przez Design House
+
+<p align="center">
+  <a href="https://designhouse.me">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/design-house-logo-dark.png">
+      <img alt="Design House" src="docs/design-house-logo-light.png" width="320">
+    </picture>
+  </a>
+</p>
+
+CookingTube zaprojektowało i zbudowało **[Design House](https://designhouse.me)**: strony, automatyzacje, wideo i aplikacje dla polskich firm. Chcesz coś podobnego dla swojej firmy? Napisz na [hello@designhouse.me](mailto:hello@designhouse.me).
 
 ## Licencja
 

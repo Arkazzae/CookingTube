@@ -18,6 +18,7 @@
   <img alt="Gemini" src="https://img.shields.io/badge/AI-Gemini-8fdf6a">
   <img alt="PWA" src="https://img.shields.io/badge/PWA-installable-8fdf6a">
   <img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-f2c14e">
+  <a href="https://designhouse.me"><img alt="Built by Design House" src="https://img.shields.io/badge/built%20by-Design%20House-e6ff32"></a>
 </p>
 
 <p align="center">
@@ -108,6 +109,19 @@ npm run dev                  # http://127.0.0.1:5173
 - **[Technical guide](docs/TECHNICAL.md)**: deployment to Cloudflare (Workers, D1, R2), the shared library, voting and limits.
 - **[Architecture](docs/ARCHITECTURE.md)**: how the interface, local data, watch & cook, timers and sharing are built.
 - **[Credits](CREDITS.md)**: the creators behind the popular recipes, fonts, icons and AI.
+
+## Built by Design House
+
+<p align="center">
+  <a href="https://designhouse.me">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/design-house-logo-dark.png">
+      <img alt="Design House" src="docs/design-house-logo-light.png" width="320">
+    </picture>
+  </a>
+</p>
+
+CookingTube was designed and built by **[Design House](https://designhouse.me)**: websites, automations, video and apps for businesses. Want something like this for your company? Write to [hello@designhouse.me](mailto:hello@designhouse.me).
 
 ## License
 

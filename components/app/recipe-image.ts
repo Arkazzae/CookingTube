@@ -7,6 +7,8 @@ export type ImageFormat = "post" | "story";
 const sizes = { post: { w: 1080, h: 1350, photo: 720, ingredients: 8 }, story: { w: 1080, h: 1920, photo: 1040, ingredients: 12 } };
 const C = { bg: "#0a0f0b", surface: "#152017", text: "#eef3ea", text2: "#b6c1b2", text3: "#8a9686", accent: "#8fdf6a", ink: "#0c1a07", gold: "#f2c14e" };
 const LEAF = "M13 51C13 27 27 13 51 13c0 24-14 38-38 38Z", PLAY = "M28 25.5v13l11-6.5Z";
+// Design House mark (designhouse.me): [x, y, side] of its three squares in a 150.3-wide box.
+const DH_SQUARES = [[73.18, 0, 31.73], [0, 31.82, 73.39], [104.8, 31.81, 45.5]] as const;
 
 function load(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -49,6 +51,12 @@ function brand(ctx: CanvasRenderingContext2D, x: number, y: number, scale: numbe
   ctx.fillStyle = C.bg; ctx.fill(new Path2D(PLAY));
   ctx.strokeStyle = C.bg; ctx.lineWidth = 3; ctx.lineCap = "round"; ctx.stroke(new Path2D("M13 51l7-7"));
   ctx.restore();
+}
+
+function designHouseMark(ctx: CanvasRenderingContext2D, x: number, y: number, width: number) {
+  const s = width / 150.3;
+  ctx.fillStyle = "#e6ff32";
+  for (const [sx, sy, side] of DH_SQUARES) { roundRect(ctx, x + sx * s, y + sy * s, side * s, side * s, 5.88 * s); ctx.fill(); }
 }
 
 /** Draws a shareable recipe card (Instagram post or story) in the app's art direction. */
@@ -118,7 +126,7 @@ export async function renderRecipeImage({ recipe, id, format, t, url }: { recipe
   y += 56 + 46;
 
   // Ingredients in two columns with the generated icons.
-  const footer = size.h - 110;
+  const footer = size.h - 132;
   ctx.fillStyle = C.text; ctx.font = '700 36px "Bricolage Grotesque"';
   ctx.fillText(t.card2.ingredients, pad, y); y += 26;
   const rowH = 60, colW = (size.w - pad * 2 - 24) / 2;
@@ -143,10 +151,19 @@ export async function renderRecipeImage({ recipe, id, format, t, url }: { recipe
   ctx.strokeStyle = "rgba(214,255,220,.12)"; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(pad, footer); ctx.lineTo(size.w - pad, footer); ctx.stroke();
   ctx.fillStyle = C.text3; ctx.font = '400 26px "Onest"';
-  ctx.fillText(t.card2.made, pad, footer + 54);
+  ctx.fillText(t.card2.made, pad, footer + 50);
   ctx.fillStyle = C.accent; ctx.font = '600 26px "Onest"';
   const host = url.replace(/^https?:\/\//, "");
-  ctx.fillText(ellipsis(ctx, host, size.w / 2), size.w - pad - Math.min(ctx.measureText(host).width, size.w / 2), footer + 54);
+  ctx.fillText(ellipsis(ctx, host, size.w / 2), size.w - pad - Math.min(ctx.measureText(host).width, size.w / 2), footer + 50);
+  // Second line: the studio that built the app.
+  ctx.fillStyle = C.text3; ctx.font = '400 24px "Onest"';
+  const by = t.shell.builtBy;
+  let bx = pad + ctx.measureText(by).width + 12;
+  ctx.fillText(by, pad, footer + 90);
+  designHouseMark(ctx, bx, footer + 71, 28);
+  bx += 28 + 9;
+  ctx.fillStyle = C.text2; ctx.font = '600 24px "Onest"';
+  ctx.fillText("Design House", bx, footer + 90);
 
   return new Promise<Blob>((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("Canvas export failed")), "image/jpeg", 0.9));
 }

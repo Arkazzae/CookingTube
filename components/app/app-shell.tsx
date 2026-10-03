@@ -11,7 +11,7 @@ import { GenerationProvider, useGeneration } from "./generation";
 import { GenerationOverlay } from "./generation-overlay";
 import { LinkForm } from "./link-form";
 import { Sheet } from "./sheet";
-import { Wordmark } from "./brand";
+import { BuiltBy, Wordmark } from "./brand";
 import { LanguageSwitch, LocaleProvider, useT } from "./locale";
 import { TimerProvider, useTimerCenter } from "./timers";
 
@@ -37,7 +37,11 @@ function Shell({ children }: { children: React.ReactNode }) {
   return <div className={`shell ${immersive ? "shell--immersive" : ""} ${detail ? "shell--detail" : ""}`}>
     <a href="#tresc" className="skip-link">{t.nav.skip}</a>
     {!immersive && <Sidebar pathname={pathname} />}
-    <main id="tresc" className="shell-main">{children}</main>
+    <main id="tresc" className="shell-main">
+      {children}
+      {/* Phones have no sidebar, so the credit closes every page instead. */}
+      {!immersive && <footer className="shell-credit"><BuiltBy label={t.shell.builtBy} /></footer>}
+    </main>
     {!immersive && <BottomNav pathname={pathname} />}
     <GenerationOverlay />
     <Sheet open={sheetOpen} onClose={closeSheet} title={t.shell.sheetTitle} description={t.shell.sheetDescription}>
@@ -83,6 +87,7 @@ function Sidebar({ pathname }: { pathname: string }) {
         <p><strong>{t.shell.noteTitle}</strong> {t.shell.noteText}</p>
         <div className="sidebar-pwa"><PwaStatus /></div>
       </div>
+      <BuiltBy label={t.shell.builtBy} />
     </div>
   </aside>;
 }
